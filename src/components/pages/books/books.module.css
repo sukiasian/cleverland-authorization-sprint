@@ -1,0 +1,25 @@
+.books__container_window {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.books__container_list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1130px) {
+  .books__container_window {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .books__container_window {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 450px) {
+  .books__container_window {
+    grid-template-columns: 1fr;
+  }
+}

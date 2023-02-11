@@ -1,0 +1,36 @@
+.terms {
+  grid-area: content;
+}
+.terms ol {
+  list-style: none;
+  counter-reset: li;
+}
+.terms li:before {
+  counter-increment: li;
+  content: counters(li, '.') '. ';
+}
+.terms__title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+.rule__firstLevel {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #363636;
+  margin-top: 32px;
+}
+
+.rule__firstLevel li {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #363636;
+  margin-top: 16px;
+  margin-left: 30px;
+}

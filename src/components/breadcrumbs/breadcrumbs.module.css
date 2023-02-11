@@ -1,0 +1,31 @@
+.breadcrumbs {
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+  font-weight: 400;
+}
+.breadcrumbs__content {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+.breadcrumbs__content_route {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.breadcrumbs__content_separator {
+  font-size: 22px;
+  vertical-align: middle;
+  margin: 2px 12px 0px 12px;
+}
+@media (max-width: 1250px) {
+  .breadcrumbs__content {
+    width: 96%;
+  }
+}
+@media (max-width: 700px) {
+  .breadcrumbs__content_route {
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+  }
+}
