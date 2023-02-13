@@ -12,7 +12,7 @@
 }
 .book__content img {
   max-width: 174px;
-
+  height: 242px;
   margin: 0 auto 16px;
 }
 .book__content button {

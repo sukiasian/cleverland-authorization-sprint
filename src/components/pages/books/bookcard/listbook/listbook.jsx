@@ -7,14 +7,14 @@ import { BookButton } from '../bookbutton';
 
 export const ListBook = (props) => {
   const buttonStatus = useMemo(() => {
-    if (props.book.isBooked) {
-      return { className: 'primary', text: 'Забронировать' };
+    if (props.book.delivery) {
+      return { className: 'disabled', text: `занята до ${props.book.delivery.dateHandedTo}` };
     }
-    if (props.book.stock) {
+    if (props.book.booking) {
       return { className: 'secondary', text: 'Забронировано' };
     }
-    return { className: 'disabled', text: `занята до ${props.book.bookedTill}` };
-  }, [props.book.isBooked, props.book.stock, props.book.bookedTill]);
+    return { className: 'primary', text: 'Забронировать' };
+  }, [props.book.delivery, props.book.booking]);
   const [isLoadedImage, setIsLoadedImage] = useState(true);
   return (
     <div className={style.listBook}>
@@ -22,7 +22,7 @@ export const ListBook = (props) => {
         <div className={style.listBook__content}>
           <div className={style.listBook__content_image}>
             <img
-              src={isLoadedImage ? props.book.image : bookWithoutPhoto}
+              src={props.book.image ? `https://strapi.cleverland.by${props.book.image.url}` : bookWithoutPhoto}
               onError={() => {
                 setIsLoadedImage(false);
               }}
@@ -32,7 +32,7 @@ export const ListBook = (props) => {
           <div className={style.listBook__content_info}>
             <h2 className={style.listBook__content_title}>{props.book.title}</h2>
             <p className={style.listBook__content_author}>
-              {props.book.author},{props.book.year}
+              {props.book.authors},{props.book.issueYear}
             </p>
             <div className={style.listBook__content_ratingAndButton}>
               <Rating rating={props.book.rating} />

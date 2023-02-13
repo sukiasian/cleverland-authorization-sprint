@@ -19,7 +19,10 @@ export const Rating = (props) =>
       <p className={style.noRating}>ещё нет оценок</p>
     )
   ) : (
-    <div className={props.size === 'large' ? style.rating__large : style.rating} data-total-value={props.rating}>
+    <div
+      className={props.size === 'large' ? style.rating__large : style.rating}
+      data-total-value={Math.round(props.rating)}
+    >
       <div className={props.size === 'large' ? style.rating__item_large : style.rating__item} data-item-value='5' />
       <div className={props.size === 'large' ? style.rating__item_large : style.rating__item} data-item-value='4' />
       <div className={props.size === 'large' ? style.rating__item_large : style.rating__item} data-item-value='3' />

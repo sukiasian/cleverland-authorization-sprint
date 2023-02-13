@@ -12,21 +12,19 @@ import { LayoutBookPage } from './components/layouts/book-page';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <Routes>
-          <Route path='/' element={<MainLayout />}>
-            <Route element={<NavigationLayout />}>
-              <Route path='/' element={<Navigate to='/books/all' />} />
-              <Route path='/books/:category' element={<Books />} />
-              <Route path='/terms' element={<LayoutTerms contentView='terms' />} />
-              <Route path='/contract' element={<LayoutTerms contentView='contract' />} />
-            </Route>
+  <Provider store={store}>
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<MainLayout />}>
+          <Route element={<NavigationLayout />}>
+            <Route path='/' element={<Navigate to='/books/all' />} />
+            <Route path='/books/:category' element={<Books />} />
+            <Route path='/terms' element={<LayoutTerms contentView='terms' />} />
+            <Route path='/contract' element={<LayoutTerms contentView='contract' />} />
           </Route>
-          <Route path='/books/:category/:id' element={<LayoutBookPage />} />
-        </Routes>
-      </HashRouter>
-    </Provider>
-  </React.StrictMode>
+        </Route>
+        <Route path='/books/:category/:id' element={<LayoutBookPage />} />
+      </Routes>
+    </HashRouter>
+  </Provider>
 );
