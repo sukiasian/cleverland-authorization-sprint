@@ -1,11 +1,28 @@
 .books__container_window {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 100%;
 }
 .books__container_list {
   margin-top: 8px;
   display: flex;
   flex-direction: column;
+}
+.books__loaderBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 200%;
+  background: rgba(54, 54, 54, 0.3);
+  backdrop-filter: blur(10px);
+}
+.books__loader {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
 }
 
 @media (max-width: 1130px) {

@@ -1,21 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Lottie from 'react-lottie';
+import * as animationData from '../../../assets/loader.json';
 import style from './books.module.css';
 import { Book } from './bookcard/windowbook/windowbook';
 import { ListBook } from './bookcard/listbook';
 import { Search } from '../../search';
 import { fetchBooks } from '../../../redux/actions/actions';
+import { ShowWindowDimensions } from '../../show-window-dimensions';
 
 const Bookss = (props) => {
   useEffect(() => {
     props.fetchBooks();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
   const { category } = useParams();
-  const loader = props.isLoading;
-
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData,
+  };
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
@@ -23,15 +31,22 @@ const Bookss = (props) => {
   //   () => (category === 'all' ? books : books.filter((el) => el.category === category)),
   //   [category]
   // );
-  console.log(props.isLoading);
-  console.log(props.books);
+  const windowWidth = ShowWindowDimensions().props.children[1];
+
   return (
     <div className='app-wrapper__content'>
       <div className={style.books}>
         <Search changeButtonMode={changeButtonMode} />
         <div className={buttonMode === 'window' ? style.books__container_window : style.books__container_list}>
-          {props.isLoading ? (
-            <h1>ИДЁТ ЗАГРУЗА</h1>
+          {loader ? (
+            <div className={style.books__loaderBox}>
+              <Lottie
+                style={{ position: 'absolute', top: '50vh', left: '50%', transform: 'translate(-50%, -50%)' }}
+                options={defaultOptions}
+                height={windowWidth < 910 ? 48 : 150}
+                width={windowWidth < 910 ? 48 : 150}
+              />
+            </div>
           ) : (
             props.books[0].map((book) =>
               buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
