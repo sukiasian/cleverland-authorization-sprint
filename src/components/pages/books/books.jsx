@@ -29,11 +29,12 @@ const BooksContainer = (props) => {
     setButtonMode(mode);
   };
   // const filterBooks = useMemo(
-  //   () => (category === 'all' ? books : books.filter((el) => el.category === category)),
+  //   () => (category === 'all' ? props.books[0] : props.books[0].filter((el) => el.category === category)),
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   //   [category]
   // );
   const windowWidth = ShowWindowDimensions().props.children[1];
-
+  console.log(props.categories[0]);
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
@@ -64,6 +65,7 @@ const mapStateToProps = (state) => ({
   books: state.books.books,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
+  categories: state.books.categories,
 });
 const mapDispatchToProps = {
   fetchBooks,

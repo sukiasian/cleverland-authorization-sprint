@@ -101,7 +101,6 @@
   color: #ff5253;
 }
 .navbar__list_terms {
-  margin-left: 20px;
   margin-top: 42px;
   font-weight: 700;
   font-size: 18px;
@@ -112,7 +111,6 @@
 
 .navbar__list_activeTerms {
   margin-top: 42px;
-  margin-left: 20px;
   font-weight: 700;
   font-size: 18px;
   line-height: 28px;
