@@ -28,6 +28,7 @@
   margin-left: 32px;
 }
 .burgerNavigation__active_title {
+  margin-bottom: 16px;
   font-weight: 700;
   font-size: 18px;
   line-height: 28px;

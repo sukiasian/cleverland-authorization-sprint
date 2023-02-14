@@ -7,10 +7,11 @@ import style from './books.module.css';
 import { Book } from './bookcard/windowbook/windowbook';
 import { ListBook } from './bookcard/listbook';
 import { Search } from '../../search';
-import { fetchBooks } from '../../../redux/actions/actions';
+import { fetchBooks, fetchCategories, hideAlert } from '../../../redux/actions/actions';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
+import { ErrorAlert } from '../../error-alert';
 
-const Bookss = (props) => {
+const BooksContainer = (props) => {
   useEffect(() => {
     props.fetchBooks();
 
@@ -33,7 +34,9 @@ const Bookss = (props) => {
   // );
   const windowWidth = ShowWindowDimensions().props.children[1];
 
-  return (
+  return props.alert ? (
+    <ErrorAlert text={props.alert} />
+  ) : (
     <div className='app-wrapper__content'>
       <div className={style.books}>
         <Search changeButtonMode={changeButtonMode} />
@@ -60,9 +63,11 @@ const Bookss = (props) => {
 const mapStateToProps = (state) => ({
   books: state.books.books,
   isLoading: state.app.isLoading,
+  alert: state.app.alert,
 });
 const mapDispatchToProps = {
   fetchBooks,
+  hideAlert,
 };
 
-export const Books = connect(mapStateToProps, mapDispatchToProps)(Bookss);
+export const Books = connect(mapStateToProps, mapDispatchToProps)(BooksContainer);

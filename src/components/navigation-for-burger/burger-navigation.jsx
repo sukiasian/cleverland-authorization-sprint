@@ -1,9 +1,11 @@
 import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { fetchCategories } from '../../redux/actions/actions';
 import { navbarItems } from '../../assets/mocks';
 import style from './burger-navigation.module.css';
 
-export const BurgerNavigation = (props) => {
+export const BurgerNavigationContainer = (props) => {
   const { category, id } = useParams();
   const { pathname } = useLocation();
   const [isMenuListOpen, toggleListMenu] = useState(true);
@@ -11,10 +13,14 @@ export const BurgerNavigation = (props) => {
     toggleListMenu(!isMenuListOpen);
   };
   useEffect(() => {
+    if (props.books.length) {
+      props.fetchCategories();
+    }
     if (pathname === '/terms' || pathname === '/contract' || pathname === `/books/${category}/${id}`) {
       toggleListMenu(false);
     }
-  }, [pathname, id, category]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.books]);
 
   return (
     <section
@@ -54,21 +60,30 @@ export const BurgerNavigation = (props) => {
       </button>
 
       <ul className={isMenuListOpen ? style.burgerNavigation__list : style.burgerNavigation__list_close}>
-        {navbarItems.map((item) => (
-          <li key={item.id} className={style.burgerNavigation__list_item}>
-            <NavLink
-              data-test-id={item.id === 1 ? 'burger-books' : ''}
-              onClick={() => {
-                props.toggleMenu(false);
-              }}
-              className={`/${category}` === item.path ? style.burgerNavigation__list_active : ''}
-              to={`/books${item.path}`}
-            >
-              {item.title}
-              <span>{item.count}</span>
-            </NavLink>
-          </li>
-        ))}
+        <NavLink
+          onClick={() => {
+            props.toggleMenu(false);
+          }}
+          className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
+          data-test-id='burger-books'
+          to='/books/all'
+        >
+          Все книги
+        </NavLink>
+        {props.categories[0] &&
+          props.categories[0].map((item) => (
+            <li key={item.id} className={style.burgerNavigation__list_item}>
+              <NavLink
+                onClick={() => {
+                  props.toggleMenu(false);
+                }}
+                className={`${category}` === item.path ? style.burgerNavigation__list_active : ''}
+                to={`/books/${item.path}`}
+              >
+                {item.name}
+              </NavLink>
+            </li>
+          ))}
       </ul>
 
       <NavLink
@@ -119,3 +134,12 @@ export const BurgerNavigation = (props) => {
     </section>
   );
 };
+
+const mapStateToProps = (state) => ({
+  categories: state.books.categories,
+  books: state.books.books,
+});
+const mapDispatchToProps = {
+  fetchCategories,
+};
+export const BurgerNavigation = connect(mapStateToProps, mapDispatchToProps)(BurgerNavigationContainer);

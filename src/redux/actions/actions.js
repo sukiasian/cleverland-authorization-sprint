@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_BOOKS, HIDE_LOADER, SHOW_LOADER } from '../types/types';
+import { FETCH_BOOKS, FETCH_CATEGORIES, HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, SHOW_LOADER } from '../types/types';
 
 export function showLoader() {
   return {
@@ -11,13 +11,44 @@ export function hideLoader() {
     type: HIDE_LOADER,
   };
 }
+export function showAlert(text) {
+  return {
+    type: SHOW_ALERT,
+    payload: text,
+  };
+}
+export function hideAlert() {
+  return {
+    type: HIDE_ALERT,
+  };
+}
 export function fetchBooks() {
   /* eslint-disable */
   return async function (dispatch) {
-    dispatch(showLoader());
-    return await axios('https://strapi.cleverland.by/api/books').then(function (response) {
-      dispatch({ type: FETCH_BOOKS, payload: response.data });
+    try {
+      dispatch(showLoader());
+      return await axios('https://strapi.cleverland.by/api/books').then(function (response) {
+        dispatch({ type: FETCH_BOOKS, payload: response.data });
+        dispatch(hideLoader());
+      });
+    } catch (error) {
       dispatch(hideLoader());
-    });
+      dispatch(showAlert('Что-то пошло не так. Обновите страницу через некоторое время.'));
+    }
+  };
+}
+export function fetchCategories() {
+  /* eslint-disable */
+  return async function (dispatch) {
+    try {
+      dispatch(showLoader());
+      return await axios('https://strapi.cleverland.by/api/categories').then(function (response) {
+        dispatch({ type: FETCH_CATEGORIES, payload: response.data });
+        dispatch(hideLoader());
+      });
+    } catch (error) {
+      dispatch(hideLoader());
+      dispatch(showAlert('Что-то пошло не так. Обновите страницу через некоторое время.'));
+    }
   };
 }
