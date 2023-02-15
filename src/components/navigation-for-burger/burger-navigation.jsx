@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { fetchCategories } from '../../redux/actions/actions';
+import { changeActiveCategory, fetchCategories } from '../../redux/actions/actions';
 import { navbarItems } from '../../assets/mocks';
 import style from './burger-navigation.module.css';
 
@@ -63,6 +63,7 @@ export const BurgerNavigationContainer = (props) => {
         <NavLink
           onClick={() => {
             props.toggleMenu(false);
+            props.changeActiveCategory('все');
           }}
           className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
           data-test-id='burger-books'
@@ -76,6 +77,7 @@ export const BurgerNavigationContainer = (props) => {
               <NavLink
                 onClick={() => {
                   props.toggleMenu(false);
+                  props.changeActiveCategory(item.name);
                 }}
                 className={`${category}` === item.path ? style.burgerNavigation__list_active : ''}
                 to={`/books/${item.path}`}
@@ -141,5 +143,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   fetchCategories,
+  changeActiveCategory,
 };
 export const BurgerNavigation = connect(mapStateToProps, mapDispatchToProps)(BurgerNavigationContainer);

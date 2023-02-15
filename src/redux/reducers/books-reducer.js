@@ -1,8 +1,9 @@
-import { FETCH_BOOKS, FETCH_CATEGORIES } from '../types/types';
+import { CHANGE_ACTIVE_CATEGORY, FETCH_BOOKS, FETCH_CATEGORIES } from '../types/types';
 
 const initialState = {
   books: [],
   categories: [],
+  activeCategory: 'все',
 };
 export const booksReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +11,8 @@ export const booksReducer = (state = initialState, action) => {
       return { ...state, books: [...state.books, action.payload] };
     case FETCH_CATEGORIES:
       return { ...state, categories: [...state.categories, action.payload] };
+    case CHANGE_ACTIVE_CATEGORY:
+      return { ...state, activeCategory: action.payload };
 
     default:
       return state;

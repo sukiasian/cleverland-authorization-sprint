@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { connect } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
 import style from './windowbook.module.css';
 import bookWithoutPhoto from '../../../../../assets/images/bookWithoutPhoto.png';
 import { Rating } from '../../../../rating';
 import { BookButton } from '../bookbutton';
+import { fetchBook } from '../../../../../redux/actions/actions';
 
-export const Book = (props) => {
+export const BookContainer = (props) => {
   const buttonStatus = useMemo(() => {
     if (props.book.delivery) {
       return { className: 'disabled', text: `занята до ${props.book.delivery.dateHandedTo}` };
@@ -43,3 +45,7 @@ export const Book = (props) => {
     </div>
   );
 };
+const mapDispatchToProps = {
+  fetchBook,
+};
+export const Book = connect(null, mapDispatchToProps)(BookContainer);

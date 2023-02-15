@@ -1,5 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Lottie from 'react-lottie';
+import * as animationData from '../../../assets/loader.json';
 import { books, navbarItems, reviews } from '../../../assets/mocks';
 import style from './book-page.module.css';
 import { Breadcrumbs } from '../../breadcrumbs/breadcrumbs';
@@ -10,36 +13,58 @@ import { Rating } from '../../rating';
 import { BookButton } from '../books/bookcard/bookbutton';
 import { Slider } from '../../slider';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
+import { fetchBook } from '../../../redux/actions/actions';
 
-export const BookPage = () => {
+export const BookPageContainer = (props) => {
   const { category, id } = useParams();
-  const thisBook = books.find((el) => el.id === id);
-  const bookCategoryName = navbarItems.find((el) => el.path === `/${category}`);
-  const [isLoadedImage, setIsLoadedImage] = useState(true);
-  const rateButton = { className: 'primary', text: 'Оценить книгу' };
-
-  const [activeBookImage, setActiveBookImage] = useState(0);
-  const [activeReviews, setActiveReviews] = useState(true);
-  const toggleReviews = () => {
-    setActiveReviews(!activeReviews);
+  useEffect(() => {
+    props.fetchBook(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData,
   };
-  const buttonStatus = useMemo(() => {
-    if (thisBook.isBooked) {
-      return { className: 'primary', text: 'Забронировать' };
-    }
-    if (thisBook.stock) {
-      return { className: 'secondary', text: 'Забронировано' };
-    }
-    return { className: 'disabled', text: `занята до ${thisBook.bookedTill}` };
-  }, [thisBook.isBooked, thisBook.stock, thisBook.bookedTill]);
+  const loader = props.isLoading;
+  const thisBook = props.book;
+  // const buttonStatus = useMemo(() => {
+  //   if (props.book.delivery) {
+  //     return { className: 'disabled', text: `занята до ${props.book.delivery.dateHandedTo}` };
+  //   }
+  //   if (props.book.booking) {
+  //     return { className: 'secondary', text: 'Забронировано' };
+  //   }
+  //   return { className: 'primary', text: 'Забронировать' };
+  // }, [props.book.delivery, props.book.booking]);
+  // const bookCategoryName = navbarItems.find((el) => el.path === `/${category}`);
+  // const [isLoadedImage, setIsLoadedImage] = useState(true);
+  // const rateButton = { className: 'primary', text: 'Оценить книгу' };
+  // const [activeBookImage, setActiveBookImage] = useState(0);
+  // const [activeReviews, setActiveReviews] = useState(true);
+  // const toggleReviews = () => {
+  //   setActiveReviews(!activeReviews);
+  // };
 
   const windowWidth = ShowWindowDimensions().props.children[1];
   return (
     <section className={style.bookPage}>
-      <div className={style.bookPage__breadcrumbs}>
-        <Breadcrumbs path={bookCategoryName.path} title={bookCategoryName.title} bookTitle={thisBook.title} />
-      </div>
-      <div className={style.bookPage__container}>
+      {
+        loader ? (
+          <div className={style.bookPage__loaderBox}>
+            <Lottie
+              style={{ position: 'absolute', top: '50vh', left: '50%', transform: 'translate(-50%, -50%)' }}
+              options={defaultOptions}
+              height={windowWidth < 910 ? 48 : 150}
+              width={windowWidth < 910 ? 48 : 150}
+            />
+          </div>
+        ) : (
+          <div className={style.bookPage__breadcrumbs}>
+            <Breadcrumbs path={`/${category}`} title={thisBook.categories[0]} bookTitle={thisBook.title} />
+          </div>
+        )
+        /* <div className={style.bookPage__container}>
         <div className={style.bookPage__information}>
           <div className={style.bookPage__information_image}>
             {thisBook.imagesForSlider ? (
@@ -111,7 +136,16 @@ export const BookPage = () => {
         <div data-test-id='button-rating' className={style.bookPage__rateButton}>
           <BookButton status={rateButton} />
         </div>
-      </div>
+      </div> */
+      }
     </section>
   );
 };
+const mapStateToProps = (state) => ({
+  book: state.book.book,
+  isLoading: state.app.isLoading,
+});
+const mapDispatchToProps = {
+  fetchBook,
+};
+export const BookPage = connect(mapStateToProps, mapDispatchToProps)(BookPageContainer);

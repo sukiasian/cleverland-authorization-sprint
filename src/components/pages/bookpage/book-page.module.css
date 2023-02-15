@@ -18,6 +18,17 @@
     'image aboutBook';
   margin-bottom: 42px;
 }
+.bookPage__loaderBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 200%;
+  background: rgba(54, 54, 54, 0.3);
+  backdrop-filter: blur(10px);
+}
+
 .bookPage__information_photo {
   width: 100%;
   max-width: 445px;

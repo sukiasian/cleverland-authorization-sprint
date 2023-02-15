@@ -1,11 +1,13 @@
 import React, { useMemo, useState } from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import style from './listbook.module.css';
 import bookWithoutPhoto from '../../../../../assets/images/bookWithoutPhoto.png';
 import { Rating } from '../../../../rating';
 import { BookButton } from '../bookbutton';
+import { fetchBook } from '../../../../../redux/actions/actions';
 
-export const ListBook = (props) => {
+export const ListBookContainer = (props) => {
   const buttonStatus = useMemo(() => {
     if (props.book.delivery) {
       return { className: 'disabled', text: `занята до ${props.book.delivery.dateHandedTo}` };
@@ -18,7 +20,12 @@ export const ListBook = (props) => {
   const [isLoadedImage, setIsLoadedImage] = useState(true);
   return (
     <div className={style.listBook}>
-      <NavLink to={`/books/${props.book.category}/${props.book.id}`}>
+      <NavLink
+        onClick={() => {
+          props.fetchBook(props.book.id);
+        }}
+        to={`/books/${props.book.category}/${props.book.id}`}
+      >
         <div className={style.listBook__content}>
           <div className={style.listBook__content_image}>
             <img
@@ -44,3 +51,8 @@ export const ListBook = (props) => {
     </div>
   );
 };
+
+const mapDispatchToProps = {
+  fetchBook,
+};
+export const ListBook = connect(null, mapDispatchToProps)(ListBookContainer);

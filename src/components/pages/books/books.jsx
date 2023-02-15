@@ -28,13 +28,15 @@ const BooksContainer = (props) => {
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
-  // const filterBooks = useMemo(
-  //   () => (category === 'all' ? props.books[0] : props.books[0].filter((el) => el.category === category)),
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [category]
-  // );
+  const filterBooks = useMemo(
+    () =>
+      props.activeCategory === 'все'
+        ? props.books[0]
+        : props.books[0].filter((el) => el.categories[0] === props.activeCategory),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.activeCategory, props.books[0]]
+  );
   const windowWidth = ShowWindowDimensions().props.children[1];
-  console.log(props.categories[0]);
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
@@ -52,7 +54,8 @@ const BooksContainer = (props) => {
               />
             </div>
           ) : (
-            props.books[0].map((book) =>
+            filterBooks &&
+            filterBooks.map((book) =>
               buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
             )
           )}
@@ -63,9 +66,10 @@ const BooksContainer = (props) => {
 };
 const mapStateToProps = (state) => ({
   books: state.books.books,
+  activeCategory: state.books.activeCategory,
+  categories: state.books.categories,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
-  categories: state.books.categories,
 });
 const mapDispatchToProps = {
   fetchBooks,

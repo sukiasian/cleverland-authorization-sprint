@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { fetchCategories } from '../../redux/actions/actions';
+import { changeActiveCategory, fetchCategories } from '../../redux/actions/actions';
 import style from './navigation.module.css';
 
 export const NavigationContainer = (props) => {
@@ -47,6 +47,9 @@ export const NavigationContainer = (props) => {
       </button>
       <ul className={isMenuOpen ? style.navbar__list : style.navbar__active}>
         <NavLink
+          onClick={() => {
+            props.changeActiveCategory('все');
+          }}
           className={`${category}` === 'all' ? style.navbar__list_active : ''}
           data-test-id='navigation-books'
           to='/books/all'
@@ -57,6 +60,9 @@ export const NavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>
               <NavLink
+                onClick={() => {
+                  props.changeActiveCategory(item.name);
+                }}
                 className={`${category}` === item.path ? style.navbar__list_active : ''}
                 to={`/books/${item.path}`}
               >
@@ -85,5 +91,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   fetchCategories,
+  changeActiveCategory,
 };
 export const Navigation = connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);
