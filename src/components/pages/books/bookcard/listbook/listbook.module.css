@@ -33,6 +33,12 @@
   color: #727272;
   margin-bottom: 16px;
 }
+.authorName:not(:first-child) {
+  margin-left: 3px;
+}
+.bookYear {
+  margin-left: 3px;
+}
 .listBook__content_ratingAndButton {
   display: flex;
   justify-content: space-between;

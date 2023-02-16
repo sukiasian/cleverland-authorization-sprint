@@ -47,17 +47,17 @@ export const Slider = (props) => {
       slidesPerView={5}
       watchSlidesProgress={true}
     >
-      {props.booksImage.map((image, index) => (
+      {props.booksImage.map((url, index) => (
         <SwiperSlide
           data-test-id='slide-mini'
-          key={image}
+          key={url}
           className={activeImage === index ? 'activeImage' : 'sliderImage'}
           onClick={() => {
             setActiveImage(index);
             props.setActiveBookImage(index);
           }}
         >
-          <img className='swiper-slide-visible' src={image} alt='' />
+          <img className='swiper-slide-visible' src={`https://strapi.cleverland.by${url}`} alt='' />
         </SwiperSlide>
       ))}
     </Swiper>

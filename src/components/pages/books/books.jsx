@@ -13,7 +13,9 @@ import { ErrorAlert } from '../../error-alert';
 
 const BooksContainer = (props) => {
   useEffect(() => {
-    props.fetchBooks();
+    if (!props.books.length) {
+      props.fetchBooks();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

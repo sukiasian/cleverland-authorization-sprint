@@ -81,6 +81,8 @@
   line-height: 28px;
   letter-spacing: 0.1px;
   color: #a7a7a7;
+}
+.description__author:last-child {
   margin-bottom: 32px;
 }
 .description__button {
