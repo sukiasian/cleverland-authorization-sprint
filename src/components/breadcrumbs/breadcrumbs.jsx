@@ -4,8 +4,7 @@ import { NavLink } from 'react-router-dom';
 import style from './breadcrumbs.module.css';
 
 export const Breadcrumbs = (props) => {
-  const pathtTitle = useSelector((state) => state.books.activeCategory);
-  console.log(pathtTitle);
+  const pathTitle = useSelector((state) => state.books.activeCategory);
   return (
     <div className={style.breadcrumbs}>
       <div className={style.breadcrumbs__content}>
@@ -14,7 +13,7 @@ export const Breadcrumbs = (props) => {
           to={`/books${props.path}`}
           className={style.breadcrumbs__content_route}
         >
-          {pathtTitle}
+          {pathTitle}
         </NavLink>
         <span className={style.breadcrumbs__content_separator}>/</span>
         <span className={style.breadcrumbs__content_route}>{props.bookTitle}</span>

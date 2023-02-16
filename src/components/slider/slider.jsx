@@ -16,13 +16,12 @@ export const Slider = (props) => {
           dragSize: 190,
         }
       : false;
-
+  console.log(props);
   return props.view === 'circles' ? (
     <Swiper className='slider' spaceBetween={8} slidesPerView={props.booksImage.length}>
       {props.booksImage.map((image, index) => (
         <SwiperSlide
           data-test-id='slide-mini'
-          key={image}
           onClick={() => {
             setActiveImage(index);
             props.setActiveBookImage(index);
@@ -47,17 +46,16 @@ export const Slider = (props) => {
       slidesPerView={5}
       watchSlidesProgress={true}
     >
-      {props.booksImage.map((url, index) => (
+      {props.booksImage.map((image, index) => (
         <SwiperSlide
           data-test-id='slide-mini'
-          key={url}
           className={activeImage === index ? 'activeImage' : 'sliderImage'}
           onClick={() => {
             setActiveImage(index);
             props.setActiveBookImage(index);
           }}
         >
-          <img className='swiper-slide-visible' src={`https://strapi.cleverland.by${url}`} alt='' />
+          <img className='swiper-slide-visible' src={`https://strapi.cleverland.by${image.url}`} alt='' />
         </SwiperSlide>
       ))}
     </Swiper>

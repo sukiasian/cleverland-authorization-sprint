@@ -12,7 +12,7 @@ export const NavigationContainer = (props) => {
     toggleMenu(!isMenuOpen);
   };
   useEffect(() => {
-    if (props.books.length) {
+    if (props.books.length && !props.categories) {
       props.fetchCategories();
     }
     if (pathname === '/terms' || pathname === '/contract') {

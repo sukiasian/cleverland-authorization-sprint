@@ -11,6 +11,7 @@
   border: 1.5px solid #f42c4f;
   border-radius: 5px;
   padding: 24px 32px;
+  z-index: 99;
 }
 .alertInvisible {
   display: none;
@@ -54,4 +55,24 @@
 }
 .alert__cross:after {
   transform: rotate(-45deg);
+}
+
+@media (max-width: 1250px) {
+  .alert {
+    width: 96%;
+  }
+}
+@media (max-width: 640px) {
+  .alert {
+    padding: 24px 16px;
+  }
+  .alert__info_text {
+    margin-left: 12px;
+  }
+}
+
+@media (max-width: 450px) {
+  .alert {
+    padding: 12px 16px;
+  }
 }

@@ -16,9 +16,7 @@ const BooksContainer = (props) => {
     if (!props.books.length) {
       props.fetchBooks();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props]);
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
   const { category } = useParams();
@@ -47,7 +45,7 @@ const BooksContainer = (props) => {
         <Search changeButtonMode={changeButtonMode} />
         <div className={buttonMode === 'window' ? style.books__container_window : style.books__container_list}>
           {loader ? (
-            <div className={style.books__loaderBox}>
+            <div data-test-id='loader' className={style.books__loaderBox}>
               <Lottie
                 style={{ position: 'absolute', top: '50vh', left: '50%', transform: 'translate(-50%, -50%)' }}
                 options={defaultOptions}

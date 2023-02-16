@@ -6,9 +6,11 @@ import style from './error-alert.module.css';
 export const ErrorAlert = (props) => {
   const [alert, setAlert] = useState(true);
   return (
-    <div className={alert ? style.alert : style.alertInvisible}>
+    <div data-test-id='error' className={alert ? style.alert : style.alertInvisible}>
       <div className={style.alert__info}>
-        <div className={style.alert__info_icon} />
+        <div>
+          <div className={style.alert__info_icon} />
+        </div>
         <p className={style.alert__info_text}>{props.text}</p>
       </div>
       <button

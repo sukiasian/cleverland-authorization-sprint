@@ -14,6 +14,7 @@ import { BookButton } from '../books/bookcard/bookbutton';
 import { Slider } from '../../slider';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
 import { changeActiveBookImage, fetchBook } from '../../../redux/actions/actions';
+import { ErrorAlert } from '../../error-alert';
 
 export const BookPageContainer = (props) => {
   const { category, id } = useParams();
@@ -28,7 +29,7 @@ export const BookPageContainer = (props) => {
   };
   const loader = props.isLoading;
   const thisBook = props.book;
-  console.log(thisBook);
+
   const buttonStatus = () => {
     if (thisBook.delivery) {
       return { className: 'disabled', text: `занята до ${thisBook.delivery.dateHandedTo}` };
@@ -38,17 +39,18 @@ export const BookPageContainer = (props) => {
     }
     return { className: 'primary', text: 'Забронировать' };
   };
-  // const bookCategoryName = navbarItems.find((el) => el.path === `/${category}`);
-  // const [isLoadedImage, setIsLoadedImage] = useState(true);
+
   const rateButton = { className: 'primary', text: 'Оценить книгу' };
-  // const [activeBookImage, setActiveBookImage] = useState(0);
   const [activeReviews, setActiveReviews] = useState(true);
   const toggleReviews = () => {
     setActiveReviews(!activeReviews);
   };
   const windowWidth = ShowWindowDimensions().props.children[1];
+  if (props.alert) {
+    return <ErrorAlert text={props.alert} />;
+  }
   return loader ? (
-    <div className={style.bookPage__loaderBox}>
+    <div data-test-id='loader' className={style.bookPage__loaderBox}>
       <Lottie
         style={{ position: 'absolute', top: '50vh', left: '50%', transform: 'translate(-50%, -50%)' }}
         options={defaultOptions}
@@ -70,12 +72,12 @@ export const BookPageContainer = (props) => {
                   <img
                     data-test-id='slide-big'
                     className={style.bookPage__information_photo}
-                    src={`https://strapi.cleverland.by${thisBook.images[props.activeBookImage].url}`}
+                    src={thisBook.images && `https://strapi.cleverland.by${thisBook.images[props.activeBookImage].url}`}
                     alt=''
                   />
                   <Slider
                     view={windowWidth < 801 ? 'circles' : ''}
-                    setActiveBookImage={props.changeActiveBookImage()}
+                    setActiveBookImage={props.changeActiveBookImage}
                     booksImage={thisBook.images}
                   />
                 </>
@@ -92,7 +94,7 @@ export const BookPageContainer = (props) => {
               <p className={style.description__title}>{thisBook.title}</p>
               <div className={style.bookPage__information_authorsBox}>
                 {thisBook.authors.map((author, index) => (
-                  <p className={style.description__author}>
+                  <p key={author} className={style.description__author}>
                     {author}
                     {index === thisBook.authors.length - 1 ? '.' : ','}
                   </p>
@@ -121,7 +123,8 @@ export const BookPageContainer = (props) => {
           </div>
           <div className={style.bookPage__reviews}>
             <p className={`${style.bookPage__reviews_title} ${style.subTitle}`}>
-              Отзывы <span className={style.bookPage__reviews_count}>{reviews.length}</span>
+              Отзывы
+              {thisBook.comments && <span className={style.bookPage__reviews_count}>{thisBook.comments.length}</span>}
               <button
                 data-test-id='button-hide-reviews'
                 className={style.bookPage__reviews_button}
@@ -133,9 +136,13 @@ export const BookPageContainer = (props) => {
                 <span className={activeReviews ? style.bookPage__reviews_upArrow : style.bookPage__reviews_downArrow} />
               </button>
             </p>
-            {reviews.map((review) => (
-              <Review activeReviews={activeReviews} key={review.id} review={review} />
-            ))}
+            {thisBook.comments ? (
+              thisBook.comments.map((comment) => (
+                <Review activeReviews={activeReviews} key={comment.id} review={comment} />
+              ))
+            ) : (
+              <span className={style.bookPage__reviews_noComments}> Комментарий пока нет </span>
+            )}
           </div>
           <div data-test-id='button-rating' className={style.bookPage__rateButton}>
             <BookButton status={rateButton} />
@@ -149,6 +156,7 @@ const mapStateToProps = (state) => ({
   book: state.book.book,
   activeBookImage: state.book.activeBookImage,
   isLoading: state.app.isLoading,
+  alert: state.app.alert,
 });
 const mapDispatchToProps = {
   changeActiveBookImage,

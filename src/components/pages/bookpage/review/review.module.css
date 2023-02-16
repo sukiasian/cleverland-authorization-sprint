@@ -29,9 +29,16 @@
   letter-spacing: 0.1px;
   color: #727272;
 }
+
+.reviewBlock__user_image img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
 .reviewBlock__review {
   margin-top: -6px;
 }
+
 @media (max-width: 460px) {
   .reviewBlock {
     margin-bottom: 32px;

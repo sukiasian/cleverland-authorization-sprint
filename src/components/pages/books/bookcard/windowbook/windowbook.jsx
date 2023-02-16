@@ -38,7 +38,9 @@ export const BookContainer = (props) => {
 
           <p className={style.book__content_author}>
             {props.book.authors.map((author) => (
-              <span className={style.authorName}>{author}</span>
+              <span key={author} className={style.authorName}>
+                {author}
+              </span>
             ))}
             <span className={style.bookYear}>{props.book.issueYear}</span>
           </p>

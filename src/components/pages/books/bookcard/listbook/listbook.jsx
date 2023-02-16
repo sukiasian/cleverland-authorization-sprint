@@ -40,7 +40,9 @@ export const ListBookContainer = (props) => {
             <h2 className={style.listBook__content_title}>{props.book.title}</h2>
             <p className={style.listBook__content_author}>
               {props.book.authors.map((author) => (
-                <span className={style.authorName}>{author},</span>
+                <span key={author} className={style.authorName}>
+                  {author},
+                </span>
               ))}
               <span className={style.bookYear}>{props.book.issueYear}</span>
             </p>

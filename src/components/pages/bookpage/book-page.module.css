@@ -59,6 +59,7 @@
   display: inline-block;
   padding: 3px;
   transform: rotate(-135deg);
+  cursor: pointer;
 }
 .bookPage__reviews_downArrow {
   border: solid black;
@@ -66,6 +67,16 @@
   display: inline-block;
   padding: 3px;
   transform: rotate(45deg);
+  cursor: pointer;
+}
+.bookPage__reviews_noComments {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+  display: block;
+  margin-bottom: 45px;
 }
 .bookPage__reviews_button {
   border: none;
@@ -142,6 +153,7 @@
   line-height: 24px;
   letter-spacing: 0.1px;
   color: #a7a7a7;
+  margin-left: 6px;
 }
 .bookPage__rateButton {
   max-width: 350px;
@@ -153,7 +165,7 @@
       'image description'
       'aboutBook aboutBook';
     grid-template-columns: minmax(100px, 136px);
-    grid-template-rows: minmax(200px, 100%) minmax(100px, 100%);
+    grid-template-rows: minmax(200px, 150%) 1fr;
   }
   .bookPage__information_photo {
     max-height: 200px;
