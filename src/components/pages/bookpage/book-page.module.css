@@ -12,7 +12,7 @@
 .bookPage__information {
   display: grid;
   grid-template-columns: minmax(100px, 445px);
-  grid-template-rows: minmax(200px, 100%) minmax(100px, 100%);
+  grid-template-rows: minmax(200px, 40%) minmax(100px, 100%);
   grid-template-areas:
     'image description'
     'image aboutBook';
@@ -74,7 +74,9 @@
   height: 12px;
   margin-left: 24px;
 }
-
+.bookPage__information_authorsBox {
+  margin-bottom: 32px;
+}
 .description__author {
   font-weight: 700;
   font-size: 18px;
@@ -82,9 +84,7 @@
   letter-spacing: 0.1px;
   color: #a7a7a7;
 }
-.description__author:last-child {
-  margin-bottom: 32px;
-}
+
 .description__button {
   max-width: 350px;
 }

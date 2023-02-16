@@ -63,7 +63,7 @@ export const BurgerNavigationContainer = (props) => {
         <NavLink
           onClick={() => {
             props.toggleMenu(false);
-            props.changeActiveCategory('все');
+            props.changeActiveCategory('Все книги');
           }}
           className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
           data-test-id='burger-books'

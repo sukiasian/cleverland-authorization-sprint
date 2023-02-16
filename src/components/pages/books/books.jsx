@@ -32,7 +32,7 @@ const BooksContainer = (props) => {
   };
   const filterBooks = useMemo(
     () =>
-      props.activeCategory === 'все'
+      props.activeCategory === 'Все книги'
         ? props.books[0]
         : props.books[0].filter((el) => el.categories[0] === props.activeCategory),
     // eslint-disable-next-line react-hooks/exhaustive-deps

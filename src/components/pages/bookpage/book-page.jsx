@@ -29,15 +29,15 @@ export const BookPageContainer = (props) => {
   const loader = props.isLoading;
   const thisBook = props.book;
   console.log(thisBook);
-  // const buttonStatus = useMemo(() => {
-  //   if (props.book.delivery) {
-  //     return { className: 'disabled', text: `занята до ${props.book.delivery.dateHandedTo}` };
-  //   }
-  //   if (props.book.booking) {
-  //     return { className: 'secondary', text: 'Забронировано' };
-  //   }
-  //   return { className: 'primary', text: 'Забронировать' };
-  // }, [props.book.delivery, props.book.booking]);
+  const buttonStatus = () => {
+    if (thisBook.delivery) {
+      return { className: 'disabled', text: `занята до ${thisBook.delivery.dateHandedTo}` };
+    }
+    if (thisBook.booking) {
+      return { className: 'secondary', text: 'Забронировано' };
+    }
+    return { className: 'primary', text: 'Забронировать' };
+  };
   // const bookCategoryName = navbarItems.find((el) => el.path === `/${category}`);
   // const [isLoadedImage, setIsLoadedImage] = useState(true);
   const rateButton = { className: 'primary', text: 'Оценить книгу' };
@@ -90,13 +90,17 @@ export const BookPageContainer = (props) => {
             </div>
             <div className={style.bookPage__information_description}>
               <p className={style.description__title}>{thisBook.title}</p>
-              {thisBook.authors.map((author, index) => (
-                <p className={style.description__author}>
-                  {author}
-                  {index === thisBook.authors.length - 1 ? '.' : ','}
-                </p>
-              ))}
-              <div className={style.description__button}>{/* <BookButton status={buttonStatus} /> */}</div>
+              <div className={style.bookPage__information_authorsBox}>
+                {thisBook.authors.map((author, index) => (
+                  <p className={style.description__author}>
+                    {author}
+                    {index === thisBook.authors.length - 1 ? '.' : ','}
+                  </p>
+                ))}
+              </div>
+              <div className={style.description__button}>
+                <BookButton status={buttonStatus()} />
+              </div>
             </div>
             <div className={style.bookPage__information_aboutBook}>
               <p className={`${style.aboutBook__title} ${style.subTitle}`}>О книге</p>
@@ -112,7 +116,7 @@ export const BookPageContainer = (props) => {
               </div>
             </div>
             <div className={style.bookPage__detailedInfoBox}>
-              <DetailedInformation />
+              <DetailedInformation thisBookInfo={thisBook} />
             </div>
           </div>
           <div className={style.bookPage__reviews}>

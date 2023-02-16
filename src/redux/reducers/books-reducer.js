@@ -3,7 +3,7 @@ import { CHANGE_ACTIVE_CATEGORY, FETCH_BOOKS, FETCH_CATEGORIES } from '../types/
 const initialState = {
   books: [],
   categories: [],
-  activeCategory: 'все',
+  activeCategory: 'Все книги',
 };
 export const booksReducer = (state = initialState, action) => {
   switch (action.type) {
