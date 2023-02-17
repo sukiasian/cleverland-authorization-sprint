@@ -12,14 +12,13 @@ export const NavigationContainer = (props) => {
     toggleMenu(!isMenuOpen);
   };
   useEffect(() => {
-    if (props.books.length && !props.categories) {
-      props.fetchCategories();
-    }
+    props.fetchCategories();
+
     if (pathname === '/terms' || pathname === '/contract') {
       toggleMenu(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.books]);
+  }, []);
 
   return (
     <section className={style.navbar}>

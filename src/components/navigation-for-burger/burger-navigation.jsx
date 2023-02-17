@@ -13,14 +13,13 @@ export const BurgerNavigationContainer = (props) => {
     toggleListMenu(!isMenuListOpen);
   };
   useEffect(() => {
-    if (props.books.length) {
-      props.fetchCategories();
-    }
+    props.fetchCategories();
+
     if (pathname === '/terms' || pathname === '/contract' || pathname === `/books/${category}/${id}`) {
       toggleListMenu(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.books]);
+  }, []);
 
   return (
     <section

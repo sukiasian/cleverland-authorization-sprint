@@ -16,7 +16,8 @@ const BooksContainer = (props) => {
     if (!props.books.length) {
       props.fetchBooks();
     }
-  }, [props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.books]);
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
   const { category } = useParams();
