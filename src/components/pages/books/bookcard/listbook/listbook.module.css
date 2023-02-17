@@ -1,0 +1,73 @@
+.listBook {
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 16px 24px 16px 16px;
+  margin-top: 16px;
+}
+.listBook__content {
+  display: flex;
+}
+.listBook__content_info {
+  margin-left: 16px;
+  width: 100%;
+}
+.listBook__content_image img {
+  max-width: 120px;
+  height: 170px;
+}
+.listBook__content_title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.1px;
+  color: #363636;
+  margin-bottom: 8px;
+}
+.listBook__content_author {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #727272;
+  margin-bottom: 16px;
+}
+.authorName:not(:first-child) {
+  margin-left: 3px;
+}
+.bookYear {
+  margin-left: 3px;
+}
+.listBook__content_ratingAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+.listBook__content_ratingAndButton button {
+  max-width: 174px;
+}
+@media (max-width: 700px) {
+  .listBook__content_title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 3px;
+  }
+  .listBook__content_author {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 3px;
+  }
+  .listBook__content_ratingAndButton {
+    display: block;
+  }
+  .listBook__content_ratingAndButton button {
+    margin-top: -6px;
+  }
+}
+@media (max-width: 500px) {
+  .listBook__content_ratingAndButton button {
+    max-width: none;
+    width: 100%;
+  }
+}

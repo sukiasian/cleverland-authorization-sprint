@@ -1,0 +1,95 @@
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 22px;
+  width: 144px;
+}
+.rating__large {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 22px;
+}
+.withoutRating {
+  display: flex;
+  align-items: center;
+}
+.noRating__large {
+  margin-left: 24px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+.stars__large {
+  display: flex;
+  margin-left: -12px;
+}
+.star__large {
+  margin-left: 12px;
+  height: 34px;
+  width: 34px;
+  background-size: cover;
+  background-image: url('../../assets//images/star.png');
+}
+.rating__item {
+  height: 24px;
+  width: 24px;
+  background-size: cover;
+  background-image: url('../../assets//images/star.png');
+}
+.rating__item_large {
+  height: 34px;
+  width: 34px;
+  background-size: cover;
+  background-image: url('../../assets//images/star.png');
+}
+.rating__item:not(:last-child) {
+  margin-left: 6px;
+}
+.rating__item_large:not(:last-child) {
+  margin-left: 6px;
+}
+
+.rating[data-total-value='1'] .rating__item:nth-child(n + 5),
+.rating[data-total-value='2'] .rating__item:nth-child(n + 4),
+.rating[data-total-value='3'] .rating__item:nth-child(n + 3),
+.rating[data-total-value='4'] .rating__item:nth-child(n + 2),
+.rating[data-total-value='5'] .rating__item:nth-child(n + 1) {
+  background-image: url('../../assets//images/yellowstar.png');
+}
+.rating__large[data-total-value='1'] .rating__item_large:nth-child(n + 5),
+.rating__large[data-total-value='2'] .rating__item_large:nth-child(n + 4),
+.rating__large[data-total-value='3'] .rating__item_large:nth-child(n + 3),
+.rating__large[data-total-value='4'] .rating__item_large:nth-child(n + 2),
+.rating__large[data-total-value='5'] .rating__item_large:nth-child(n + 1) {
+  background-image: url('../../assets//images/yellowstar.png');
+}
+.noRating {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+  height: 24px;
+  margin-bottom: 22px;
+  width: 144px;
+}
+@media (max-width: 460px) {
+  .noRating {
+    margin-bottom: 16px;
+  }
+  .rating {
+    margin-bottom: 16px;
+  }
+  .withoutRating {
+    display: block;
+  }
+  .noRating__large {
+    margin-left: 0px;
+    margin-bottom: 24px;
+  }
+  .star__large {
+    margin-bottom: 8px;
+  }
+}

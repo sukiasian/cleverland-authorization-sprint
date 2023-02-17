@@ -1,0 +1,58 @@
+.slider img {
+  height: 100%;
+  width: 100%;
+}
+
+.sliderImage {
+  border-radius: 3px;
+  width: 65px;
+  height: 86px;
+  cursor: pointer;
+}
+
+.slider:hover .swiper-scrollbar-horizontal {
+  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+  background-color: transparent;
+}
+.swiper-scrollbar-drag {
+  background-color: #a7a7a7;
+  height: 6px;
+}
+.swiper-scrollbar-horizontal {
+  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+
+  height: 0.6rem !important;
+}
+.activeImage {
+  border: 1px solid;
+  border-radius: 3px;
+  width: 65px;
+  height: 86px;
+  border-image: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  border-image-slice: 1;
+}
+.sliderCircle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #bfc4c9;
+}
+
+.sliderActiveCircle {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #363636;
+}
+
+@media (max-width: 460px) {
+  .slider {
+    max-width: 145px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+}

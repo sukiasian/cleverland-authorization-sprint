@@ -1,0 +1,15 @@
+.layoutTerms {
+  margin-top: 62px;
+  margin-left: 6px;
+  grid-area: content;
+}
+@media (max-width: 910px) {
+  .layoutTerms {
+    margin-top: 32px;
+  }
+}
+@media (max-width: 700px) {
+  .layoutTerms {
+    margin-top: 24px;
+  }
+}

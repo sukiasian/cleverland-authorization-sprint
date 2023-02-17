@@ -1,0 +1,78 @@
+.alert {
+  position: absolute;
+  top: 65px;
+  background-color: red;
+  width: 100%;
+  max-width: 1110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #feebea;
+  border: 1.5px solid #f42c4f;
+  border-radius: 5px;
+  padding: 24px 32px;
+  z-index: 99;
+}
+.alertInvisible {
+  display: none;
+}
+.alert__info {
+  display: flex;
+  align-items: center;
+}
+.alert__info_icon {
+  width: 32px;
+  height: 32px;
+  background-image: url('../../assets/images/icons/erroeIcons.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.alert__info_text {
+  margin-left: 24px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+.alert__cross {
+  cursor: pointer;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.alert__cross:before,
+.alert__cross:after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background: gray;
+  background: #363636;
+}
+.alert__cross:before {
+  transform: rotate(45deg);
+}
+.alert__cross:after {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 1250px) {
+  .alert {
+    width: 96%;
+  }
+}
+@media (max-width: 640px) {
+  .alert {
+    padding: 24px 16px;
+  }
+  .alert__info_text {
+    margin-left: 12px;
+  }
+}
+
+@media (max-width: 450px) {
+  .alert {
+    padding: 12px 16px;
+  }
+}

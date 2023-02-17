@@ -1,0 +1,79 @@
+.inputButton {
+  position: absolute;
+  top: 50%;
+  left: 26px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+.activeButton {
+  position: absolute;
+  top: 36%;
+  left: 26px;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.inputButton img {
+  width: 16px;
+  height: 16px;
+}
+.input {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 599px;
+  padding: 11px 16px 11px 38px;
+  width: 100%;
+  border: none;
+}
+.activeInput {
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+    0px 1px 5px rgba(191, 196, 201, 0.24);
+  border-radius: 599px;
+  padding: 14px 16px 11px 42px;
+  width: 100%;
+  border: none;
+}
+.cross {
+  position: absolute;
+  top: 18px;
+  right: 40px;
+  cursor: pointer;
+}
+.cross:before,
+.cross:after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 3px;
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+}
+.cross:before {
+  transform: rotate(45deg);
+}
+.cross:after {
+  transform: rotate(-45deg);
+}
+@media (max-width: 630px) {
+  .input {
+    display: none;
+  }
+  .inputButton {
+    background: #ffffff;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+      0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius: 599px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

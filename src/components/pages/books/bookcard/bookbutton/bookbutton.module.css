@@ -1,0 +1,27 @@
+.book__button {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  border: none;
+  padding: 11px 0px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.primary {
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  color: #ffffff;
+}
+.secondary {
+  background: #ffffff;
+  border: 1px solid #bfc4c9;
+}
+.disabled {
+  background: #f9f9fa;
+  border: 1px solid #bfc4c9;
+  color: #a7a7a7;
+  cursor: default;
+}
