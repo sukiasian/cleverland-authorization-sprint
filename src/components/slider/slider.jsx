@@ -4,9 +4,11 @@ import { Scrollbar } from 'swiper';
 import 'swiper/css/scrollbar';
 import 'swiper/css';
 import './slider.css';
+import { useSelector } from 'react-redux';
 
 export const Slider = (props) => {
   const [activeImage, setActiveImage] = useState(0);
+  const HOST = useSelector((state) => state.app.HOST);
   const thumbCount = 5;
   const scrollParams =
     props.booksImage.length > thumbCount
@@ -16,7 +18,6 @@ export const Slider = (props) => {
           dragSize: 190,
         }
       : false;
-  console.log(props);
   return props.view === 'circles' ? (
     <Swiper className='slider' spaceBetween={8} slidesPerView={props.booksImage.length}>
       {props.booksImage.map((image, index) => (
@@ -55,7 +56,7 @@ export const Slider = (props) => {
             props.setActiveBookImage(index);
           }}
         >
-          <img className='swiper-slide-visible' src={`https://strapi.cleverland.by${image.url}`} alt='' />
+          <img className='swiper-slide-visible' src={`${props.HOST}${image.url}`} alt='' />
         </SwiperSlide>
       ))}
     </Swiper>

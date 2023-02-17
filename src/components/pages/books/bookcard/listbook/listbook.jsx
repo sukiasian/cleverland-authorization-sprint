@@ -5,7 +5,7 @@ import style from './listbook.module.css';
 import bookWithoutPhoto from '../../../../../assets/images/bookWithoutPhoto.png';
 import { Rating } from '../../../../rating';
 import { BookButton } from '../bookbutton';
-import { fetchBook } from '../../../../../redux/actions/actions';
+import { changeActiveBookTitle, fetchBook } from '../../../../../redux/actions/actions';
 
 export const ListBookContainer = (props) => {
   const buttonStatus = useMemo(() => {
@@ -23,13 +23,14 @@ export const ListBookContainer = (props) => {
       <NavLink
         onClick={() => {
           props.fetchBook(props.book.id);
+          props.changeActiveBookTitle(props.book.title);
         }}
         to={`/books/${props.book.category}/${props.book.id}`}
       >
         <div className={style.listBook__content}>
           <div className={style.listBook__content_image}>
             <img
-              src={props.book.image ? `https://strapi.cleverland.by${props.book.image.url}` : bookWithoutPhoto}
+              src={props.book.image ? `${props.HOST}${props.book.image.url}` : bookWithoutPhoto}
               onError={() => {
                 setIsLoadedImage(false);
               }}
@@ -56,8 +57,9 @@ export const ListBookContainer = (props) => {
     </div>
   );
 };
-
+const mapStateToProps = (state) => ({ HOST: state.app.HOST });
 const mapDispatchToProps = {
+  changeActiveBookTitle,
   fetchBook,
 };
-export const ListBook = connect(null, mapDispatchToProps)(ListBookContainer);
+export const ListBook = connect(mapStateToProps, mapDispatchToProps)(ListBookContainer);

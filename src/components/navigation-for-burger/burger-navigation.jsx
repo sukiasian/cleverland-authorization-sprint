@@ -20,7 +20,7 @@ export const BurgerNavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(props.categories);
   return (
     <section
       role='button'
@@ -59,17 +59,20 @@ export const BurgerNavigationContainer = (props) => {
       </button>
 
       <ul className={isMenuListOpen ? style.burgerNavigation__list : style.burgerNavigation__list_close}>
-        <NavLink
-          onClick={() => {
-            props.toggleMenu(false);
-            props.changeActiveCategory('Все книги');
-          }}
-          className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
-          data-test-id='burger-books'
-          to='/books/all'
-        >
-          Все книги
-        </NavLink>
+        {props.categories.length !== 0 && (
+          <NavLink
+            onClick={() => {
+              props.toggleMenu(false);
+              props.changeActiveCategory('Все книги');
+            }}
+            className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
+            data-test-id='burger-books'
+            to='/books/all'
+          >
+            Все книги
+          </NavLink>
+        )}
+
         {props.categories[0] &&
           props.categories[0].map((item) => (
             <li key={item.id} className={style.burgerNavigation__list_item}>

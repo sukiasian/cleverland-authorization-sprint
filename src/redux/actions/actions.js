@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   CHANGE_ACTIVE_BOOK_IMAGE,
+  CHANGE_ACTIVE_BOOK_TITLE,
   CHANGE_ACTIVE_CATEGORY,
   FETCH_BOOK,
   FETCH_BOOKS,
@@ -42,6 +43,12 @@ export function changeActiveBookImage(imageIndex) {
   return {
     type: CHANGE_ACTIVE_BOOK_IMAGE,
     payload: imageIndex,
+  };
+}
+export function changeActiveBookTitle(title) {
+  return {
+    type: CHANGE_ACTIVE_BOOK_TITLE,
+    payload: title,
   };
 }
 export function fetchBooks() {

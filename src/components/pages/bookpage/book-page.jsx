@@ -47,7 +47,14 @@ export const BookPageContainer = (props) => {
   };
   const windowWidth = ShowWindowDimensions().props.children[1];
   if (props.alert) {
-    return <ErrorAlert text={props.alert} />;
+    return (
+      <div>
+        <ErrorAlert text={props.alert} />
+        <div className={style.bookPage__breadcrumbs_error}>
+          <Breadcrumbs path={`/${category}`} title={props.activeCategory} bookTitle={props.activeTitle} />
+        </div>
+      </div>
+    );
   }
   return loader ? (
     <div data-test-id='loader' className={style.bookPage__loaderBox}>
@@ -62,7 +69,7 @@ export const BookPageContainer = (props) => {
     thisBook && (
       <section className={style.bookPage}>
         <div className={style.bookPage__breadcrumbs}>
-          <Breadcrumbs path={`/${category}`} title={props.book.categories[0]} bookTitle={thisBook.title} />
+          <Breadcrumbs path={`/${category}`} title={props.book.categories[0]} bookTitle={props.book.title} />
         </div>
         <div className={style.bookPage__container}>
           <div className={style.bookPage__information}>
@@ -72,7 +79,7 @@ export const BookPageContainer = (props) => {
                   <img
                     data-test-id='slide-big'
                     className={style.bookPage__information_photo}
-                    src={thisBook.images && `https://strapi.cleverland.by${thisBook.images[props.activeBookImage].url}`}
+                    src={thisBook.images && `${props.HOST}${thisBook.images[props.activeBookImage].url}`}
                     alt=''
                   />
                   <Slider
@@ -85,7 +92,7 @@ export const BookPageContainer = (props) => {
                 <img
                   data-test-id='slide-big'
                   className={style.bookPage__information_photo}
-                  src={thisBook.images ? `https://strapi.cleverland.by${thisBook.images[0].url}` : bookWithoutPhoto}
+                  src={thisBook.images ? `${props.HOST}${thisBook.images[0].url}` : bookWithoutPhoto}
                   alt='book'
                 />
               )}
@@ -153,10 +160,13 @@ export const BookPageContainer = (props) => {
   );
 };
 const mapStateToProps = (state) => ({
+  activeCategory: state.books.activeCategory,
   book: state.book.book,
+  activeTitle: state.book.activeBookTitle,
   activeBookImage: state.book.activeBookImage,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
+  HOST: state.app.HOST,
 });
 const mapDispatchToProps = {
   changeActiveBookImage,

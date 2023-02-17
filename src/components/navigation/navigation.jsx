@@ -45,16 +45,18 @@ export const NavigationContainer = (props) => {
         />
       </button>
       <ul className={isMenuOpen ? style.navbar__list : style.navbar__active}>
-        <NavLink
-          onClick={() => {
-            props.changeActiveCategory('Все книги');
-          }}
-          className={`${category}` === 'all' ? style.navbar__list_active : ''}
-          data-test-id='navigation-books'
-          to='/books/all'
-        >
-          Все книги
-        </NavLink>
+        {props.categories.length !== 0 && (
+          <NavLink
+            onClick={() => {
+              props.changeActiveCategory('Все книги');
+            }}
+            className={`${category}` === 'all' ? style.navbar__list_active : ''}
+            data-test-id='navigation-books'
+            to='/books/all'
+          >
+            Все книги
+          </NavLink>
+        )}
         {props.categories[0] &&
           props.categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>

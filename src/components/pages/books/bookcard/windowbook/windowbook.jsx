@@ -5,7 +5,7 @@ import style from './windowbook.module.css';
 import bookWithoutPhoto from '../../../../../assets/images/bookWithoutPhoto.png';
 import { Rating } from '../../../../rating';
 import { BookButton } from '../bookbutton';
-import { fetchBook } from '../../../../../redux/actions/actions';
+import { changeActiveBookTitle, fetchBook } from '../../../../../redux/actions/actions';
 
 export const BookContainer = (props) => {
   const buttonStatus = useMemo(() => {
@@ -17,20 +17,18 @@ export const BookContainer = (props) => {
     }
     return { className: 'primary', text: 'Забронировать' };
   }, [props.book.delivery, props.book.booking]);
-  const [isLoadedImage, setIsLoadedImage] = useState(true);
   const { category } = useParams();
   return (
     <div data-test-id='card' className={style.book}>
-      <NavLink to={`/books/${category}/${props.book.id}`}>
+      <NavLink
+        onClick={() => {
+          props.changeActiveBookTitle(props.book.title);
+        }}
+        to={`/books/${category}/${props.book.id}`}
+      >
         <div className={style.book__content}>
           <div className={style.book__content_image}>
-            <img
-              src={props.book.image ? `https://strapi.cleverland.by${props.book.image.url}` : bookWithoutPhoto}
-              onError={() => {
-                setIsLoadedImage(false);
-              }}
-              alt='bookImage'
-            />
+            <img src={props.book.image ? `${props.HOST}${props.book.image.url}` : bookWithoutPhoto} alt='bookImage' />
           </div>
           <Rating rating={props.book.rating} />
 
@@ -50,7 +48,9 @@ export const BookContainer = (props) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({ HOST: state.app.HOST });
 const mapDispatchToProps = {
+  changeActiveBookTitle,
   fetchBook,
 };
-export const Book = connect(null, mapDispatchToProps)(BookContainer);
+export const Book = connect(mapStateToProps, mapDispatchToProps)(BookContainer);

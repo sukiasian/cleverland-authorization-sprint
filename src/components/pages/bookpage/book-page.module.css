@@ -6,6 +6,15 @@
   background: #f9f9fa;
   width: 100%;
 }
+.bookPage__breadcrumbs_error {
+  position: absolute;
+  left: 0;
+  top: 140px;
+  padding: 23px 0px;
+  background: #f9f9fa;
+  width: 100%;
+}
+
 .bookPage__container {
   margin-top: 112px;
 }
