@@ -10,6 +10,8 @@ import {
   HIDE_LOADER,
   SHOW_ALERT,
   SHOW_LOADER,
+  SORT_ASCENDING,
+  SORT_DESCENDING,
 } from '../types/types';
 
 export function showLoader() {
@@ -49,6 +51,18 @@ export function changeActiveBookTitle(title) {
   return {
     type: CHANGE_ACTIVE_BOOK_TITLE,
     payload: title,
+  };
+}
+export function sortAscending(books) {
+  return {
+    type: SORT_ASCENDING,
+    payload: books,
+  };
+}
+export function sortDescending(books) {
+  return {
+    type: SORT_DESCENDING,
+    payload: books,
   };
 }
 export function fetchBooks() {

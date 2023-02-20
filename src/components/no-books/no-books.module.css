@@ -1,0 +1,18 @@
+.text {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+  margin-top: 192px;
+}
+
+@media (max-width: 510px) {
+  .text {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 134px;
+    padding: 0 50px;
+  }
+}

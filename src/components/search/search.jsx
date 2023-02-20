@@ -8,6 +8,7 @@ import search from '../../assets/images/icons/search.svg';
 import action from '../../assets/images/icons/action.svg';
 import { SearchInput } from './searchinput';
 import { ShowWindowDimensions } from '../show-window-dimensions';
+import { SortButton } from './sort-button/sort-button';
 
 export const Search = (props) => {
   const buttons = [
@@ -39,7 +40,7 @@ export const Search = (props) => {
           />
         </div>
         <div className={style.searchWrapper__inputs_filter}>
-          <SearchInput status='' image={action} placeholderValue='По рейтингу' />
+          <SortButton books={props.sortBooks} icon={action} text='По рейтингу' />
         </div>
       </div>
       <div className={style.searchWrapper__buttons}>

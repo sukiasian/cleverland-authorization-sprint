@@ -10,6 +10,7 @@ import { Search } from '../../search';
 import { fetchBooks, fetchCategories, hideAlert } from '../../../redux/actions/actions';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
 import { ErrorAlert } from '../../error-alert';
+import { NoBooks } from '../../no-books';
 
 const BooksContainer = (props) => {
   useEffect(() => {
@@ -20,7 +21,6 @@ const BooksContainer = (props) => {
   }, [props.books]);
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
-  const { category } = useParams();
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -29,7 +29,7 @@ const BooksContainer = (props) => {
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
-  const filterBooks = useMemo(
+  const sortBooks = useMemo(
     () =>
       props.activeCategory === 'Все книги'
         ? props.books[0]
@@ -43,7 +43,8 @@ const BooksContainer = (props) => {
   ) : (
     <div className='app-wrapper__content'>
       <div className={style.books}>
-        <Search changeButtonMode={changeButtonMode} />
+        <Search sortBooks={sortBooks && sortBooks} changeButtonMode={changeButtonMode} />
+        {sortBooks && !sortBooks.length && <NoBooks text='В этой категории книг ещё нет' />}
         <div className={buttonMode === 'window' ? style.books__container_window : style.books__container_list}>
           {loader ? (
             <div data-test-id='loader' className={style.books__loaderBox}>
@@ -54,9 +55,13 @@ const BooksContainer = (props) => {
                 width={windowWidth < 910 ? 48 : 150}
               />
             </div>
+          ) : props.sortBooks && props.sortBooks.length ? (
+            props.sortBooks.map((book) =>
+              buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
+            )
           ) : (
-            filterBooks &&
-            filterBooks.map((book) =>
+            sortBooks &&
+            sortBooks.map((book) =>
               buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
             )
           )}
@@ -67,6 +72,8 @@ const BooksContainer = (props) => {
 };
 const mapStateToProps = (state) => ({
   books: state.books.books,
+  sortButton: state.books.sortButton,
+  sortBooks: state.books.sortBooks,
   activeCategory: state.books.activeCategory,
   categories: state.books.categories,
   isLoading: state.app.isLoading,

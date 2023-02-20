@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { changeActiveCategory, fetchCategories } from '../../redux/actions/actions';
+import { changeActiveCategory, fetchCategories, sortDescending } from '../../redux/actions/actions';
 import style from './navigation.module.css';
 
 export const NavigationContainer = (props) => {
@@ -69,6 +69,7 @@ export const NavigationContainer = (props) => {
               >
                 {item.name}
               </NavLink>
+              <span>{props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}</span>
             </li>
           ))}
       </ul>
@@ -91,6 +92,7 @@ const mapStateToProps = (state) => ({
   books: state.books.books,
 });
 const mapDispatchToProps = {
+  sortDescending,
   fetchCategories,
   changeActiveCategory,
 };

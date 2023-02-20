@@ -20,12 +20,6 @@
   position: relative;
 }
 
-.searchWrapper__inputs_filter {
-  margin-left: 16px;
-  max-width: 150px;
-  position: relative;
-}
-
 .searchWrapper__buttons {
   display: flex;
   margin-left: 201px;

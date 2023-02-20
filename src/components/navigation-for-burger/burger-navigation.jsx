@@ -20,7 +20,6 @@ export const BurgerNavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(props.categories);
   return (
     <section
       role='button'
@@ -85,6 +84,9 @@ export const BurgerNavigationContainer = (props) => {
                 to={`/books/${item.path}`}
               >
                 {item.name}
+                <span>
+                  {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+                </span>
               </NavLink>
             </li>
           ))}
