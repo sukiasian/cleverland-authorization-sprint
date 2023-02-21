@@ -13,13 +13,13 @@ const SortButtonContainer = (props) => {
         className={style.iconBox}
         type='button'
         onClick={
-          props.sortButton === 'DESC'
-            ? () => props.sortAscending(ascending)
-            : () => props.sortDescending(ascending && ascending.reverse())
+          props.sortButton === 'ASC'
+            ? () => props.sortDescending(ascending.reverse())
+            : () => props.sortAscending(ascending)
         }
       >
         <img
-          className={props.sortButton === 'DESC' ? style.sortButton__icon_descending : style.sortButton__icon_ascending}
+          className={props.sortButton === 'ASC' ? style.sortButton__icon_descending : style.sortButton__icon_ascending}
           src={props.icon}
           alt='sort icon'
         />
@@ -30,6 +30,7 @@ const SortButtonContainer = (props) => {
 };
 const mapStateToProps = (state) => ({
   sortButton: state.books.sortButton,
+  sortBooks: state.books.sortBooks,
 });
 const mapDispatchToProps = {
   sortDescending,

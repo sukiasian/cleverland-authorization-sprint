@@ -3,6 +3,7 @@ import {
   CHANGE_ACTIVE_BOOK_IMAGE,
   CHANGE_ACTIVE_BOOK_TITLE,
   CHANGE_ACTIVE_CATEGORY,
+  CHANGE_SORT_ICON,
   FETCH_BOOK,
   FETCH_BOOKS,
   FETCH_CATEGORIES,
@@ -63,6 +64,11 @@ export function sortDescending(books) {
   return {
     type: SORT_DESCENDING,
     payload: books,
+  };
+}
+export function changeSortIcon() {
+  return {
+    type: CHANGE_SORT_ICON,
   };
 }
 export function fetchBooks() {
