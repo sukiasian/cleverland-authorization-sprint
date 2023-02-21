@@ -7,8 +7,10 @@ import {
   FETCH_BOOK,
   FETCH_BOOKS,
   FETCH_CATEGORIES,
+  FILTER_BOOKS,
   HIDE_ALERT,
   HIDE_LOADER,
+  SEARCH_BOOKS,
   SHOW_ALERT,
   SHOW_LOADER,
   SORT_ASCENDING,
@@ -69,6 +71,18 @@ export function sortDescending(books) {
 export function changeSortIcon() {
   return {
     type: CHANGE_SORT_ICON,
+  };
+}
+export function searchBooks(text) {
+  return {
+    type: SEARCH_BOOKS,
+    payload: text,
+  };
+}
+export function filterBooks(books) {
+  return {
+    type: FILTER_BOOKS,
+    payload: books,
   };
 }
 export function fetchBooks() {

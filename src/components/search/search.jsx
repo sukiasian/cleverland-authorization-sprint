@@ -22,6 +22,7 @@ export const Search = (props) => {
   return activeSearch ? (
     <div className={style.searchWrapper__inputs_active}>
       <SearchInput
+        sortBooks={props.sortBooks}
         setActiveSearch={setActiveSearch}
         status='active'
         image={search}
@@ -33,6 +34,7 @@ export const Search = (props) => {
       <div className={style.searchWrapper__inputs}>
         <div className={style.searchWrapper__inputs_search}>
           <SearchInput
+            sortBooks={props.sortBooks}
             setActiveSearch={width < 630 ? setActiveSearch : ''}
             status='notActive'
             image={search}

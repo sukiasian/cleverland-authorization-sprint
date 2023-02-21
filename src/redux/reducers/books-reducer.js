@@ -3,6 +3,8 @@ import {
   CHANGE_SORT_ICON,
   FETCH_BOOKS,
   FETCH_CATEGORIES,
+  FILTER_BOOKS,
+  SEARCH_BOOKS,
   SORT_ASCENDING,
   SORT_DESCENDING,
 } from '../types/types';
@@ -13,6 +15,8 @@ const initialState = {
   activeCategory: 'Все книги',
   sortBooks: [],
   sortButton: 'ASC',
+  booksSearchValue: '',
+  filterBooks: [],
 };
 export const booksReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,6 +36,12 @@ export const booksReducer = (state = initialState, action) => {
       };
     case CHANGE_SORT_ICON:
       return { ...state, sortButton: 'ASC' };
+    case SEARCH_BOOKS: {
+      return { ...state, booksSearchValue: action.payload };
+    }
+    case FILTER_BOOKS: {
+      return { ...state, filterBooks: action.payload };
+    }
     default:
       return state;
   }

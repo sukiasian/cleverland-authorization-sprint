@@ -7,19 +7,17 @@ import style from './books.module.css';
 import { Book } from './bookcard/windowbook/windowbook';
 import { ListBook } from './bookcard/listbook';
 import { Search } from '../../search';
-import { fetchBooks, fetchCategories, hideAlert, sortDescending } from '../../../redux/actions/actions';
+import { fetchBooks, hideAlert, sortDescending } from '../../../redux/actions/actions';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
 import { ErrorAlert } from '../../error-alert';
 import { NoBooks } from '../../no-books';
 
 const BooksContainer = (props) => {
   useEffect(() => {
-    if (!props.books.length) {
-      props.fetchBooks();
-    }
+    props.fetchBooks();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.books]);
+  }, []);
   const sortBooks = useMemo(
     () =>
       props.activeCategory === 'Все книги'
@@ -28,10 +26,7 @@ const BooksContainer = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.activeCategory, props.books[0]]
   );
-  // if (sortBooks && props.sortButton !== 'ASC') {
-  //   const descending = sortBooks.sort((a, b) => Math.ceil(a.rating) - Math.ceil(b.rating)).reverse();
-  //   props.sortDescending(descending);
-  // }
+
   const filterBooks = sortBooks && sortBooks.reverse();
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
@@ -43,7 +38,9 @@ const BooksContainer = (props) => {
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
+
   const windowWidth = ShowWindowDimensions().props.children[1];
+
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
@@ -80,6 +77,7 @@ const mapStateToProps = (state) => ({
   categories: state.books.categories,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
+  filterBooks: state.books.filterBooks,
 });
 const mapDispatchToProps = {
   sortDescending,
