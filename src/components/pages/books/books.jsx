@@ -21,7 +21,7 @@ const BooksContainer = (props) => {
   const sortBooks = useMemo(
     () =>
       props.activeCategory === 'Все книги'
-        ? props.books[0] && props.books[0].sort((a, b) => Math.ceil(a.rating) - Math.ceil(b.rating))
+        ? props.books[0] && props.books[0].sort((a, b) => Math.round(a.rating) - Math.round(b.rating))
         : props.books[0] && props.books[0].filter((el) => el.categories[0] === props.activeCategory),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.activeCategory, props.books[0]]

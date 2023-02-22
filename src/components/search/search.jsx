@@ -26,7 +26,7 @@ export const Search = (props) => {
         data-test-id='input-search'
         sortBooks={props.sortBooks}
         setActiveSearch={setActiveSearch}
-        setActiveBigSearch={width > 630 ? setActiveBigSearch : ''}
+        setActiveBigSearch={setActiveBigSearch}
         status='active'
         image={focusedSearch}
         placeholderValue='Поиск книги или автора…'
