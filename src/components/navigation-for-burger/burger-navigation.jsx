@@ -60,13 +60,13 @@ export const BurgerNavigationContainer = (props) => {
       <ul className={isMenuListOpen ? style.burgerNavigation__list : style.burgerNavigation__list_close}>
         {props.categories.length !== 0 && (
           <NavLink
+            data-test-id='burger-books'
             onClick={() => {
               props.toggleMenu(false);
               props.changeActiveCategory('Все книги');
               props.changeSortIcon();
             }}
             className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
-            data-test-id='burger-books'
             to='/books/all'
           >
             Все книги
@@ -77,6 +77,7 @@ export const BurgerNavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.burgerNavigation__list_item}>
               <NavLink
+                data-test-id={`burger-${category}`}
                 onClick={() => {
                   props.toggleMenu(false);
                   props.changeActiveCategory(item.name);
@@ -86,7 +87,7 @@ export const BurgerNavigationContainer = (props) => {
                 to={`/books/${item.path}`}
               >
                 {item.name}
-                <span>
+                <span data-test-id={`burger-book-count-for-${category}`}>
                   {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
                 </span>
               </NavLink>

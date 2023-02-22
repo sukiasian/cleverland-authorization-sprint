@@ -6,6 +6,7 @@ import list from '../../assets/images/icons/list.svg';
 import whiteList from '../../assets/images/icons/whiteList.svg';
 import search from '../../assets/images/icons/search.svg';
 import action from '../../assets/images/icons/action.svg';
+import focusedSearch from '../../assets/images/icons/focusedSearch.svg';
 import { SearchInput } from './searchinput';
 import { ShowWindowDimensions } from '../show-window-dimensions';
 import { SortButton } from './sort-button/sort-button';
@@ -17,15 +18,17 @@ export const Search = (props) => {
   ];
   const [activeButton, setActiveButton] = useState(0);
   const [activeSearch, setActiveSearch] = useState(false);
+  const [activeBigSearch, setActiveBigSearch] = useState(false);
   const width = ShowWindowDimensions().props.children[1];
-
   return activeSearch ? (
     <div className={style.searchWrapper__inputs_active}>
       <SearchInput
+        data-test-id='input-search'
         sortBooks={props.sortBooks}
         setActiveSearch={setActiveSearch}
+        setActiveBigSearch={width > 630 ? setActiveBigSearch : ''}
         status='active'
-        image={search}
+        image={focusedSearch}
         placeholderValue='Поиск книги или автора…'
       />
     </div>
@@ -34,10 +37,12 @@ export const Search = (props) => {
       <div className={style.searchWrapper__inputs}>
         <div className={style.searchWrapper__inputs_search}>
           <SearchInput
+            data-test-id='input-search'
             sortBooks={props.sortBooks}
             setActiveSearch={width < 630 ? setActiveSearch : ''}
+            setActiveBigSearch={setActiveBigSearch}
             status='notActive'
-            image={search}
+            image={activeBigSearch ? focusedSearch : search}
             placeholderValue='Поиск книги или автора…'
           />
         </div>

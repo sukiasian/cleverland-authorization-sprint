@@ -10,6 +10,7 @@ const SortButtonContainer = (props) => {
   return (
     <div className={style.sortButton}>
       <button
+        data-test-id='sort-rating-button'
         className={style.iconBox}
         type='button'
         onClick={

@@ -19,7 +19,6 @@ export const NavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <section className={style.navbar}>
       <button
@@ -47,12 +46,12 @@ export const NavigationContainer = (props) => {
       <ul className={isMenuOpen ? style.navbar__list : style.navbar__active}>
         {props.categories.length !== 0 && (
           <NavLink
+            data-test-id='navigation-books'
             onClick={() => {
               props.changeActiveCategory('Все книги');
               props.changeSortIcon();
             }}
             className={`${category}` === 'all' ? style.navbar__list_active : ''}
-            data-test-id='navigation-books'
             to='/books/all'
           >
             Все книги
@@ -62,6 +61,7 @@ export const NavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>
               <NavLink
+                data-test-id={`navigation-${category}`}
                 onClick={() => {
                   props.changeActiveCategory(item.name);
                   props.changeSortIcon();
@@ -71,7 +71,9 @@ export const NavigationContainer = (props) => {
               >
                 {item.name}
               </NavLink>
-              <span>{props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}</span>
+              <span data-test-id={`navigation-book-count-for-${category}`}>
+                {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+              </span>
             </li>
           ))}
       </ul>

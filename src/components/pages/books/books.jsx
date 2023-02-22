@@ -27,7 +27,6 @@ const BooksContainer = (props) => {
     [props.activeCategory, props.books[0]]
   );
 
-  const filterBooks = sortBooks && sortBooks.reverse();
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
   const defaultOptions = {
@@ -38,16 +37,28 @@ const BooksContainer = (props) => {
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
-
+  const searchFilterBooks = useMemo(
+    () =>
+      props.booksSearchValue.length
+        ? sortBooks &&
+          sortBooks.filter((book) => book.title.toLowerCase().includes(props.booksSearchValue.toLowerCase()))
+        : sortBooks && sortBooks,
+    [props.booksSearchValue, sortBooks]
+  );
+  const filterBooks = searchFilterBooks && searchFilterBooks.reverse();
   const windowWidth = ShowWindowDimensions().props.children[1];
-
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
     <div className='app-wrapper__content'>
       <div className={style.books}>
-        <Search sortBooks={sortBooks && sortBooks} changeButtonMode={changeButtonMode} />
-        {sortBooks && !sortBooks.length && <NoBooks text='В этой категории книг ещё нет' />}
+        <Search sortBooks={searchFilterBooks && searchFilterBooks} changeButtonMode={changeButtonMode} />
+        {!props.booksSearchValue.length && searchFilterBooks && !searchFilterBooks.length && (
+          <NoBooks text='В этой категории книг ещё нет' />
+        )}
+        {props.booksSearchValue.length > 0 && searchFilterBooks && !searchFilterBooks.length && (
+          <NoBooks text='По запросу ничего не найдено' />
+        )}
         <div className={buttonMode === 'window' ? style.books__container_window : style.books__container_list}>
           {loader ? (
             <div data-test-id='loader' className={style.books__loaderBox}>
@@ -59,8 +70,8 @@ const BooksContainer = (props) => {
               />
             </div>
           ) : (
-            sortBooks &&
-            sortBooks.map((book) =>
+            searchFilterBooks &&
+            searchFilterBooks.map((book) =>
               buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
             )
           )}
@@ -77,6 +88,7 @@ const mapStateToProps = (state) => ({
   categories: state.books.categories,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
+  booksSearchValue: state.books.booksSearchValue,
   filterBooks: state.books.filterBooks,
 });
 const mapDispatchToProps = {

@@ -16,6 +16,12 @@ const SearchInputContainer = (props) => (
       <img src={props.image} alt={props.image} />
     </button>
     <input
+      onFocus={() => {
+        props.setActiveBigSearch(true);
+      }}
+      onBlur={() => {
+        props.setActiveBigSearch(false);
+      }}
       onChange={(e) => props.searchBooks(e.target.value)}
       data-test-id='input-search'
       className={props.status === 'active' ? style.activeInput : style.input}
