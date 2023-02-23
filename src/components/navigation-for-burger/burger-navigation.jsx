@@ -77,7 +77,7 @@ export const BurgerNavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.burgerNavigation__list_item}>
               <NavLink
-                data-test-id={`burger-${category}`}
+                data-test-id={`burger-${item.path}`}
                 onClick={() => {
                   props.toggleMenu(false);
                   props.changeActiveCategory(item.name);
@@ -87,10 +87,10 @@ export const BurgerNavigationContainer = (props) => {
                 to={`/books/${item.path}`}
               >
                 {item.name}
-                <span data-test-id={`burger-book-count-for-${category}`}>
-                  {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
-                </span>
               </NavLink>
+              <span data-test-id={`burger-book-count-for-${item.path}`}>
+                {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+              </span>
             </li>
           ))}
       </ul>

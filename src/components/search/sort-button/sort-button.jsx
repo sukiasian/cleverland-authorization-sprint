@@ -6,7 +6,7 @@ import style from './sort-button.module.css';
 
 const SortButtonContainer = (props) => {
   const windowWidth = ShowWindowDimensions().props.children[1];
-  const ascending = props.books && props.books.sort((a, b) => Math.round(a.rating) - Math.round(b.rating));
+  const ascending = props.books && props.books.sort((a, b) => Math.round(a.rating + 0.5) - Math.round(b.rating + 0.5));
   return (
     <div data-test-id='sort-rating-button' className={style.sortButton}>
       <button

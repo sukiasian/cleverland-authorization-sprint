@@ -61,7 +61,7 @@ export const NavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>
               <NavLink
-                data-test-id={`navigation-${category}`}
+                data-test-id={`navigation-${item.path}`}
                 onClick={() => {
                   props.changeActiveCategory(item.name);
                   props.changeSortIcon();
@@ -71,7 +71,7 @@ export const NavigationContainer = (props) => {
               >
                 {item.name}
               </NavLink>
-              <span data-test-id={`navigation-book-count-for-${category}`}>
+              <span data-test-id={`navigation-book-count-for-${item.path}`}>
                 {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
               </span>
             </li>
