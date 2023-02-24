@@ -56,7 +56,6 @@ const BooksContainer = (props) => {
   );
   const filterBooks = searchFilterBooks && searchFilterBooks.reverse();
   const windowWidth = ShowWindowDimensions().props.children[1];
-  console.log(filterBooks);
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
