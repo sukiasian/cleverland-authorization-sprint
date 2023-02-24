@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import style from './listbook.module.css';
@@ -6,6 +6,7 @@ import bookWithoutPhoto from '../../../../../assets/images/bookWithoutPhoto.png'
 import { Rating } from '../../../../rating';
 import { BookButton } from '../bookbutton';
 import { changeActiveBookTitle, fetchBook } from '../../../../../redux/actions/actions';
+import { HightLight } from '../../../../hightlight';
 
 export const ListBookContainer = (props) => {
   const buttonStatus = useMemo(() => {
@@ -18,6 +19,10 @@ export const ListBookContainer = (props) => {
     return { className: 'primary', text: 'Забронировать' };
   }, [props.book.delivery, props.book.booking]);
   const [isLoadedImage, setIsLoadedImage] = useState(true);
+  const light = useCallback(
+    (str) => <HightLight filter={props.booksSearchValue} str={str} />,
+    [props.booksSearchValue]
+  );
   return (
     <div className={style.listBook}>
       <NavLink
@@ -38,7 +43,9 @@ export const ListBookContainer = (props) => {
             />
           </div>
           <div className={style.listBook__content_info}>
-            <h2 className={style.listBook__content_title}>{props.book.title}</h2>
+            <h2 data-test-id='book-title' className={style.listBook__content_title}>
+              <span data-test-id='book-name'>{light(props.book.title)}</span>
+            </h2>
             <p className={style.listBook__content_author}>
               {props.book.authors.map((author) => (
                 <span key={author} className={style.authorName}>
@@ -57,7 +64,10 @@ export const ListBookContainer = (props) => {
     </div>
   );
 };
-const mapStateToProps = (state) => ({ HOST: state.app.HOST });
+const mapStateToProps = (state) => ({
+  booksSearchValue: state.books.booksSearchValue,
+  HOST: state.app.HOST,
+});
 const mapDispatchToProps = {
   changeActiveBookTitle,
   fetchBook,

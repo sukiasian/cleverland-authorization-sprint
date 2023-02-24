@@ -3,13 +3,18 @@ import {
   CHANGE_ACTIVE_BOOK_IMAGE,
   CHANGE_ACTIVE_BOOK_TITLE,
   CHANGE_ACTIVE_CATEGORY,
+  CHANGE_SORT_ICON,
   FETCH_BOOK,
   FETCH_BOOKS,
   FETCH_CATEGORIES,
+  FILTER_BOOKS,
   HIDE_ALERT,
   HIDE_LOADER,
+  SEARCH_BOOKS,
   SHOW_ALERT,
   SHOW_LOADER,
+  SORT_ASCENDING,
+  SORT_DESCENDING,
 } from '../types/types';
 
 export function showLoader() {
@@ -49,6 +54,35 @@ export function changeActiveBookTitle(title) {
   return {
     type: CHANGE_ACTIVE_BOOK_TITLE,
     payload: title,
+  };
+}
+export function sortAscending(books) {
+  return {
+    type: SORT_ASCENDING,
+    payload: books,
+  };
+}
+export function sortDescending(books) {
+  return {
+    type: SORT_DESCENDING,
+    payload: books,
+  };
+}
+export function changeSortIcon() {
+  return {
+    type: CHANGE_SORT_ICON,
+  };
+}
+export function searchBooks(text) {
+  return {
+    type: SEARCH_BOOKS,
+    payload: text,
+  };
+}
+export function filterBooks(books) {
+  return {
+    type: FILTER_BOOKS,
+    payload: books,
   };
 }
 export function fetchBooks() {

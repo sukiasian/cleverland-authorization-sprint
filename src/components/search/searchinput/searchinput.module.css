@@ -33,6 +33,7 @@
   padding: 11px 16px 11px 38px;
   width: 100%;
   border: none;
+  caret-color: rgb(248, 54, 0);
 }
 .activeInput {
   background: #ffffff;
@@ -42,6 +43,7 @@
   padding: 14px 16px 11px 42px;
   width: 100%;
   border: none;
+  caret-color: rgb(248, 54, 0);
 }
 .cross {
   position: absolute;

@@ -7,20 +7,37 @@ import style from './books.module.css';
 import { Book } from './bookcard/windowbook/windowbook';
 import { ListBook } from './bookcard/listbook';
 import { Search } from '../../search';
-import { fetchBooks, fetchCategories, hideAlert } from '../../../redux/actions/actions';
+import { fetchBooks, hideAlert, sortDescending } from '../../../redux/actions/actions';
 import { ShowWindowDimensions } from '../../show-window-dimensions';
 import { ErrorAlert } from '../../error-alert';
+import { NoBooks } from '../../no-books';
 
 const BooksContainer = (props) => {
   useEffect(() => {
-    if (!props.books.length) {
-      props.fetchBooks();
-    }
+    props.fetchBooks();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.books]);
+  }, []);
+  const sortBooks = useMemo(
+    () =>
+      props.activeCategory === 'Все книги'
+        ? props.books[0] &&
+          props.books[0].sort((a, b) => {
+            let result = '';
+            if (b.rating === 0) {
+              result = b.rating + 0.1;
+            } else {
+              result = b.rating;
+            }
+            return a.rating - result;
+          })
+        : props.books[0] && props.books[0].filter((el) => el.categories[0] === props.activeCategory),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.activeCategory, props.books[0]]
+  );
+
   const loader = props.isLoading;
   const [buttonMode, setButtonMode] = useState('window');
-  const { category } = useParams();
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -29,21 +46,28 @@ const BooksContainer = (props) => {
   const changeButtonMode = (mode) => {
     setButtonMode(mode);
   };
-  const filterBooks = useMemo(
+  const searchFilterBooks = useMemo(
     () =>
-      props.activeCategory === 'Все книги'
-        ? props.books[0]
-        : props.books[0].filter((el) => el.categories[0] === props.activeCategory),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.activeCategory, props.books[0]]
+      props.booksSearchValue.length
+        ? sortBooks &&
+          sortBooks.filter((book) => book.title.toLowerCase().includes(props.booksSearchValue.toLowerCase()))
+        : sortBooks && sortBooks,
+    [props.booksSearchValue, sortBooks]
   );
+  const filterBooks = searchFilterBooks && searchFilterBooks.reverse();
   const windowWidth = ShowWindowDimensions().props.children[1];
   return props.alert ? (
     <ErrorAlert text={props.alert} />
   ) : (
     <div className='app-wrapper__content'>
       <div className={style.books}>
-        <Search changeButtonMode={changeButtonMode} />
+        <Search sortBooks={searchFilterBooks && searchFilterBooks} changeButtonMode={changeButtonMode} />
+        {!props.booksSearchValue.length && searchFilterBooks && !searchFilterBooks.length && (
+          <NoBooks text='В этой категории книг ещё нет' />
+        )}
+        {props.booksSearchValue.length > 0 && searchFilterBooks && !searchFilterBooks.length && (
+          <NoBooks text='По запросу ничего не найдено' />
+        )}
         <div className={buttonMode === 'window' ? style.books__container_window : style.books__container_list}>
           {loader ? (
             <div data-test-id='loader' className={style.books__loaderBox}>
@@ -55,8 +79,8 @@ const BooksContainer = (props) => {
               />
             </div>
           ) : (
-            filterBooks &&
-            filterBooks.map((book) =>
+            searchFilterBooks &&
+            searchFilterBooks.map((book) =>
               buttonMode === 'window' ? <Book key={book.id} book={book} /> : <ListBook key={book.id} book={book} />
             )
           )}
@@ -67,12 +91,17 @@ const BooksContainer = (props) => {
 };
 const mapStateToProps = (state) => ({
   books: state.books.books,
+  sortButton: state.books.sortButton,
+  sortBooks: state.books.sortBooks,
   activeCategory: state.books.activeCategory,
   categories: state.books.categories,
   isLoading: state.app.isLoading,
   alert: state.app.alert,
+  booksSearchValue: state.books.booksSearchValue,
+  filterBooks: state.books.filterBooks,
 });
 const mapDispatchToProps = {
+  sortDescending,
   fetchBooks,
   hideAlert,
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { changeActiveCategory, fetchCategories } from '../../redux/actions/actions';
+import { changeActiveCategory, changeSortIcon, fetchCategories, sortDescending } from '../../redux/actions/actions';
 import style from './navigation.module.css';
 
 export const NavigationContainer = (props) => {
@@ -19,7 +19,6 @@ export const NavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <section className={style.navbar}>
       <button
@@ -47,11 +46,12 @@ export const NavigationContainer = (props) => {
       <ul className={isMenuOpen ? style.navbar__list : style.navbar__active}>
         {props.categories.length !== 0 && (
           <NavLink
+            data-test-id='navigation-books'
             onClick={() => {
               props.changeActiveCategory('Все книги');
+              props.changeSortIcon();
             }}
             className={`${category}` === 'all' ? style.navbar__list_active : ''}
-            data-test-id='navigation-books'
             to='/books/all'
           >
             Все книги
@@ -61,14 +61,19 @@ export const NavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>
               <NavLink
+                data-test-id={`navigation-${item.path}`}
                 onClick={() => {
                   props.changeActiveCategory(item.name);
+                  props.changeSortIcon();
                 }}
                 className={`${category}` === item.path ? style.navbar__list_active : ''}
                 to={`/books/${item.path}`}
               >
                 {item.name}
               </NavLink>
+              <span data-test-id={`navigation-book-count-for-${item.path}`}>
+                {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+              </span>
             </li>
           ))}
       </ul>
@@ -91,6 +96,8 @@ const mapStateToProps = (state) => ({
   books: state.books.books,
 });
 const mapDispatchToProps = {
+  changeSortIcon,
+  sortDescending,
   fetchCategories,
   changeActiveCategory,
 };

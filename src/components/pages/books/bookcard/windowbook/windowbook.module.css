@@ -48,6 +48,9 @@
 .bookYear {
   margin-left: 3px;
 }
+.searchword {
+  color: red;
+}
 @media (max-width: 450px) {
   .book {
     max-width: none;

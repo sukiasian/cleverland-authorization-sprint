@@ -98,7 +98,11 @@ export const BookPageContainer = (props) => {
               )}
             </div>
             <div className={style.bookPage__information_description}>
-              <p className={style.description__title}>{thisBook.title}</p>
+              <div data-test-id='book-name'>
+                <p data-test-id='book-title' className={style.description__title}>
+                  {thisBook.title}
+                </p>
+              </div>
               <div className={style.bookPage__information_authorsBox}>
                 {thisBook.authors.map((author, index) => (
                   <p key={author} className={style.description__author}>

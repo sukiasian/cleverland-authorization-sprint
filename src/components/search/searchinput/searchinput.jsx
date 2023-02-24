@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
+import { filterBooks, searchBooks } from '../../../redux/actions/actions';
 import style from './searchinput.module.css';
 
-export const SearchInput = (props) => (
+const SearchInputContainer = (props) => (
   <>
     <button
       data-test-id={props.status === 'notActive' ? 'button-search-open' : ''}
@@ -14,8 +16,16 @@ export const SearchInput = (props) => (
       <img src={props.image} alt={props.image} />
     </button>
     <input
+      onFocus={() => {
+        props.setActiveBigSearch(true);
+      }}
+      onBlur={() => {
+        props.setActiveBigSearch(false);
+      }}
+      onChange={(e) => props.searchBooks(e.target.value)}
       data-test-id='input-search'
       className={props.status === 'active' ? style.activeInput : style.input}
+      value={props.booksSearchValue}
       placeholder={props.placeholderValue}
       type='text'
     />
@@ -29,3 +39,10 @@ export const SearchInput = (props) => (
     )}
   </>
 );
+
+const mapStateToProps = (state) => ({ booksSearchValue: state.books.booksSearchValue });
+const mapDispatchToProps = {
+  filterBooks,
+  searchBooks,
+};
+export const SearchInput = connect(mapStateToProps, mapDispatchToProps)(SearchInputContainer);

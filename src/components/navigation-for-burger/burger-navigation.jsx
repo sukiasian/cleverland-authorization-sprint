@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { changeActiveCategory, fetchCategories } from '../../redux/actions/actions';
+import { changeActiveCategory, changeSortIcon, fetchCategories } from '../../redux/actions/actions';
 import { navbarItems } from '../../assets/mocks';
 import style from './burger-navigation.module.css';
 
@@ -20,7 +20,6 @@ export const BurgerNavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(props.categories);
   return (
     <section
       role='button'
@@ -61,12 +60,13 @@ export const BurgerNavigationContainer = (props) => {
       <ul className={isMenuListOpen ? style.burgerNavigation__list : style.burgerNavigation__list_close}>
         {props.categories.length !== 0 && (
           <NavLink
+            data-test-id='burger-books'
             onClick={() => {
               props.toggleMenu(false);
               props.changeActiveCategory('Все книги');
+              props.changeSortIcon();
             }}
             className={`${category}` === 'all' ? style.burgerNavigation__list_active : ''}
-            data-test-id='burger-books'
             to='/books/all'
           >
             Все книги
@@ -77,15 +77,20 @@ export const BurgerNavigationContainer = (props) => {
           props.categories[0].map((item) => (
             <li key={item.id} className={style.burgerNavigation__list_item}>
               <NavLink
+                data-test-id={`burger-${item.path}`}
                 onClick={() => {
                   props.toggleMenu(false);
                   props.changeActiveCategory(item.name);
+                  props.changeSortIcon();
                 }}
                 className={`${category}` === item.path ? style.burgerNavigation__list_active : ''}
                 to={`/books/${item.path}`}
               >
                 {item.name}
               </NavLink>
+              <span data-test-id={`burger-book-count-for-${item.path}`}>
+                {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+              </span>
             </li>
           ))}
       </ul>
@@ -144,6 +149,7 @@ const mapStateToProps = (state) => ({
   books: state.books.books,
 });
 const mapDispatchToProps = {
+  changeSortIcon,
   fetchCategories,
   changeActiveCategory,
 };
