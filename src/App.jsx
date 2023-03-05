@@ -7,7 +7,6 @@ import { MainLayout } from './components/layouts/main/main';
 import { NavigationLayout } from './components/layouts/navigation';
 import { LayoutTerms } from './components/layouts/terms/terms';
 import { Auth } from './components/pages/authorization/auth';
-import { ForgotPass } from './components/pages/authorization/forgot-pass';
 import { Register } from './components/pages/authorization/register';
 import { Books } from './components/pages/books';
 
@@ -26,7 +25,7 @@ export const App = () => {
 							</Route>
 									<Route  path='auth' element={loginUser ? <Navigate to='/' /> : <Auth />}/>
 									<Route path='register' element={loginUser ? <Navigate to='/' /> : <Register />} />
-									<Route path='forgot-pass' element={loginUser ? <Navigate to='/' /> : <ForgotPass />} /> 
+									<Route path='forgot-pass' element={loginUser ? <Navigate to='/' /> : <div/>} /> 
 									<Route path='/books/:category/:id' element={<LayoutBookPage />} />
 									<Route path='*' element={<div> not found</div>} /> 
       			</Routes>
