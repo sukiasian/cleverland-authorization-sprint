@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   CHANGE_ACTIVE_BOOK_IMAGE,
   CHANGE_ACTIVE_BOOK_TITLE,
@@ -131,4 +132,36 @@ export function fetchCategories() {
       dispatch(showAlert('Что-то пошло не так. Обновите страницу через некоторое время.'));
     }
   };
+}
+
+export function registerUser() { 
+	return async function (dispatch, getState) { 
+		try { 
+
+		} catch (error) {}
+	}
+}
+
+export function authUser() { 
+	return async function (dispatch, getState) { 
+		try { 
+
+		} catch (error) {}
+	}
+}
+
+export function requestPasswordRecovery() { 
+	return async function (dispatch, getState) { 
+		try { 
+
+		} catch (error) {}
+	}
+}
+
+export function updateForgottenPassword() { 
+	return async function (dispatch, getState) { 
+		try { 
+
+		} catch (error) {}
+	}
 }
