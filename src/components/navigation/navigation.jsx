@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect,useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
+
+import { LogoutButton } from '../../logout-button/logout-button';
 import { changeActiveCategory, changeSortIcon, fetchCategories, sortDescending } from '../../redux/actions/actions';
+import { TextButton } from '../buttons/text-button/text-button';
+
 import style from './navigation.module.css';
 
 export const NavigationContainer = (props) => {
   const { category } = useParams();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const [isMenuOpen, toggleMenu] = useState(true);
   const toggleMenuMode = () => {
     toggleMenu(!isMenuOpen);
   };
+
   useEffect(() => {
     props.fetchCategories();
 
@@ -19,6 +25,7 @@ export const NavigationContainer = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <section className={style.navbar}>
       <button
@@ -88,6 +95,7 @@ export const NavigationContainer = (props) => {
           Договор оферты
         </p>
       </NavLink>
+	  <LogoutButton />
     </section>
   );
 };
@@ -101,4 +109,5 @@ const mapDispatchToProps = {
   fetchCategories,
   changeActiveCategory,
 };
+
 export const Navigation = connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);

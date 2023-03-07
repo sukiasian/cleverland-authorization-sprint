@@ -1,0 +1,1 @@
+export { WindowWithNavigation } from './authentication-window/window-with-navigation';

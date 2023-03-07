@@ -1,11 +1,28 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { useForm } from 'react-hook-form';
+import { setUserRegistrationCurrentStep } from '../../../../redux/actions/actions';
+import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window';
+import { SwitchAuthType } from '../../../switch-authorization-type/switch-auth-type';
 
-import style from './register.module.css'; 
+import { RegisterForm } from './form';
 
-export const Register = () => { 
-	// const { register } = useForm()
-	const a = 5;
+export const Register = () => {
+	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
+	
+	const dispatch = useDispatch(); 
 
-	return <form className={style.hello}> login </form> 
+	const totalSteps = 3;
+
+	useEffect(() => { 
+		dispatch(setUserRegistrationCurrentStep(1));
+	}, [dispatch])
+
+	return (
+			<AuthenticationWindow 
+				heading="Регистрация" 
+				paragraph={`Шаг ${userRegistrationCurrentStep} из ${totalSteps}`} 
+				form={<RegisterForm />} 
+				bottomChildren={<SwitchAuthType />}/>
+	)
 }

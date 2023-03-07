@@ -1,6 +1,12 @@
-import { AUTH_USER, CHANGE_ACTIVE_BOOK_IMAGE, CHANGE_ACTIVE_BOOK_TITLE, FETCH_BOOK, REGISTER_USER, REQUEST_PASSWORD_RECOVERY, UPDATE_FORGOTTEN_PASSWORD } from '../types/types';
+import { AUTH_USER, REGISTER_USER, REQUEST_PASSWORD_RECOVERY, SET_USER_REGISTRATION_CURRENT_STEP,UPDATE_FORGOTTEN_PASSWORD } from '../types/types';
 
-const initialState = {};
+const initialState = {
+	registerUser: null,
+	authUser: null,
+	requestPasswordRecovery: null,
+	updateForgottenPassword: null,
+	userRegistrationCurrentStep: null
+};
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,6 +18,9 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, requestPasswordRecovery: action.payload };
 	case UPDATE_FORGOTTEN_PASSWORD: 
 	  return { ...state, updateForgottenPassword: action.payload };
+	case SET_USER_REGISTRATION_CURRENT_STEP: 
+	  return { ...state, userRegistrationCurrentStep: action.payload };
+	
     default:
       return state;
   }

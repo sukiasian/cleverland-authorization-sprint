@@ -1,9 +1,10 @@
-import { HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, SHOW_LOADER } from '../types/types';
+import { HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, SHOW_LOADER, TOGGLE_USER_MENU } from '../types/types';
 
 const initialState = {
   isLoading: true,
   alert: null,
   HOST: 'https://strapi.cleverland.by',
+  userMenuIsOpen: false
 };
 
 export const appReducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ export const appReducer = (state = initialState, action) => {
       return { ...state, alert: action.payload };
     case HIDE_ALERT:
       return { ...state, alert: null };
+	case TOGGLE_USER_MENU: 
+		return { ...state, userMenuIsOpen: !state.userMenuIsOpen }
 
     default:
       return state;

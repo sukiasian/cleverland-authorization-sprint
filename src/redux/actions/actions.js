@@ -12,10 +12,12 @@ import {
   HIDE_ALERT,
   HIDE_LOADER,
   SEARCH_BOOKS,
+  SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
   SHOW_LOADER,
   SORT_ASCENDING,
   SORT_DESCENDING,
+  TOGGLE_USER_MENU,
 } from '../types/types';
 
 export function showLoader() {
@@ -163,5 +165,26 @@ export function updateForgottenPassword() {
 		try { 
 
 		} catch (error) {}
+	}
+}
+
+export function logout() {
+	return async function (dispatch, getState) { 
+		try { 
+
+		} catch (error) {}
+	}
+}
+
+export function setUserRegistrationCurrentStep(payload) { 
+	return { 
+		type: SET_USER_REGISTRATION_CURRENT_STEP,
+		payload
+	}
+}
+
+export function toggleUserMenu() { 
+	return { 
+		type: TOGGLE_USER_MENU
 	}
 }

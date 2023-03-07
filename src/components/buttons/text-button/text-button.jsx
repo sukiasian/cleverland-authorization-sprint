@@ -1,0 +1,1 @@
+export const TextButton = ({ children, onClick }) => <button className="button_text" type="button" onClick={onClick}>{children}</button>
