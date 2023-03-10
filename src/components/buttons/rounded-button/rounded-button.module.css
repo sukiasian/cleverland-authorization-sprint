@@ -1,0 +1,8 @@
+.button_available { 
+	background: linear-gradient(to right top, #F87B11, #F84E06);
+}
+
+.button_unavailable { 
+	background: #EBEBEB;
+	padding: 1rem;
+}

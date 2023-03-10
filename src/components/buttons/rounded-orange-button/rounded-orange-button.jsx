@@ -1,1 +1,0 @@
-export const RoundedOrangeButton = ({ children, onClick }) => <button type="button" onClick={onClick}>{children}</button>;

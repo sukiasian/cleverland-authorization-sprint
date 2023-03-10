@@ -5,7 +5,7 @@ const initialState = {
 	authUser: null,
 	requestPasswordRecovery: null,
 	updateForgottenPassword: null,
-	userRegistrationCurrentStep: null
+	userRegistrationCurrentStep: 1
 };
 
 export const authReducer = (state = initialState, action) => {

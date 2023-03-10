@@ -1,0 +1,1 @@
+export const appIsAtRegisterURL = window.location.hash.includes('/register') ?? false;

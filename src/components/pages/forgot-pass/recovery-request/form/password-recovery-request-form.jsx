@@ -1,15 +1,17 @@
 import { useForm } from 'react-hook-form'
 
-import { RoundedOrangeButton } from '../../../../buttons/rounded-orange-button/rounded-orange-button';
+import { PASSWORD_RECOVERY_REQUEST_INPUTS } from '../../../../../utils/input-names';
+import { RoundedButton } from '../../../../buttons/rounded-button';
 
 export const PasswordRecoveryRequestForm = () => {
-	const { form } = useForm();
+	const { register } = useForm();
+	const { email } = PASSWORD_RECOVERY_REQUEST_INPUTS;
 
 	return (
 		<form> 
-			<input placeholder='Email'/>
+			<input placeholder='Email' { ...register(email) } />
 			<p>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
-			<RoundedOrangeButton>ВОССТАНОВИТЬ</RoundedOrangeButton>
+			<RoundedButton>ВОССТАНОВИТЬ</RoundedButton>
 		</form>
 	)
 }

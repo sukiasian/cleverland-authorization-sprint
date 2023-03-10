@@ -1,100 +1,111 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setUserRegistrationCurrentStep } from '../../../../../../redux/actions/actions';
+import { REGISTER_INPUTS } from '../../../../../../utils/input-names';
+import { RoundedButton } from '../../../../../buttons/rounded-button';
+import { EmailInput } from '../../../../../inputs/email';
+import { FirstName } from '../../../../../inputs/first-name';
+import { LastName } from '../../../../../inputs/last-name';
+import { PasswordInput } from '../../../../../inputs/password';
+import { PhoneInput } from '../../../../../inputs/phone';
+import { UsernameInput } from '../../../../../inputs/username/username-input';
 
-const StepOneInputs = () => { 
+const StepOneInputs = ({ innerRef, incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
+
+	const { control, errors } = useFormContext();
+	const { username, password } = useWatch({ control })
+
+	const dataIsProvided = username && password && !errors?.username && !errors?.password;
 
 	return userRegistrationCurrentStep === 1 
 		? 
-			<React.Fragment> 
-				<input placeholder='Придумайте логин для входа'/>
-				<p>Используйте для логина латинский алфавит и цифры</p>
-				<input placeholder='Пароль'/>
-				<p>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
-			</React.Fragment> 
+			<React.Fragment>
+				<UsernameInput innerRef={innerRef} />
+				<PasswordInput />
+				<RoundedButton 
+					available={dataIsProvided}
+					onClick={dataIsProvided ? incrementStep : null}
+				>
+					Следующий шаг
+				</RoundedButton>
+			</React.Fragment>
 		: 
 			null
 }
-const StepTwoInputs = () => { 
+const StepTwoInputs = ({ innerRef, incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
+
+	const { formState: { errors }, control, register } = useFormContext();
+	const { firstName, lastName } = useWatch({ control });
+
+	const dataIsProvided = firstName && lastName && !errors?.firstName && !errors?.lastName;
 
 	return userRegistrationCurrentStep === 2 
-	? 
-		<React.Fragment> 
-				<input placeholder='Имя'/>
-				<input placeholder='Фамилия'/>
-			</React.Fragment> 
-	: 
-		null;
+		? 
+			<React.Fragment>
+				<FirstName innerRef={innerRef} />
+				<LastName innerRef={innerRef} />
+				<RoundedButton 
+					isAvailable={dataIsProvided} 
+					onClick={dataIsProvided ? incrementStep : null}
+				>
+					Последний шаг
+				</RoundedButton>
+			</React.Fragment>
+		: 
+			null;
 }
 
-const StepThreeInputs = () => { 
+const StepThreeInputs = ({ innerRef }) => { 
 	const { userRegistrationCurrentStep} = useSelector((state) => state.auth);
 
+	const { control, formState: { errors }, register } = useFormContext();
+
+	const { email, phone } = useWatch({ control });
+
+	const dataIsProvided = email && phone && !errors?.email && !errors?.phone;
+
 	return userRegistrationCurrentStep === 3 
-	? 
-		<React.Fragment>
-			<input placeholder='Номер телефона' />
-			<input placeholder='E-mail' />
-		</React.Fragment> 
-	: 
-		null;
+		? 
+			 <React.Fragment>
+				<PhoneInput innerRef={innerRef}/>
+				<EmailInput />
+				<RoundedButton 
+					isAvailable={dataIsProvided} 
+					submit={true}
+				> 
+					Зарегистрироваться
+				</RoundedButton>
+			</React.Fragment>
+		: 
+			null;
 }
 
-const NextStepButton = () => { 
+export const InputsBySteps = () => {
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
-
+	
+	const inputRef = useRef(null);
+	
 	const dispatch = useDispatch();
-
-	const button = {
-		text: null,
-		onClick: null,
-		type: null
-	};
-
+	
 	const incrementStep = () => { 
 		dispatch(setUserRegistrationCurrentStep(userRegistrationCurrentStep + 1));
 	};
-	const registerUser = () => {};
-	
-	switch (userRegistrationCurrentStep) { 
-		case 1: 
-			button.text = 'Следующий шаг';
-			button.onClick = incrementStep;
-			button.type = 'button'
-	
-			break;
 
-		case 2: 
-			button.text = 'Последний шаг';
-			button.onClick = incrementStep;
-			button.type = 'button';
-
-			break;
-
-		case 3: 
-			button.text = 'Зарегистрироваться';
-			button.onClick = registerUser;
-			button.type = 'submit';
-
-			break;
-
-		default: 
-			break;
-
+	useEffect(() => {
+		if(inputRef.current) {
+			inputRef.current.focus();
 		}
+	}, [userRegistrationCurrentStep]); // eslint-disable-line
 
-		return <button type={button.type === 'button' ? 'button' : 'submit'} onClick={button.onClick}>{button.text}</button>
-}
-
-export const InputsBySteps = () => 
-	//  можно поменять направление стрелок навигации истории так чтобы при нажатии назад менялся шаг а не роут
-
-	 <React.Fragment>
-			<StepOneInputs />
-			<StepTwoInputs />
-			<StepThreeInputs />
-			<NextStepButton />
+	return (
+		<React.Fragment>
+			<StepOneInputs innerRef={inputRef} incrementStep={incrementStep} />
+			<StepTwoInputs innerRef={inputRef} incrementStep={incrementStep} />
+			<StepThreeInputs innerRef={inputRef} />
 		</React.Fragment>
+	)
+}

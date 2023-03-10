@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 
-import { TextButton } from '../components/buttons/text-button/text-button'
+import { TextButton } from '../buttons/text-button/text-button'
 
 export const LogoutButton = () => { 
 	const dispatch = useDispatch();

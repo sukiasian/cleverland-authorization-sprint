@@ -12,6 +12,7 @@ import {
   HIDE_ALERT,
   HIDE_LOADER,
   SEARCH_BOOKS,
+  SET_PASSWORD_VISIBILITY,
   SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
   SHOW_LOADER,
@@ -186,5 +187,12 @@ export function setUserRegistrationCurrentStep(payload) {
 export function toggleUserMenu() { 
 	return { 
 		type: TOGGLE_USER_MENU
+	}
+}
+
+export function setPasswordVisibility(payload) { 
+	return { 
+		type: SET_PASSWORD_VISIBILITY,
+		payload
 	}
 }

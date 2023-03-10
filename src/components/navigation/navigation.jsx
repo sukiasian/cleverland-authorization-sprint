@@ -2,9 +2,9 @@ import React, { useEffect,useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 
-import { LogoutButton } from '../../logout-button/logout-button';
 import { changeActiveCategory, changeSortIcon, fetchCategories, sortDescending } from '../../redux/actions/actions';
 import { TextButton } from '../buttons/text-button/text-button';
+import { LogoutButton } from '../logout-button/logout-button';
 
 import style from './navigation.module.css';
 

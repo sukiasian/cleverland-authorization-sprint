@@ -14,8 +14,8 @@ export const Register = () => {
 
 	const totalSteps = 3;
 
-	useEffect(() => { 
-		dispatch(setUserRegistrationCurrentStep(1));
+	useEffect(() => () => { 
+		dispatch(setUserRegistrationCurrentStep(null));
 	}, [dispatch])
 
 	return (
