@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { SERVER_URL_PATHNAMES } from '../../utils/url-pathnames';
 import {
   CHANGE_ACTIVE_BOOK_IMAGE,
   CHANGE_ACTIVE_BOOK_TITLE,
@@ -12,10 +13,10 @@ import {
   HIDE_ALERT,
   HIDE_LOADER,
   SEARCH_BOOKS,
+  SET_AUTH_USER,
   SET_LOADING_SPIN_IS_OPEN,
   SET_PASSWORD_VISIBILITY,
   SET_REGISTER_USER,
-  SET_STATUS_BLOCK_IS_OPEN,
   SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
   SHOW_LOADER,
@@ -145,31 +146,16 @@ export function setRegisterUser(payload) {
 		try { 
 			dispatch(_setLoadingSpinIsOpen(true));
 
-			const response = await axios.post('https://strapi.cleverland.by/api/auth/local/register', payload);
+			const response = await axios.post(SERVER_URL_PATHNAMES.REGISTER, payload);
 
 			dispatch(_registerNewUser(response));
 		
 			localStorage.setItem('jwt', response.jwt);
 		} catch (error) {
-			console.log(error);
-			dispatch(_setStatusBlockIsOpen(true))
+		
 		} finally { 
-			dispatch({ type: SET_LOADING_SPIN_IS_OPEN, payload: false });
+			dispatch(_setLoadingSpinIsOpen(false));
 		}
-	}
-}
-
-function _setStatusBlockIsOpen(payload) {
-	return { 
-		type: SET_STATUS_BLOCK_IS_OPEN,
-		payload
-	}
-}
-
-function _setLoadingSpinIsOpen(payload) { 
-	return {
-		type: SET_LOADING_SPIN_IS_OPEN,
-		payload
 	}
 }
 
@@ -180,7 +166,30 @@ function _registerNewUser(payload) {
 	}
 } 
 
-export function setAuthUser() { 
+export function setAuthUser(payload) { 
+	return async function (dispatch, getState) { 
+		try { 
+			dispatch(_setLoadingSpinIsOpen(true));
+
+			const response = await axios.post(SERVER_URL_PATHNAMES.AUTH, payload);
+
+			dispatch(_authNewUser(response));
+		} catch (error) {
+
+		} finally { 
+			dispatch(_setLoadingSpinIsOpen(false));
+		}
+	}
+}
+
+const _authNewUser = (payload) => { 
+	return { 
+		type: SET_AUTH_USER,
+		payload
+	}
+}
+
+export function setRequestPasswordRecovery() { 
 	return async function (dispatch, getState) { 
 		try { 
 
@@ -188,7 +197,7 @@ export function setAuthUser() {
 	}
 }
 
-export function requestPasswordRecovery() { 
+export function setUpdateForgottenPassword() { 
 	return async function (dispatch, getState) { 
 		try { 
 
@@ -196,15 +205,7 @@ export function requestPasswordRecovery() {
 	}
 }
 
-export function updateForgottenPassword() { 
-	return async function (dispatch, getState) { 
-		try { 
-
-		} catch (error) {}
-	}
-}
-
-export function logout() {
+export function setLogout() {
 	return async function (dispatch, getState) { 
 		try { 
 
@@ -228,6 +229,13 @@ export function toggleUserMenu() {
 export function setPasswordVisibility(payload) { 
 	return { 
 		type: SET_PASSWORD_VISIBILITY,
+		payload
+	}
+}
+
+function _setLoadingSpinIsOpen(payload) { 
+	return {
+		type: SET_LOADING_SPIN_IS_OPEN,
 		payload
 	}
 }

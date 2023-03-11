@@ -40,6 +40,10 @@ export const Auth = () => {
 		if(authUser) { 
 			navigate(CLIENT_URL_PATHNAMES.HOME);
 		}
+
+		return () => { 
+			dispatch(setAuthUser(null));
+		}
 	}, [authUser]); // eslint-disable-line
 	
 	return (

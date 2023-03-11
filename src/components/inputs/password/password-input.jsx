@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -62,11 +62,27 @@ const NotifyingTip = ({ errors }) => (
 
 
 
-export const PasswordInput = ({ confirmation }) => { 
-	const { control, register } = useFormContext();
+export const PasswordInput = ({ confirmation, focus }) => { 
 	const { passwordVisibility } = useSelector((state) => state.app);
+	
+	const inputRef = useRef(null);
 
+	const { control, register } = useFormContext();
 	const { errors } = useFormState({ control });
+
+	const { ref, ...rest } = register(
+		confirmation 
+			? 
+				PASSWORD_UPDATE_INPUTS.passwordConfirmation 
+			: 
+				REGISTER_INPUTS.password, 
+		{ 
+			validate: { 
+				regexValidation: regexValidation(getRegexErrorsForPasswordValidation)
+			
+			}
+		}
+	) 
 
 	const dispatch = useDispatch();
 
@@ -76,6 +92,10 @@ export const PasswordInput = ({ confirmation }) => {
 
 	useEffect(() => { 
 		dispatch(setPasswordVisibility(false));
+
+		if(focus) { 
+			inputRef.current.focus()
+		}
 		// setValue(REGISTER_INPUTS.password, 'helloworld');
 
 		return () => { 
@@ -89,19 +109,14 @@ export const PasswordInput = ({ confirmation }) => {
 				className={`input ${appIsAtRegisterURL && errors?.password ? 'input_invalid' : ''}`}
 				type={ passwordVisibility ? 'text' : 'password' }
 				placeholder={confirmation ? 'Подтверждение пароля' : 'Пароль'} 
-				{ ...register(
-					confirmation 
-						? 
-							PASSWORD_UPDATE_INPUTS.passwordConfirmation 
-						: 
-							REGISTER_INPUTS.password, 
-					{ 
-						validate: { 
-							regexValidation: regexValidation(getRegexErrorsForPasswordValidation)
-						
-						}
-					}) 
-				}  
+				{ ...rest}  
+				ref={(e) => { 
+					ref(e);
+
+					if(focus) { 
+						inputRef.current = e;
+					}
+				}}
 			/> 
 			<button type='button' onClick={togglePasswordVisibility}>
 				<img src={ 

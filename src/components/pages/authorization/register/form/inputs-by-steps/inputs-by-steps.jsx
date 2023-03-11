@@ -24,7 +24,7 @@ const StepOneInputs = ({ innerRef, incrementStep }) => {
 	return userRegistrationCurrentStep === 1 
 		? 
 			<React.Fragment>
-				<UsernameInput innerRef={innerRef} />
+				<UsernameInput focus={true} />
 				<PasswordInput />
 				<RoundedButton 
 					available={dataIsProvided}
@@ -36,7 +36,7 @@ const StepOneInputs = ({ innerRef, incrementStep }) => {
 		: 
 			null
 }
-const StepTwoInputs = ({ innerRef, incrementStep }) => { 
+const StepTwoInputs = ({ incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
 
 	const { formState: { errors }, control } = useFormContext();
@@ -47,7 +47,7 @@ const StepTwoInputs = ({ innerRef, incrementStep }) => {
 	return userRegistrationCurrentStep === 2 
 		? 
 			<React.Fragment>
-				<FirstName innerRef={innerRef} />
+				<FirstName focus={true} />
 				<LastName />
 				<RoundedButton 
 					isAvailable={dataIsProvided} 
@@ -72,7 +72,7 @@ const StepThreeInputs = ({ innerRef }) => {
 	return userRegistrationCurrentStep === 3 
 		? 
 			 <React.Fragment>
-				<PhoneInput innerRef={innerRef}/>
+				<PhoneInput focus={true}/>
 				<EmailInput />
 				<RoundedButton 
 					isAvailable={dataIsProvided} 
@@ -104,9 +104,9 @@ export const InputsBySteps = () => {
 
 	return (
 		<React.Fragment>
-			<StepOneInputs innerRef={inputRef} incrementStep={incrementStep} />
-			<StepTwoInputs innerRef={inputRef} incrementStep={incrementStep} />
-			<StepThreeInputs innerRef={inputRef} />
+			<StepOneInputs incrementStep={incrementStep} />
+			<StepTwoInputs incrementStep={incrementStep} />
+			<StepThreeInputs />
 		</React.Fragment>
 	)
 }

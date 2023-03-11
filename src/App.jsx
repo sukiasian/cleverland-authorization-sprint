@@ -14,23 +14,25 @@ import { RecoveryRequest } from './components/pages/forgot-pass/recovery-request
 import { CLIENT_URL_PATHNAMES } from './utils/url-pathnames';
 
 export const App = () => { 
-	const { authUser } = useSelector(state => state.auth);
-	
+	const jwt = localStorage.getItem('jwt');
+
+	console.log(jwt);
+
 	return (
 		<Routes>
 			<Route path='/' element={<MainLayout /> }>
 				<Route element={<NavigationLayout />}>
-					<Route path='/' element={authUser ? <Navigate to='books/all' /> : <Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
-					<Route path='books/:category' element={authUser ? <Books /> : <Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
+					<Route path='/' element={jwt ? <Navigate to='books/all' /> : <Navigate to="/auth" relative={false} />} />
+					<Route path='books/:category' element={jwt ? <Books /> : <Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
 					<Route path='terms' element={<LayoutTerms contentView='terms' />} />
 					<Route path='contract' element={<LayoutTerms contentView='contract' />} /> 
 				</Route>
 			</Route>
 
 			<Route path='/' element={<OrangeBackground />}>
-				<Route  path={CLIENT_URL_PATHNAMES.AUTH} element={authUser ? <Navigate to='/' /> : <Auth />} />
-				<Route path={CLIENT_URL_PATHNAMES.REGISTER} element={authUser ? <Navigate to='/' /> : <Register />} />
-				<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={authUser ? <Navigate to='/' /> : <RecoveryRequest />} /> 
+				<Route  path={CLIENT_URL_PATHNAMES.AUTH} element={jwt ? <Navigate to='/' /> : <Auth />} />
+				<Route path={CLIENT_URL_PATHNAMES.REGISTRATION} element={jwt ? <Navigate to='/' /> : <Register />} />
+				<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={jwt ? <Navigate to='/' /> : <RecoveryRequest />} /> 
 				<Route path='/books/:category/:id' element={<LayoutBookPage />} />
 			</Route>
 

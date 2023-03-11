@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { setRegisterUser, setUserRegistrationCurrentStep } from '../../../../redux/actions/actions';
+import { CLIENT_URL_PATHNAMES } from '../../../../utils/url-pathnames';
 import { RoundedButton } from '../../../buttons/rounded-button';
 import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window';
 import { LoadingWindow } from '../../../layouts/window-elements/loading-window/loading-window';
@@ -71,7 +72,7 @@ export const Register = () => {
 						<StatusBlock 
 							heading={statusBlockMutualHeading} 
 							paragraph='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail' 
-							buttonOrLinkComponent={<Link to="/register">Назад к регистрации</Link>}
+							buttonOrLinkComponent={<Link to={CLIENT_URL_PATHNAMES.REGISTRATION}>Назад к регистрации</Link>}
 						/> 
 					: 
 						null 

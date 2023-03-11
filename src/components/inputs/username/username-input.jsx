@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { REGISTER_INPUTS } from '../../../utils/input-names';
@@ -19,46 +19,49 @@ const getRegexErrorsForUsernameValidation = (value) => ({
 const NotifyingTip = () => { 
 	const { formState: { errors }} = useFormContext();
 
-	return (
-		<p>
-			Используйте для логина {' '}
-				<span 
-					className={
-						appIsAtRegisterURL 
-							? 
-								getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
-									errors, 
-									REGISTER_INPUTS.username, 
-									USERNAME_VALIDATION_ERRORS_NAMES.latinOnly
-								) 
-							: 
-								''
-					}
-				> 
-					латинский алфавит и {' '}
-				</span> 
-				<span
-					className={
-						appIsAtRegisterURL 
-							? 
-								getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
-									errors, 
-									REGISTER_INPUTS.username, 
-									USERNAME_VALIDATION_ERRORS_NAMES.atLeastOneDigit
-								) 
-							: 
-								''
-					}
-				> 
-					цифры 
-				</span>
-		</p>
-	)
+	return appIsAtRegisterURL 
+		? 
+			<p>
+				Используйте для логина {' '}
+					<span 
+						className={
+							appIsAtRegisterURL 
+								? 
+									getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
+										errors, 
+										REGISTER_INPUTS.username, 
+										USERNAME_VALIDATION_ERRORS_NAMES.latinOnly
+									) 
+								: 
+									''
+						}
+					> 
+						латинский алфавит и {' '}
+					</span> 
+					<span
+						className={
+							appIsAtRegisterURL 
+								? 
+									getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
+										errors, 
+										REGISTER_INPUTS.username, 
+										USERNAME_VALIDATION_ERRORS_NAMES.atLeastOneDigit
+									) 
+								: 
+									''
+						}
+					> 
+						цифры 
+					</span>
+			</p>
+		:
+			null
 }
 
-export const UsernameInput = ({ innerRef }) => { 
+export const UsernameInput = ({ focus }) => {
+	const inputRef = useRef();
+	
 	const { register } = useFormContext();
-
 	const { ref, ...rest } = register(
 		REGISTER_INPUTS.username, 
 		{ 
@@ -67,6 +70,12 @@ export const UsernameInput = ({ innerRef }) => {
 			}
 		} 
 	); 
+
+	useEffect(() => { 
+		if(focus) { 
+			inputRef?.current.focus();
+		}
+	}, []); // eslint-disable-line
 
  	return (
 		<React.Fragment> 
@@ -83,10 +92,12 @@ export const UsernameInput = ({ innerRef }) => {
 				ref={(e) => { 
 					ref(e);
 
-					innerRef.current = e; // eslint-disable-line
+					if(focus) { 
+						inputRef.current = e; // eslint-disable-line
+					}
 				}}
 			/>
-			{ appIsAtRegisterURL ? <NotifyingTip /> : null }
+			<NotifyingTip />
 		</React.Fragment>
 
 	)
