@@ -6,7 +6,7 @@ import { REGISTER_INPUTS } from '../../../utils/input-names'
 const NotifyingTip = () => { 
 	const { formState: { errors } } = useFormContext();
 
-	const spanShouldBeRed = (errorName) => errors[REGISTER_INPUTS.firstName] ? 'paragraph_red' : ''
+	const spanShouldBeRed = () => errors[REGISTER_INPUTS.firstName] ? 'paragraph_red' : ''
 
 	return <p><span className={spanShouldBeRed()}>Поле не может быть пустым</span></p>
 }

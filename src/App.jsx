@@ -12,7 +12,7 @@ import { Register } from './components/pages/authorization/register';
 import { Books } from './components/pages/books';
 import { RecoveryRequest } from './components/pages/forgot-pass/recovery-request';
 import { setUserIsAuthorized } from './redux/actions/actions';
-import { COOKIES_KEY, extractCookieValue, setCookieValue } from './utils/cookies';
+import { COOKIES_KEY, extractCookieValue } from './utils/cookies';
 import { CLIENT_URL_PATHNAMES } from './utils/url-pathnames';
 
 export const App = () => { 
@@ -27,13 +27,9 @@ export const App = () => {
 			dispatch(setUserIsAuthorized(true));
 		}
 	}, [userIsAuthorized]); // eslint-disable-line
-	// чтобы обновлялось, нужно записать значение куки в редакс
-	// setCookieValue('userIsAuthorized');
 
 	return (
-		<Routes>
-			{/* <Route path='' element={<Navigate to='/' />} /> */}
-			
+		<Routes>			
 			{ 
 				userIsAuthorized 
 					? 
@@ -55,15 +51,15 @@ export const App = () => {
 							<Route path={CLIENT_URL_PATHNAMES.AUTH} element={ <Auth /> } />
 							<Route path={CLIENT_URL_PATHNAMES.REGISTRATION} element={ <Register /> } />
 							<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={<RecoveryRequest />} /> 
-							<Route path='/books/:category' element={<Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
-							<Route path='/books/:category/:id' element={<Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
-							<Route path={CLIENT_URL_PATHNAMES.TERMS} element={<Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
-							<Route path={CLIENT_URL_PATHNAMES.CONTRACT} element={<Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} /> 
+							<Route path='/books/:category' element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />
+							<Route path='/books/:category/:id' element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />
+							<Route path={CLIENT_URL_PATHNAMES.TERMS} element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />
+							<Route path={CLIENT_URL_PATHNAMES.CONTRACT} element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} /> 
 						</Route>
 			}
 			
 
-			<Route path='*' element={<h2> Not found</h2>} /> 
+			<Route path='*' element={<h2> Страница не найдена </h2>} /> 
     </Routes>
 	)
 }

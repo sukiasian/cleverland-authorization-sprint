@@ -7,6 +7,7 @@ import showPasswordIcon from '../../../assets/images/icons/show-password-icon.sv
 import { setPasswordVisibility } from '../../../redux/actions/actions';
 import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
 import { PASSWORD_UPDATE_INPUTS, REGISTER_INPUTS } from '../../../utils/input-names';
+import { CLIENT_URL_PATHNAMES } from '../../../utils/url-pathnames';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
 const PASSWORD_VALIDATION_ERRORS_NAMES = {
@@ -23,8 +24,9 @@ const getRegexErrorsForPasswordValidation = (value) => ({
 
 const NotifyingTip = ({ errors }) => { 
 	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
+	const appIsAtPasswordChangeURL = document.location.hash.includes(`${CLIENT_URL_PATHNAMES.RESET_PASS}`);
 
-	return appIsAtRegistrationURL 
+	return appIsAtRegistrationURL || appIsAtPasswordChangeURL
 		? 
 			<p>Пароль {' '}
 				<span 

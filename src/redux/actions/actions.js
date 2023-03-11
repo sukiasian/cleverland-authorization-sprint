@@ -19,6 +19,7 @@ import {
   SET_PASSWORD_VISIBILITY,
   SET_REGISTER_USER,
   SET_REQUEST_PASSWORD_RECOVERY,
+  SET_RESET_PASSWORD,
   SET_USER_IS_AUTHORIZED,
   SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
@@ -246,29 +247,38 @@ function _setRequestPasswordRecovery(payload) {
 	}
 }
 
-function annualizeRequestPasswordRecovery() { 
+export function annualizeRequestPasswordRecovery() { 
 	return { 
 		type: SET_REQUEST_PASSWORD_RECOVERY, 
 		payload: null
 	}
 }
 
-export function setUpdateForgottenPassword() { 
+export function setResetPassword(payload) { 
 	return async function (dispatch, getState) { 
 		try { 
+			dispatch(_setLoadingSpinIsOpen(true));
 
-		} catch (error) {}
+			const response = await axios.post(SERVER_URL_PATHNAMES.RESET_PASS, payload);
+
+			dispatch(_setResetPassword(response));
+		} catch (error) {
+
+		} finally { 
+			dispatch(_setLoadingSpinIsOpen(false));
+		}
 	}
 }
 
-export function setLogout() {
-	return async function (dispatch, getState) { 
-		try { 
-			setCookieValue(COOKIES_KEY.USER_IS_AUTHORIZED, null);
-
-			dispatch(_setUserIsAuthorized(false));
-		} catch (error) {}
+function _setResetPassword(payload) { 
+	return { 
+		type: SET_RESET_PASSWORD, 
+		payload
 	}
+}
+
+export function annualizeResetPassword() { 
+	_setResetPassword(null);
 }
 
 export function setUserRegistrationCurrentStep(payload) { 

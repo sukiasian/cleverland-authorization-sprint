@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import avatar from '../../assets/images/avatar.png';
 import { toggleUserMenu } from '../../redux/actions/actions';

@@ -1,6 +1,5 @@
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
-import { PASSWORD_RECOVERY_REQUEST_INPUTS } from '../../../../../utils/input-names';
 import { RoundedButton } from '../../../../buttons/rounded-button';
 import { EmailInput } from '../../../../inputs/email';
 

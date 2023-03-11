@@ -3,7 +3,6 @@ export const CLIENT_URL_PATHNAMES = {
 	AUTH: 'auth',
 	REGISTRATION: 'registration',
 	FORGOT_PASS: 'forgot-pass',
-	RESET_PASS: 'reset-password',
 	CONTRACT: 'contract',
 	TERMS: 'terms'
 };
