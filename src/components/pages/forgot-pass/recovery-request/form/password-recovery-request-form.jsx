@@ -1,17 +1,27 @@
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
 
 import { PASSWORD_RECOVERY_REQUEST_INPUTS } from '../../../../../utils/input-names';
 import { RoundedButton } from '../../../../buttons/rounded-button';
+import { EmailInput } from '../../../../inputs/email';
 
-export const PasswordRecoveryRequestForm = () => {
-	const { register } = useForm();
-	const { email } = PASSWORD_RECOVERY_REQUEST_INPUTS;
+export const PasswordRecoveryRequestForm = ({ recoverPasswordHandler }) => {
+	const methods = useForm({ 
+		defaultValues: { 
+			email: ''
+		}
+	});
+
+	const { email } = useWatch({ control: methods.control });
+
+	const dataIsProvided = !methods.formState.errors && email;
 
 	return (
-		<form> 
-			<input placeholder='Email' { ...register(email) } />
-			<p>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
-			<RoundedButton>ВОССТАНОВИТЬ</RoundedButton>
-		</form>
+		<FormProvider { ...methods }> 
+			<form onSubmit={ methods.handleSubmit(recoverPasswordHandler) }> 
+				<EmailInput focus={true} />
+				<p>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
+				<RoundedButton submit={true} isAvailable={dataIsProvided}>ВОССТАНОВИТЬ</RoundedButton>
+			</form>
+		</FormProvider>
 	)
 }

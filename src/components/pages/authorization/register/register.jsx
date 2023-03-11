@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { setRegisterUser, setUserRegistrationCurrentStep } from '../../../../redux/actions/actions';
+import { annualizeAuthUser, setRegisterUser, setUserRegistrationCurrentStep } from '../../../../redux/actions/actions';
 import { CLIENT_URL_PATHNAMES } from '../../../../utils/url-pathnames';
 import { RoundedButton } from '../../../buttons/rounded-button';
 import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window';
@@ -16,14 +16,18 @@ export const Register = () => {
 	const [registerUserDataForRetryingRequest, setRegisterUserDataForRetryingRequest] = useState(null);
 
 	const { userRegistrationCurrentStep, registerUser } = useSelector((state) => state.auth);
-	const { loadingSpinIsOpen } = useSelector((state) => state.app);
 
 	const dispatch = useDispatch(); 
 
 	const totalSteps = 3;
 
-	const emailIsNotAccepted= registerUser?.error?.status === 400;
-	const unknownErrorOccured = registerUser && registerUser.error && registerUser.error.status !== 400;
+	const emailIsNotAccepted= registerUser?.response?.data?.error?.status === 400;
+	const unknownErrorOccured = 
+		registerUser && 
+		registerUser.response && 
+		registerUser.response.data && 
+		registerUser.response.data.error && 
+		registerUser.response.data.error.status !== 400;
 
 	const statusBlockMutualHeading = 'Данные не сохранились';
 	
@@ -39,7 +43,7 @@ export const Register = () => {
 	useEffect(() => 
 		() => { 
 			dispatch(setUserRegistrationCurrentStep(1));
-			dispatch(setRegisterUser(null));
+			dispatch(annualizeAuthUser());
 		}, 
 	[]); // eslint-disable-line
 
@@ -49,12 +53,9 @@ export const Register = () => {
 		<React.Fragment> 
 			{/* <LoadingWindow */}
 			{
-				registerUser ? 
-						<StatusBlock 
-							heading='Регистрация успешна'
-							paragraph='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль'
-							buttonOrLinkComponent={<Link to='/auth'>ВХОД</Link>}
-						/>
+				registerUser 
+					? 
+						null 
 					: 
 						<AuthenticationWindow 
 							heading="Регистрация" 
@@ -64,7 +65,18 @@ export const Register = () => {
 						/>
 			}
 
-			{ loadingSpinIsOpen ? <LoadingWindow /> : null }
+			{
+				registerUser?.status === 200 ? 
+						<StatusBlock 
+							heading='Регистрация успешна'
+							paragraph='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль'
+							buttonOrLinkComponent={<Link to='/auth'>ВХОД</Link>}
+						/>
+					: 
+						null
+			}
+
+			<LoadingWindow />
 
 			{ 
 				emailIsNotAccepted

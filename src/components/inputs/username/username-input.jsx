@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { REGISTER_INPUTS } from '../../../utils/input-names';
+import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
+import { AUTH_INPUTS, REGISTER_INPUTS } from '../../../utils/input-names';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
-
-const appIsAtRegisterURL = window.location.hash.includes('register');
 
 const USERNAME_VALIDATION_ERRORS_NAMES = {
 	latinOnly: 'latinOnly',
@@ -18,14 +17,15 @@ const getRegexErrorsForUsernameValidation = (value) => ({
 
 const NotifyingTip = () => { 
 	const { formState: { errors }} = useFormContext();
+	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
 
-	return appIsAtRegisterURL 
+	return appIsAtRegistrationURL
 		? 
 			<p>
 				Используйте для логина {' '}
 					<span 
 						className={
-							appIsAtRegisterURL 
+							checkAppIsAtRegistrationURL() 
 								? 
 									getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
 										errors, 
@@ -40,7 +40,7 @@ const NotifyingTip = () => {
 					</span> 
 					<span
 						className={
-							appIsAtRegisterURL 
+							appIsAtRegistrationURL 
 								? 
 									getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
 										errors, 
@@ -59,18 +59,24 @@ const NotifyingTip = () => {
 }
 
 export const UsernameInput = ({ focus }) => {
+	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
+
 	const inputRef = useRef();
 	
 	const { register } = useFormContext();
 	const { ref, ...rest } = register(
-		REGISTER_INPUTS.username, 
-		{ 
-			validate: { 
-				regexValidation: regexValidation(getRegexErrorsForUsernameValidation)
-			}
-		} 
-	); 
-
+		appIsAtRegistrationURL ? REGISTER_INPUTS.username : AUTH_INPUTS.identifier, 
+		appIsAtRegistrationURL 
+			? 
+				{
+					validate: { 
+						regexValidation: regexValidation(getRegexErrorsForUsernameValidation)
+					}
+				} 
+			: 
+				{}
+		); 
+		
 	useEffect(() => { 
 		if(focus) { 
 			inputRef?.current.focus();
@@ -82,7 +88,7 @@ export const UsernameInput = ({ focus }) => {
 			<input 
 				className=''
 				placeholder={
-					appIsAtRegisterURL 
+					appIsAtRegistrationURL 
 						? 
 							'Придумайте логин для входа' 
 						: 

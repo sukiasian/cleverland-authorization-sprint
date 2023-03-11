@@ -1,11 +1,19 @@
+import { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { REGISTER_INPUTS } from '../../../utils/input-names'
 
-export const EmailInput = ({ innerRef }) => { 
+export const EmailInput = ({ focus }) => { 
+	const inputRef = useRef(null);
+	
 	const { register } = useFormContext();
-
 	const { ref, ...rest } = register(REGISTER_INPUTS.email);
+
+	useEffect(() => { 
+		if(focus) { 
+			inputRef.current.focus();
+		}
+	}, []); // eslint-disable-line
 
 	return (
 		<input 
@@ -15,8 +23,8 @@ export const EmailInput = ({ innerRef }) => {
 			ref={(e) => { 
 				ref(e);
 
-				if(innerRef) { 
-					innerRef.current = e; // eslint-disable-line
+				if(focus) { 
+					inputRef.current = e; // eslint-disable-line
 				}
 			}}
 		/>

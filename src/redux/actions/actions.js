@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { COOKIES_KEY, setCookieValue } from '../../utils/cookies';
 import { SERVER_URL_PATHNAMES } from '../../utils/url-pathnames';
 import {
   CHANGE_ACTIVE_BOOK_IMAGE,
@@ -17,6 +18,8 @@ import {
   SET_LOADING_SPIN_IS_OPEN,
   SET_PASSWORD_VISIBILITY,
   SET_REGISTER_USER,
+  SET_REQUEST_PASSWORD_RECOVERY,
+  SET_USER_IS_AUTHORIZED,
   SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
   SHOW_LOADER,
@@ -150,12 +153,21 @@ export function setRegisterUser(payload) {
 
 			dispatch(_registerNewUser(response));
 		
-			localStorage.setItem('jwt', response.jwt);
+			const date = new Date();
+
+			setCookieValue('jwt', response.jwt, 90);
 		} catch (error) {
-		
+			dispatch(_registerNewUser(error));
 		} finally { 
 			dispatch(_setLoadingSpinIsOpen(false));
 		}
+	}
+}
+
+export function annualizeRegisterUser() { 
+	return { 
+		type: SET_REGISTER_USER,
+		payload: null
 	}
 }
 
@@ -166,14 +178,59 @@ function _registerNewUser(payload) {
 	}
 } 
 
+function _setJwtCookie() { 
+	const date = new Date();
+}
+
 export function setAuthUser(payload) { 
 	return async function (dispatch, getState) { 
 		try { 
 			dispatch(_setLoadingSpinIsOpen(true));
-
+			
 			const response = await axios.post(SERVER_URL_PATHNAMES.AUTH, payload);
-
+			
+			setCookieValue(COOKIES_KEY.USER_IS_AUTHORIZED, 'true', 90);
+			
 			dispatch(_authNewUser(response));
+			dispatch(setUserIsAuthorized(true));
+		} catch (error) {
+			dispatch(_authNewUser(error));
+		} finally { 
+			dispatch(_setLoadingSpinIsOpen(false));
+		}
+	}
+}
+
+export function annualizeAuthUser() { 
+	return { 
+		type: SET_AUTH_USER,
+		payload: null
+	}
+}
+
+function _authNewUser (payload) { 
+	return { 
+		type: SET_AUTH_USER,
+		payload
+	}
+}
+
+export function setUserIsAuthorized(payload) { 
+	return { 
+		type: SET_USER_IS_AUTHORIZED, 
+		payload
+	}
+}
+
+
+export function setRequestPasswordRecovery(payload) { 
+	return async function (dispatch, getState) { 
+		try { 
+			dispatch(_setLoadingSpinIsOpen(true));
+			
+			const response = await axios.post(SERVER_URL_PATHNAMES.FORGOT_PASS, payload);
+
+			dispatch(_setRequestPasswordRecovery(response));
 		} catch (error) {
 
 		} finally { 
@@ -182,18 +239,17 @@ export function setAuthUser(payload) {
 	}
 }
 
-const _authNewUser = (payload) => { 
+function _setRequestPasswordRecovery(payload) { 
 	return { 
-		type: SET_AUTH_USER,
+		type: SET_REQUEST_PASSWORD_RECOVERY, 
 		payload
 	}
 }
 
-export function setRequestPasswordRecovery() { 
-	return async function (dispatch, getState) { 
-		try { 
-
-		} catch (error) {}
+function annualizeRequestPasswordRecovery() { 
+	return { 
+		type: SET_REQUEST_PASSWORD_RECOVERY, 
+		payload: null
 	}
 }
 
@@ -208,7 +264,9 @@ export function setUpdateForgottenPassword() {
 export function setLogout() {
 	return async function (dispatch, getState) { 
 		try { 
+			setCookieValue(COOKIES_KEY.USER_IS_AUTHORIZED, null);
 
+			dispatch(_setUserIsAuthorized(false));
 		} catch (error) {}
 	}
 }
@@ -239,3 +297,4 @@ function _setLoadingSpinIsOpen(payload) {
 		payload
 	}
 }
+

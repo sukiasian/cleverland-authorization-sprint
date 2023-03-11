@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setAuthUser } from '../../../../redux/actions/actions';
+import { annualizeAuthUser, setAuthUser } from '../../../../redux/actions/actions';
 import { CLIENT_URL_PATHNAMES } from '../../../../utils/url-pathnames';
 import { RoundedButton } from '../../../buttons/rounded-button';
 import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window';
+import { LoadingWindow } from '../../../layouts/window-elements/loading-window/loading-window';
 import { StatusBlock } from '../../../status-block';
 import { SwitchAuthType } from '../../../switch-authorization-type/switch-auth-type';
 
@@ -21,7 +22,7 @@ export const Auth = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const authFailedWithError = authUser?.error;
+	const authFailedWithError = authUser?.response?.data?.error;
 	
 	const authNewUser = (value) => {
 		dispatch(setAuthUser(value));
@@ -33,26 +34,24 @@ export const Auth = () => {
 	}
 
 	useEffect(() => () => {
-		dispatch(setAuthUser(null));
+		dispatch(annualizeAuthUser());
 	}, []); // eslint-disable-line
 
-	useEffect(() => { 
-		if(authUser) { 
-			navigate(CLIENT_URL_PATHNAMES.HOME);
-		}
-
-		return () => { 
-			dispatch(setAuthUser(null));
-		}
-	}, [authUser]); // eslint-disable-line
-	
 	return (
 		<React.Fragment>
-			<AuthenticationWindow 
-				heading='Вход в личный кабинет'
-				form={<AuthForm authUserHandler={ authNewUser } />}
-				bottomChildren={<SwitchAuthType />} 
-			/>
+			{ authUser
+				? 
+					null
+				: 
+					<React.Fragment>
+						<LoadingWindow />
+						<AuthenticationWindow 
+							heading='Вход в личный кабинет'
+							form={<AuthForm authUserHandler={ authNewUser } />}
+							bottomChildren={<SwitchAuthType />} 
+						/>
+					 </React.Fragment>
+			}
 
 			{ authFailedWithError 
 				?  

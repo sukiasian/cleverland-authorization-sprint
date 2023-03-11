@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import hidePasswordIcon from '../../../assets/images/icons/hide-password-icon.svg';
 import showPasswordIcon from '../../../assets/images/icons/show-password-icon.svg';
 import { setPasswordVisibility } from '../../../redux/actions/actions';
-import { appIsAtRegisterURL } from '../../../utils/functions';
+import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
 import { PASSWORD_UPDATE_INPUTS, REGISTER_INPUTS } from '../../../utils/input-names';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
@@ -21,8 +21,10 @@ const getRegexErrorsForPasswordValidation = (value) => ({
 	atLeastEightCharacters: !value.match(/.{8,}/)
 });
 
-const NotifyingTip = ({ errors }) => (
-	appIsAtRegisterURL 
+const NotifyingTip = ({ errors }) => { 
+	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
+
+	return appIsAtRegistrationURL 
 		? 
 			<p>Пароль {' '}
 				<span 
@@ -58,11 +60,12 @@ const NotifyingTip = ({ errors }) => (
 			</p> 
 		: 
 			null
-);
-
+				}
 
 
 export const PasswordInput = ({ confirmation, focus }) => { 
+	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
+
 	const { passwordVisibility } = useSelector((state) => state.app);
 	
 	const inputRef = useRef(null);
@@ -76,12 +79,15 @@ export const PasswordInput = ({ confirmation, focus }) => {
 				PASSWORD_UPDATE_INPUTS.passwordConfirmation 
 			: 
 				REGISTER_INPUTS.password, 
-		{ 
-			validate: { 
-				regexValidation: regexValidation(getRegexErrorsForPasswordValidation)
-			
-			}
-		}
+		appIsAtRegistrationURL 
+			? 
+				{ 
+					validate: { 
+						regexValidation: regexValidation(getRegexErrorsForPasswordValidation)
+					}
+				}
+			: 
+				{}
 	) 
 
 	const dispatch = useDispatch();
@@ -106,7 +112,7 @@ export const PasswordInput = ({ confirmation, focus }) => {
 	return (
 		<div className='input-container input-container_password'> 
 			<input 
-				className={`input ${appIsAtRegisterURL && errors?.password ? 'input_invalid' : ''}`}
+				className={`input ${appIsAtRegistrationURL && errors?.password ? 'input_invalid' : ''}`}
 				type={ passwordVisibility ? 'text' : 'password' }
 				placeholder={confirmation ? 'Подтверждение пароля' : 'Пароль'} 
 				{ ...rest}  
