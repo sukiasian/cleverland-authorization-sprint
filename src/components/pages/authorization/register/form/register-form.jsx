@@ -8,8 +8,7 @@ import { InputsBySteps } from './inputs-by-steps/inputs-by-steps';
 
 // при потере фокуса либо по нажатию кнопки “следующий шаг”, подсвечиватся полностью красным текст подсказки
 
-export const RegisterForm = () => { 
-	// const { register, handleSubmit, formState, formState: { errors }, control } = useForm({ 
+export const RegisterForm = ({ registerUserHandler }) => { 
 	const dispatch = useDispatch();
 
 	const methods = useForm({ 
@@ -22,13 +21,7 @@ export const RegisterForm = () => {
 			lastName: '',
 			phone: ''
 		},
-		
-	})
-
-	
-	const registerUser = (value) => { 
-		// should be used for handleSubmit(registerUser);
-	}
+	});
 	
 	useEffect(() => () => { 
 		dispatch(setUserRegistrationCurrentStep(1));
@@ -36,7 +29,7 @@ export const RegisterForm = () => {
 
 	return (
 		<FormProvider { ...methods }> 
-			<form onSubmit={methods.handleSubmit(registerUser)}>
+			<form onSubmit={methods.handleSubmit(registerUserHandler)}>
 				<InputsBySteps />
 			</form>
 		</FormProvider>

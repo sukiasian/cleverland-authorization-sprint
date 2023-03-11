@@ -1,27 +1,30 @@
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux';
+import { useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom';
 
-import { AUTH_INPUTS } from '../../../../../utils/input-names';
 import { RoundedButton } from '../../../../buttons/rounded-button';
+import { PasswordInput } from '../../../../inputs/password';
+import { UsernameInput } from '../../../../inputs/username/username-input';
 
+export const AuthForm = ({ authUserHandler }) => {
+	const inputRef = useRef(null);	
 
-export const AuthForm = () => {
-	const { register, handleSubmit } = useForm();
-	const dispatch = useDispatch();
-	
-	const { identifier, password } = AUTH_INPUTS;
-	
-	const login = () => {
-		// dispatch(login);
-	}
+	const methods = useForm({
+		mode: 'onChange',
+		defaultValues: { 
+			username: '',
+			password: ''
+		}
+	});
 	
 	return (
-		<form>
-			<input placeholder='Логин' { ...register(identifier) } />
-			<input placeholder='Пароль' { ...register(password) } />
-			<Link to='/forgot-pass'>Забыли логин или пароль?</Link>
-			<RoundedButton onClick={login}> Войти </RoundedButton>
-		</form>
+		<FormProvider {...methods} >
+			<form onSubmit={methods.handleSubmit(authUserHandler)}>
+				<UsernameInput innerRef={inputRef} />
+				<PasswordInput />
+				<Link to='/forgot-pass'>Забыли логин или пароль?</Link>
+				<RoundedButton submit={true}> Войти </RoundedButton>
+			</form>
+		</FormProvider>
 	)
 }

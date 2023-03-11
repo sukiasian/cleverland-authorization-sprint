@@ -1,6 +1,6 @@
 // 1. Валидация, возвращающая строку, перечисляющую ВСЕ ошибки;
-export const regexValidation = (regexErrorsFunction) => (value) => { 
-	const regexErrors = regexErrorsFunction(value);
+export const regexValidation = (getRegexErrorsObjectFunction) => (value) => { 
+	const regexErrors = getRegexErrorsObjectFunction(value);
 
 	const errorKeys = [];
 
@@ -8,7 +8,7 @@ export const regexValidation = (regexErrorsFunction) => (value) => {
 		if(regexErrors[errorKey]) {
 			errorKeys.push(errorKey);
 		}
-	})
+	});
 
 	if (errorKeys.length === 0) {
 		return true;
@@ -29,6 +29,10 @@ export const regexValidation = (regexErrorsFunction) => (value) => {
 
 // 2. Извлечение ошибок из строки, возвращаемой из regexValidation и возвращение названия класса для span с ошибкой;
 export const getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray = (errors, field, errorName) => { 
+	if(errors?.[field] && errors.field?.type === errorName) {
+		return 'paragraph_red';
+	}
+
 	const errorsList = errors?.[field]?.message.split(',');
   
 	let classname = '';

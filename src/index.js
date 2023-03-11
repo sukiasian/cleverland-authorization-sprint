@@ -13,20 +13,12 @@ import { App } from './app';
 
 import './index.css';
 
-
-/* 
-Если пользователь авторизован, при попытке перехода на какой либо из роутов авторизации, 
-происходит редирект на главную страницу. И наоборот, при попытке перехода на главную 
-страницу неавторизованного пользователя, происходит редирект на страницу авторизации.
-
-
-*/
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(<Provider store={store}>
-    <HashRouter >
-			<App />
-    </HashRouter>
-  </Provider>
+root.render(
+	<Provider store={store}>
+		<HashRouter >
+				<App />
+		</HashRouter>
+	</Provider>
 );

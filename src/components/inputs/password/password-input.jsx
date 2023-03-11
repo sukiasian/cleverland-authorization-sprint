@@ -22,38 +22,42 @@ const getRegexErrorsForPasswordValidation = (value) => ({
 });
 
 const NotifyingTip = ({ errors }) => (
-	<p>Пароль {' '}
-		<span 
-			className={
-				getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
-					errors, 
-					REGISTER_INPUTS.password, 
-					PASSWORD_VALIDATION_ERRORS_NAMES.atLeastEightCharacters
-				)
-			}
-		>
-			не менее 8 символов
-		</span>, {' '}
-		<span 
-			className={
-				getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
-					errors, 
-					REGISTER_INPUTS.password, 
-					PASSWORD_VALIDATION_ERRORS_NAMES.atLeastOneCapitalLetter)
-				}
-		>
-			с заглавной буквой</span> и {' '}
-		<span 
-			className={
-				getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
-					errors, 
-					REGISTER_INPUTS.password, 
-					PASSWORD_VALIDATION_ERRORS_NAMES.atLeastOneDigit)
-			}
-		>
-			цифрой
-		</span>
-	</p>
+	appIsAtRegisterURL 
+		? 
+			<p>Пароль {' '}
+				<span 
+					className={
+						getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
+							errors, 
+							REGISTER_INPUTS.password, 
+							PASSWORD_VALIDATION_ERRORS_NAMES.atLeastEightCharacters
+						)
+					}
+				>
+					не менее 8 символов
+				</span>, {' '}
+				<span 
+					className={
+						getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
+							errors, 
+							REGISTER_INPUTS.password, 
+							PASSWORD_VALIDATION_ERRORS_NAMES.atLeastOneCapitalLetter)
+						}
+				>
+					с заглавной буквой</span> и {' '}
+				<span 
+					className={
+						getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
+							errors, 
+							REGISTER_INPUTS.password, 
+							PASSWORD_VALIDATION_ERRORS_NAMES.atLeastOneDigit)
+					}
+				>
+					цифрой
+				</span>
+			</p> 
+		: 
+			null
 );
 
 
@@ -72,6 +76,7 @@ export const PasswordInput = ({ confirmation }) => {
 
 	useEffect(() => { 
 		dispatch(setPasswordVisibility(false));
+		// setValue(REGISTER_INPUTS.password, 'helloworld');
 
 		return () => { 
 			dispatch(setPasswordVisibility(null));

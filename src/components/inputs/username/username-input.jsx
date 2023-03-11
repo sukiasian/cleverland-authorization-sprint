@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { REGISTER_INPUTS } from '../../../utils/input-names';
@@ -12,8 +12,8 @@ const USERNAME_VALIDATION_ERRORS_NAMES = {
 }
 
 const getRegexErrorsForUsernameValidation = (value) => ({ 
-	latinOnly:  !value.match(/[A-Za-z\d]+$/),
-	atLeastOneDigit: !value.match(/(?=.*\d)/)
+	latinOnly:  !value.match(/^[a-zA-Z\d]+$/),
+	atLeastOneDigit: !value.match(/\d/)
 });
 
 const NotifyingTip = () => { 
@@ -21,7 +21,7 @@ const NotifyingTip = () => {
 
 	return (
 		<p>
-			Используйте для логина 
+			Используйте для логина {' '}
 				<span 
 					className={
 						appIsAtRegisterURL 
@@ -35,7 +35,7 @@ const NotifyingTip = () => {
 								''
 					}
 				> 
-					латинский алфавит и 
+					латинский алфавит и {' '}
 				</span> 
 				<span
 					className={
@@ -44,7 +44,7 @@ const NotifyingTip = () => {
 								getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
 									errors, 
 									REGISTER_INPUTS.username, 
-									USERNAME_VALIDATION_ERRORS_NAMES.atLeastOneDIgit
+									USERNAME_VALIDATION_ERRORS_NAMES.atLeastOneDigit
 								) 
 							: 
 								''
@@ -66,7 +66,7 @@ export const UsernameInput = ({ innerRef }) => {
 				regexValidation: regexValidation(getRegexErrorsForUsernameValidation)
 			}
 		} 
-	)
+	); 
 
  	return (
 		<React.Fragment> 

@@ -12,7 +12,10 @@ import {
   HIDE_ALERT,
   HIDE_LOADER,
   SEARCH_BOOKS,
+  SET_LOADING_SPIN_IS_OPEN,
   SET_PASSWORD_VISIBILITY,
+  SET_REGISTER_USER,
+  SET_STATUS_BLOCK_IS_OPEN,
   SET_USER_REGISTRATION_CURRENT_STEP,
   SHOW_ALERT,
   SHOW_LOADER,
@@ -137,15 +140,47 @@ export function fetchCategories() {
   };
 }
 
-export function registerUser() { 
-	return async function (dispatch, getState) { 
+export function setRegisterUser(payload) { 
+	return async function (dispatch) { 
 		try { 
+			dispatch(_setLoadingSpinIsOpen(true));
 
-		} catch (error) {}
+			const response = await axios.post('https://strapi.cleverland.by/api/auth/local/register', payload);
+
+			dispatch(_registerNewUser(response));
+		
+			localStorage.setItem('jwt', response.jwt);
+		} catch (error) {
+			console.log(error);
+			dispatch(_setStatusBlockIsOpen(true))
+		} finally { 
+			dispatch({ type: SET_LOADING_SPIN_IS_OPEN, payload: false });
+		}
 	}
 }
 
-export function authUser() { 
+function _setStatusBlockIsOpen(payload) {
+	return { 
+		type: SET_STATUS_BLOCK_IS_OPEN,
+		payload
+	}
+}
+
+function _setLoadingSpinIsOpen(payload) { 
+	return {
+		type: SET_LOADING_SPIN_IS_OPEN,
+		payload
+	}
+}
+
+function _registerNewUser(payload) {
+	return {
+		type: SET_REGISTER_USER,
+		payload
+	}
+} 
+
+export function setAuthUser() { 
 	return async function (dispatch, getState) { 
 		try { 
 

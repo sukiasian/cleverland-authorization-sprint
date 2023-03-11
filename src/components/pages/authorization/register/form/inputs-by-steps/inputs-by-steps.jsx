@@ -3,7 +3,6 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setUserRegistrationCurrentStep } from '../../../../../../redux/actions/actions';
-import { REGISTER_INPUTS } from '../../../../../../utils/input-names';
 import { RoundedButton } from '../../../../../buttons/rounded-button';
 import { EmailInput } from '../../../../../inputs/email';
 import { FirstName } from '../../../../../inputs/first-name';
@@ -12,14 +11,16 @@ import { PasswordInput } from '../../../../../inputs/password';
 import { PhoneInput } from '../../../../../inputs/phone';
 import { UsernameInput } from '../../../../../inputs/username/username-input';
 
+const validateLoginAndPasswordIfAutofilledOnInit = () => {};
+
 const StepOneInputs = ({ innerRef, incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
 
-	const { control, errors } = useFormContext();
+	const { control, errors, setValue, } = useFormContext();
 	const { username, password } = useWatch({ control })
 
 	const dataIsProvided = username && password && !errors?.username && !errors?.password;
-
+ 
 	return userRegistrationCurrentStep === 1 
 		? 
 			<React.Fragment>
@@ -38,7 +39,7 @@ const StepOneInputs = ({ innerRef, incrementStep }) => {
 const StepTwoInputs = ({ innerRef, incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
 
-	const { formState: { errors }, control, register } = useFormContext();
+	const { formState: { errors }, control } = useFormContext();
 	const { firstName, lastName } = useWatch({ control });
 
 	const dataIsProvided = firstName && lastName && !errors?.firstName && !errors?.lastName;
@@ -47,7 +48,7 @@ const StepTwoInputs = ({ innerRef, incrementStep }) => {
 		? 
 			<React.Fragment>
 				<FirstName innerRef={innerRef} />
-				<LastName innerRef={innerRef} />
+				<LastName />
 				<RoundedButton 
 					isAvailable={dataIsProvided} 
 					onClick={dataIsProvided ? incrementStep : null}
@@ -62,7 +63,7 @@ const StepTwoInputs = ({ innerRef, incrementStep }) => {
 const StepThreeInputs = ({ innerRef }) => { 
 	const { userRegistrationCurrentStep} = useSelector((state) => state.auth);
 
-	const { control, formState: { errors }, register } = useFormContext();
+	const { control, formState: { errors } } = useFormContext();
 
 	const { email, phone } = useWatch({ control });
 

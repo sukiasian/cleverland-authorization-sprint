@@ -1,4 +1,4 @@
-import { AUTH_USER, REGISTER_USER, REQUEST_PASSWORD_RECOVERY, SET_USER_REGISTRATION_CURRENT_STEP,UPDATE_FORGOTTEN_PASSWORD } from '../types/types';
+import { SET_AUTH_USER, SET_REGISTER_USER, SET_REQUEST_PASSWORD_RECOVERY, SET_UPDATE_FORGOTTEN_PASSWORD,SET_USER_REGISTRATION_CURRENT_STEP } from '../types/types';
 
 const initialState = {
 	registerUser: null,
@@ -10,17 +10,17 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case REGISTER_USER:
+    case SET_REGISTER_USER:
       return { ...state, registerUser: action.payload };
-    case AUTH_USER:
+    case SET_AUTH_USER:
       return { ...state, authUser: action.payload };
-    case REQUEST_PASSWORD_RECOVERY:
+    case SET_REQUEST_PASSWORD_RECOVERY:
       return { ...state, requestPasswordRecovery: action.payload };
-	case UPDATE_FORGOTTEN_PASSWORD: 
+	case SET_UPDATE_FORGOTTEN_PASSWORD: 
 	  return { ...state, updateForgottenPassword: action.payload };
 	case SET_USER_REGISTRATION_CURRENT_STEP: 
 	  return { ...state, userRegistrationCurrentStep: action.payload };
-	
+
     default:
       return state;
   }
