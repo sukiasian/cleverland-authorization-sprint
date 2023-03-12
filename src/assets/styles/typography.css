@@ -4,6 +4,10 @@
 	color: #84888f;
 }
 
+.paragraph_red { 
+	color: rgb(244, 44, 79)
+}
+
 .paragraph_white { 
 	color: #fff
 }
@@ -13,5 +17,5 @@
 }
 
 .font_medium { 
-	font-size: 1rem;
+	font-size: 0.9rem;
 }

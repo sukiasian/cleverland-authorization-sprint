@@ -9,7 +9,7 @@ export const AuthenticationWindow = (
 		paragraph 
 	}
 ) => (
-	<div className={`window window_white ${style.window_authentication}`}>
+	<div className={`window window_white ${style.window_authentication}`} data-test-id="auth">
 		{ topChildren }
 		<h2> {heading} </h2>
 		{ paragraph ? <p className='paragraph paragraph_primary'>{paragraph}</p> : null}

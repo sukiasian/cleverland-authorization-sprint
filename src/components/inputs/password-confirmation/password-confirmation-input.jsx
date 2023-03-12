@@ -51,8 +51,8 @@ export const PasswordConfirmationInput = () => {
 							{}
 				)}  
 			/> 
-			<button type='button' onClick={togglePasswordConfirmationVisibility}>
-				<img src={ 
+			<button type='button' className='button_holder' onClick={togglePasswordConfirmationVisibility}>
+				<img id='password-visibility' src={ 
 					passwordConfirmationVisibility 
 						? 
 							hidePasswordConfirmationIcon

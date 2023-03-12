@@ -1,0 +1,13 @@
+.dark-screen {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+.dark-screen_blured { 
+	backdrop-filter: blur(10px);
+}

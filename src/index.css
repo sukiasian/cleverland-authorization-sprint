@@ -95,9 +95,6 @@ select {
   overflow: hidden;
 }
 
-.paragraph_red { 
-	color: red;
-}
 @media (max-width: 1250px) {
   .app-wrapper {
     width: 96%;

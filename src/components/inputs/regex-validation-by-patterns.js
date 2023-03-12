@@ -1,4 +1,4 @@
-// 1. Валидация, возвращающая строку, перечисляющую ВСЕ ошибки;
+// 1. Валидация, возвращающая строку, перечисляющую ВСЕ ошибки (например, в случае с паролем, где сразу 3 проверки);
 export const regexValidation = (getRegexErrorsObjectFunction) => (value) => { 
 	const regexErrors = getRegexErrorsObjectFunction(value);
 
@@ -42,4 +42,11 @@ export const getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray =
 	}
 
 	return classname;
+}
+
+export const emailRegexValidation = (value) => { 
+	console.log(value.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)?.length);
+
+	
+	return value.match(/^[\w-\.]+@([\w-.]+\.)+[\w-]{2,4}$/)?.length  > 0 ?? ''; // eslint-disable-line 
 }

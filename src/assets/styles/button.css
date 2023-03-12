@@ -1,4 +1,5 @@
 button { 
+	margin-top: 2.5rem;
 	cursor: pointer;
 	color: #fff;
 }
@@ -8,4 +9,9 @@ button {
 
 .button_unavailable { 
 	background: #EBEBEB;
+}
+
+.button_holder { 
+	border: none;
+	background: transparent;
 }

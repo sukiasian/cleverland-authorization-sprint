@@ -11,23 +11,24 @@ import { PasswordInput } from '../../../../../inputs/password';
 import { PhoneInput } from '../../../../../inputs/phone';
 import { UsernameInput } from '../../../../../inputs/username/username-input';
 
-const validateLoginAndPasswordIfAutofilledOnInit = () => {};
-
-const StepOneInputs = ({ innerRef, incrementStep }) => { 
+const StepOneInputs = ({ incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
 
-	const { control, errors, setValue, } = useFormContext();
+	const { control, formState: { errors } } = useFormContext();
 	const { username, password } = useWatch({ control })
+	const dataIsProvided = username && password && !errors.username && !errors.password
 
-	const dataIsProvided = username && password && !errors?.username && !errors?.password;
- 
+	useEffect(() => { 
+		
+	}, []);
+
 	return userRegistrationCurrentStep === 1 
 		? 
 			<React.Fragment>
-				<UsernameInput focus={true} />
+				<UsernameInput />
 				<PasswordInput />
 				<RoundedButton 
-					available={dataIsProvided}
+					isAvailable={dataIsProvided}
 					onClick={dataIsProvided ? incrementStep : null}
 				>
 					Следующий шаг
@@ -36,18 +37,19 @@ const StepOneInputs = ({ innerRef, incrementStep }) => {
 		: 
 			null
 }
+
 const StepTwoInputs = ({ incrementStep }) => { 
 	const { userRegistrationCurrentStep } = useSelector((state) => state.auth);
 
 	const { formState: { errors }, control } = useFormContext();
 	const { firstName, lastName } = useWatch({ control });
 
-	const dataIsProvided = firstName && lastName && !errors?.firstName && !errors?.lastName;
+	const dataIsProvided = firstName && lastName && !errors.firstName && !errors.lastName;
 
 	return userRegistrationCurrentStep === 2 
 		? 
 			<React.Fragment>
-				<FirstName focus={true} />
+				<FirstName />
 				<LastName />
 				<RoundedButton 
 					isAvailable={dataIsProvided} 
@@ -60,7 +62,7 @@ const StepTwoInputs = ({ incrementStep }) => {
 			null;
 }
 
-const StepThreeInputs = ({ innerRef }) => { 
+const StepThreeInputs = () => { 
 	const { userRegistrationCurrentStep} = useSelector((state) => state.auth);
 
 	const { control, formState: { errors } } = useFormContext();

@@ -1,0 +1,30 @@
+.input { 
+	width: 100%;
+	margin: 0.5rem 0;
+	height: 3rem;
+	background-color: #f9fafc;
+	outline: 0;
+	border-width: 0 0 2px;
+	border-color: #d4dae3;
+	padding-left: 1rem;
+	padding-top: 1rem;
+	border-radius: 5px 5px 0 0;
+}
+
+.input_valid {}
+
+.input_invalid {}
+
+.input-hint {
+	margin-left: 0.8rem;
+	margin-top: -1rem;
+	color: rgb(244, 44, 79)
+}
+
+#password-visibility { 
+	/* width: 1.2rem;
+	height: 1.2rem;
+	position: relative;
+	margin-left: 19.6rem;
+	margin-top: -5rem; */
+}

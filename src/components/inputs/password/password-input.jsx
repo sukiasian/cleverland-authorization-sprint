@@ -10,7 +10,9 @@ import { getRegexErrorsForPasswordValidation, PASSWORD_VALIDATION_ERRORS_NAMES, 
 import { CLIENT_URL_PATHNAMES } from '../../../utils/url-pathnames';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
-const NotifyingTip = () => { 
+import style from './password-input.module.css';
+
+const Hint = () => { 
 	const { formState: { errors } } = useFormContext();
 
 	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
@@ -18,7 +20,7 @@ const NotifyingTip = () => {
 
 	return (appIsAtRegistrationURL || appIsAtPasswordChangeURL) 
 		? 
-			<p>Пароль {' '}
+			<p className='paragraph paragraph_grey input-hint'>Пароль {' '}
 				<span 
 					className={
 						getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray(
@@ -98,11 +100,11 @@ export const PasswordInput = ({ confirmation, focus }) => {
 	}, []); // eslint-disable-line
 
 	return (
-		<div className='input-container input-container_password'> 
+		<div className={`input-container ${style['input-container_password']}`}>
 			<input 
 				className={`input ${appIsAtRegistrationURL && errors?.password ? 'input_invalid' : ''}`}
+				autoComplete='off'
 				type={ passwordVisibility ? 'text' : 'password' }
-				placeholder={confirmation ? 'Подтверждение пароля' : 'Пароль'} 
 				{ ...rest}  
 				ref={(e) => { 
 					ref(e);
@@ -112,18 +114,21 @@ export const PasswordInput = ({ confirmation, focus }) => {
 					}
 				}}
 			/> 
-			<button type='button' onClick={togglePasswordVisibility}>
-				<img src={ 
+
+			<p className={style.placeholder}>Пароль</p>
+
+			<button type='button' className={`button button_holder ${style.button_holder}`} onClick={togglePasswordVisibility}>
+				<img id='password-visibility' src={ 
 					passwordVisibility 
 						? 
 							hidePasswordIcon
 						:  
 							showPasswordIcon 
 					} 
-					alt='Показать / скрыть пароль'
+					alt='Показать / скрыть пароль' data-test-id={passwordVisibility ? 'eye-closed' : 'eye-closed'}
 				/>
 			</button>
-			<NotifyingTip confirmation={confirmation} />
+			<Hint confirmation={confirmation} />
 		</div>
 	)
 }

@@ -16,7 +16,7 @@ export const PasswordRecoveryRequestForm = ({ requestPasswordRecoveryHandler }) 
 
 	return (
 		<FormProvider { ...methods }> 
-			<form onSubmit={ methods.handleSubmit(requestPasswordRecoveryHandler) }> 
+			<form data-test-id='send-email-form' onSubmit={ methods.handleSubmit(requestPasswordRecoveryHandler) }> 
 				<EmailInput focus={true} />
 				<p>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
 				<RoundedButton submit={true} isAvailable={dataIsProvided}>ВОССТАНОВИТЬ</RoundedButton>

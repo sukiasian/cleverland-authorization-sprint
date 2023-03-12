@@ -1,2 +1,6 @@
-.window_authentication {}
+.window_authentication {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly
+}
 

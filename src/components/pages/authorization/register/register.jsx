@@ -59,7 +59,7 @@ export const Register = () => {
 					: 
 						<AuthenticationWindow 
 							heading="Регистрация" 
-							paragraph={`Шаг ${userRegistrationCurrentStep} из ${totalSteps}`} 
+							paragraph={`${userRegistrationCurrentStep} шаг из ${totalSteps}`} 
 							form={<RegisterForm registerUserHandler={register} />} 
 							bottomChildren={<SwitchAuthType />}
 						/>

@@ -5,6 +5,8 @@ import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
 import { AUTH_INPUTS, REGISTER_INPUTS } from '../../../utils/input-utils';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
+import style from './username-input.module.css';
+
 const USERNAME_VALIDATION_ERRORS_NAMES = {
 	latinOnly: 'latinOnly',
 	atLeastOneDigit: 'atLeastOneDigit', 
@@ -21,7 +23,7 @@ const NotifyingTip = () => {
 
 	return appIsAtRegistrationURL
 		? 
-			<p>
+			<p className='paragraph input-hint' data-test-id='hint'>
 				Используйте для логина {' '}
 					<span 
 						className={
@@ -84,17 +86,11 @@ export const UsernameInput = ({ focus }) => {
 	}, []); // eslint-disable-line
 
  	return (
-		<React.Fragment> 
+		<div className={`input-container ${style['input-container_username']}}`}>
 			<input 
 				className='input'
-				placeholder={
-					appIsAtRegistrationURL 
-						? 
-							'Придумайте логин для входа' 
-						: 
-							'Логин' 
-				} 
 				{ ...rest }
+				autoComplete='off'
 				ref={(e) => { 
 					ref(e);
 
@@ -103,8 +99,17 @@ export const UsernameInput = ({ focus }) => {
 					}
 				}}
 			/>
+			<p className={style.placeholder}>
+				{
+					appIsAtRegistrationURL 
+						? 
+							'Придумайте логин для входа' 
+						: 
+								'Логин' 
+				}
+			</p>
 			<NotifyingTip />
-		</React.Fragment>
+		</div>
 
 	)
 

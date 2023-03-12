@@ -3,12 +3,14 @@ import { useFormContext } from 'react-hook-form';
 
 import { REGISTER_INPUTS } from '../../../utils/input-utils'
 
-const NotifyingTip = () => { 
+import style from './first-name-input.module.css';
+
+const Hint = () => { 
 	const { formState: { errors } } = useFormContext();
 
 	const spanShouldBeRed = () => errors[REGISTER_INPUTS.firstName] ? 'paragraph_red' : ''
 
-	return <p><span className={spanShouldBeRed()}>Поле не может быть пустым</span></p>
+	return <p className='paragraph input-hint'><span className={spanShouldBeRed()} data-test-id='hint'>Поле не может быть пустым</span></p>
 }
 
 export const FirstName = ({ focus }) => { 
@@ -24,10 +26,10 @@ export const FirstName = ({ focus }) => {
 	}, []); // eslint-disable-line
 
 	return (
-		<React.Fragment>
+		<div className={`input-container ${style['input-container_first-name']}`}> 
 			<input 
+				className='input'
 				type='text' 
-				placeholder='Имя' 
 				{ ...rest }	
 				ref={(e) => { 
 					ref(e);
@@ -37,8 +39,9 @@ export const FirstName = ({ focus }) => {
 					}
 				}}
 			/>
-			<NotifyingTip />
-		</React.Fragment>
+			<p className={style.placeholder}>Имя</p>
+			<Hint />
+		</div>
 	)
 
 }

@@ -29,7 +29,7 @@ export const RegisterForm = ({ registerUserHandler }) => {
 
 	return (
 		<FormProvider { ...methods }> 
-			<form onSubmit={methods.handleSubmit(registerUserHandler)}>
+			<form autoComplete='off' data-test-id='register-form' onSubmit={methods.handleSubmit(registerUserHandler)}>
 				<InputsBySteps />
 			</form>
 		</FormProvider>

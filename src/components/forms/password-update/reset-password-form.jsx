@@ -18,7 +18,7 @@ export const ResetPasswordForm = ({ resetPasswordHandler }) => {
 
 	return (
 		<FormProvider { ...methods }> 
-			<form onSubmit={methods.handleSubmit(resetPasswordHandler)}> 
+			<form data-test-id='reset-password-form' onSubmit={methods.handleSubmit(resetPasswordHandler)}> 
 				<PasswordInput focus={true} />
 				<PasswordConfirmationInput />
 				<RoundedButton submit={true} isAvailable={dataIsProvided}>СОХРАНИТЬ ИЗМЕНЕНИЯ</RoundedButton>
