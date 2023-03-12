@@ -10,6 +10,7 @@ import { LayoutTerms } from './components/layouts/terms/terms';
 import { Auth } from './components/pages/authorization/auth';
 import { Register } from './components/pages/authorization/register';
 import { Books } from './components/pages/books';
+import { ForgotPass } from './components/pages/forgot-pass/forgot-pass';
 import { RecoveryRequest } from './components/pages/forgot-pass/recovery-request';
 import { setUserIsAuthorized } from './redux/actions/actions';
 import { COOKIES_KEY, extractCookieValue } from './utils/cookies';
@@ -42,7 +43,6 @@ export const App = () => {
 								<Route path={CLIENT_URL_PATHNAMES.AUTH}element={<Navigate to='/books/all' />} /> 
 								<Route path={CLIENT_URL_PATHNAMES.REGISTRATION} element={<Navigate to='/books/all' />} /> 
 								<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={<Navigate to='/books/all' />} /> 
-								<Route path={CLIENT_URL_PATHNAMES.RESET_PASS} element={<Navigate to='/books/all' />} /> 
 							</Route> 
 						</Route>
 					:
@@ -50,7 +50,7 @@ export const App = () => {
 							<Route path='' element={<Navigate to={CLIENT_URL_PATHNAMES.AUTH} />} />
 							<Route path={CLIENT_URL_PATHNAMES.AUTH} element={ <Auth /> } />
 							<Route path={CLIENT_URL_PATHNAMES.REGISTRATION} element={ <Register /> } />
-							<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={<RecoveryRequest />} /> 
+							<Route path={CLIENT_URL_PATHNAMES.FORGOT_PASS} element={<ForgotPass />} /> 
 							<Route path='/books/:category' element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />
 							<Route path='/books/:category/:id' element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />
 							<Route path={CLIENT_URL_PATHNAMES.TERMS} element={<Navigate to={`/${CLIENT_URL_PATHNAMES.AUTH}`} />} />

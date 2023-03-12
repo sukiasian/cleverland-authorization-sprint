@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { REGISTER_INPUTS } from '../../../utils/input-names'
+import { REGISTER_INPUTS } from '../../../utils/input-utils'
 
 const NotifyingTip = () => { 
 	const { formState: { errors } } = useFormContext();

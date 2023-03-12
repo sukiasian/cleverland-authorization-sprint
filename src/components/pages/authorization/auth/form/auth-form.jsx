@@ -16,11 +16,13 @@ export const AuthForm = ({ authUserHandler }) => {
 
 	return (
 		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(authUserHandler)}>
+			<form className='form form_auth' onSubmit={methods.handleSubmit(authUserHandler)}>
 				<UsernameInput focus={true} />
 				<PasswordInput />
-				<Link to='/forgot-pass'>Забыли логин или пароль?</Link>
-				<RoundedButton submit={true}>Войти</RoundedButton>
+				<Link to='/forgot-pass'>
+					<p className='paragraph paragraph_grey font_small'>Забыли логин или пароль?</p>
+				</Link>
+				<RoundedButton submit={true} isAvailable={true}>ВОЙТИ</RoundedButton>
 			</form>
 		</FormProvider>
 	)

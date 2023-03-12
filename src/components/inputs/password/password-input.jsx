@@ -6,27 +6,17 @@ import hidePasswordIcon from '../../../assets/images/icons/hide-password-icon.sv
 import showPasswordIcon from '../../../assets/images/icons/show-password-icon.svg';
 import { setPasswordVisibility } from '../../../redux/actions/actions';
 import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
-import { PASSWORD_UPDATE_INPUTS, REGISTER_INPUTS } from '../../../utils/input-names';
+import { getRegexErrorsForPasswordValidation, PASSWORD_VALIDATION_ERRORS_NAMES, REGISTER_INPUTS } from '../../../utils/input-utils';
 import { CLIENT_URL_PATHNAMES } from '../../../utils/url-pathnames';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
-const PASSWORD_VALIDATION_ERRORS_NAMES = {
-	atLeastOneCapitalLetter: 'atLeastOneCapitalLetter',
-	atLeastOneDigit: 'atLeastOneDigit', 
-	atLeastEightCharacters: 'atLeastEightCharacters'
-}
+const NotifyingTip = () => { 
+	const { formState: { errors } } = useFormContext();
 
-const getRegexErrorsForPasswordValidation = (value) => ({
-	atLeastOneCapitalLetter: !value.match(/(?=.*[A-Z])+/),
-	atLeastOneDigit: !value.match(/(?=.*\d)/),
-	atLeastEightCharacters: !value.match(/.{8,}/)
-});
-
-const NotifyingTip = ({ errors }) => { 
 	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
-	const appIsAtPasswordChangeURL = document.location.hash.includes(`${CLIENT_URL_PATHNAMES.RESET_PASS}`);
+	const appIsAtPasswordChangeURL = document.location.hash.includes(`${CLIENT_URL_PATHNAMES.FORGOT_PASS}`);
 
-	return appIsAtRegistrationURL || appIsAtPasswordChangeURL
+	return (appIsAtRegistrationURL || appIsAtPasswordChangeURL) 
 		? 
 			<p>Пароль {' '}
 				<span 
@@ -76,11 +66,8 @@ export const PasswordInput = ({ confirmation, focus }) => {
 	const { errors } = useFormState({ control });
 
 	const { ref, ...rest } = register(
-		confirmation 
-			? 
-				PASSWORD_UPDATE_INPUTS.passwordConfirmation 
-			: 
-				REGISTER_INPUTS.password, 
+		REGISTER_INPUTS.password,
+			
 		appIsAtRegistrationURL 
 			? 
 				{ 
@@ -104,7 +91,6 @@ export const PasswordInput = ({ confirmation, focus }) => {
 		if(focus) { 
 			inputRef.current.focus()
 		}
-		// setValue(REGISTER_INPUTS.password, 'helloworld');
 
 		return () => { 
 			dispatch(setPasswordVisibility(null));
@@ -137,7 +123,7 @@ export const PasswordInput = ({ confirmation, focus }) => {
 					alt='Показать / скрыть пароль'
 				/>
 			</button>
-			<NotifyingTip errors={errors} control={control}/>
+			<NotifyingTip confirmation={confirmation} />
 		</div>
 	)
 }

@@ -15,8 +15,8 @@ export const RecoveryRequest = () => {
 
 	const dispatch = useDispatch();
 
-	const recoverPasswordHandler = (value) => { 
-		dispatch(setRequestPasswordRecovery(value))
+	const requestPasswordRecoveryHandler = (value) => { 
+		dispatch(setRequestPasswordRecovery(value));
 	}
 
 	return requestPasswordRecovery 
@@ -29,7 +29,7 @@ export const RecoveryRequest = () => {
 			<React.Fragment>
 				<AuthenticationWindow 
 					topChildren={<GoBackBar text='ВХОД В ЛИЧНЫЙ КАБИНЕТ'/>}
-					form={<PasswordRecoveryRequestForm recoverPasswordHandler={recoverPasswordHandler}/>}
+					form={<PasswordRecoveryRequestForm requestPasswordRecoveryHandler={requestPasswordRecoveryHandler}/>}
 					bottomChildren={<SwitchAuthType />}
 				/> 
 				<LoadingWindow />

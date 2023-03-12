@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { COOKIES_KEY, setCookieValue } from '../../utils/cookies';
+import { COOKIES_KEY, extractCookieValue, setCookieValue } from '../../utils/cookies';
 import { SERVER_URL_PATHNAMES } from '../../utils/url-pathnames';
 import {
   CHANGE_ACTIVE_BOOK_IMAGE,
@@ -16,6 +16,7 @@ import {
   SEARCH_BOOKS,
   SET_AUTH_USER,
   SET_LOADING_SPIN_IS_OPEN,
+  SET_PASSWORD_CONFIRMATION_VISIBILITY,
   SET_PASSWORD_VISIBILITY,
   SET_REGISTER_USER,
   SET_REQUEST_PASSWORD_RECOVERY,
@@ -101,11 +102,13 @@ export function fetchBooks() {
   /* eslint-disable */
   return async function (dispatch) {
     try {
-      dispatch(showLoader());
-      return await axios('https://strapi.cleverland.by/api/books').then(function (response) {
-        dispatch({ type: FETCH_BOOKS, payload: response.data });
+      	dispatch(showLoader());
+      	
+		const response = await axios('https://strapi.cleverland.by/api/books', _getAxiosConfig());
+        
+		dispatch({ type: FETCH_BOOKS, payload: response.data });
         dispatch(hideLoader());
-      });
+      
     } catch (error) {
       dispatch(hideLoader());
       dispatch(showAlert('Что-то пошло не так. Обновите страницу через некоторое время.'));
@@ -133,11 +136,12 @@ export function fetchCategories() {
   /* eslint-disable */
   return async function (dispatch) {
     try {
-      dispatch(showLoader());
-      return await axios('https://strapi.cleverland.by/api/categories').then(function (response) {
-        dispatch({ type: FETCH_CATEGORIES, payload: response.data });
+      	dispatch(showLoader());
+
+      	const response = await axios.get('https://strapi.cleverland.by/api/categories', _getAxiosConfig());
+
+    	dispatch({ type: FETCH_CATEGORIES, payload: response.data });
         dispatch(hideLoader());
-      });
     } catch (error) {
       dispatch(hideLoader());
       dispatch(showAlert('Что-то пошло не так. Обновите страницу через некоторое время.'));
@@ -153,10 +157,6 @@ export function setRegisterUser(payload) {
 			const response = await axios.post(SERVER_URL_PATHNAMES.REGISTER, payload);
 
 			dispatch(_registerNewUser(response));
-		
-			const date = new Date();
-
-			setCookieValue('jwt', response.jwt, 90);
 		} catch (error) {
 			dispatch(_registerNewUser(error));
 		} finally { 
@@ -189,7 +189,8 @@ export function setAuthUser(payload) {
 			dispatch(_setLoadingSpinIsOpen(true));
 			
 			const response = await axios.post(SERVER_URL_PATHNAMES.AUTH, payload);
-			
+		
+			setCookieValue(COOKIES_KEY.JWT, response.data.jwt, 90);
 			setCookieValue(COOKIES_KEY.USER_IS_AUTHORIZED, 'true', 90);
 			
 			dispatch(_authNewUser(response));
@@ -233,7 +234,7 @@ export function setRequestPasswordRecovery(payload) {
 
 			dispatch(_setRequestPasswordRecovery(response));
 		} catch (error) {
-
+			dispatch(_setRequestPasswordRecovery(error));
 		} finally { 
 			dispatch(_setLoadingSpinIsOpen(false));
 		}
@@ -263,7 +264,7 @@ export function setResetPassword(payload) {
 
 			dispatch(_setResetPassword(response));
 		} catch (error) {
-
+			dispatch(_setResetPassword(error));
 		} finally { 
 			dispatch(_setLoadingSpinIsOpen(false));
 		}
@@ -278,7 +279,7 @@ function _setResetPassword(payload) {
 }
 
 export function annualizeResetPassword() { 
-	_setResetPassword(null);
+	return _setResetPassword(null);
 }
 
 export function setUserRegistrationCurrentStep(payload) { 
@@ -308,3 +309,17 @@ function _setLoadingSpinIsOpen(payload) {
 	}
 }
 
+function _getAxiosConfig() { 
+	return { 
+		headers: { 
+			Authorization: `Bearer ${extractCookieValue(COOKIES_KEY.JWT)}`
+		}
+	}
+}
+
+export function setPasswordConfirmationVisibility(payload) { 
+	return { 
+		type: SET_PASSWORD_CONFIRMATION_VISIBILITY,
+		payload
+	}
+}

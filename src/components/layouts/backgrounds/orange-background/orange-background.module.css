@@ -1,9 +1,3 @@
-.background { 
-	width: 100%;
-	min-height: 100vh;
-	position: absolute;
-}
-
 .background_orange { 
 	background: linear-gradient(to right top, #F87B11, #F84E06);
 }

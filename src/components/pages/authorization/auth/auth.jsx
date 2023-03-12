@@ -43,15 +43,14 @@ export const Auth = () => {
 				? 
 					null
 				: 
-					<React.Fragment>
-						<LoadingWindow />
-						<AuthenticationWindow 
+					<AuthenticationWindow 
 							heading='Вход в личный кабинет'
 							form={<AuthForm authUserHandler={ authNewUser } />}
 							bottomChildren={<SwitchAuthType />} 
 						/>
-					 </React.Fragment>
 			}
+
+			<LoadingWindow />
 
 			{ authFailedWithError 
 				?  

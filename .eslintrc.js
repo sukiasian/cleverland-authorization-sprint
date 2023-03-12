@@ -20,6 +20,7 @@ module.exports = {
                 devDependencies: ['**/*.test.{ts,tsx,js,jsx}']
             },
         ],
+		'no-underscore-dangle': 'off',
         'import/no-default-export': 'error',
         indent: 'off', // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^action' }],

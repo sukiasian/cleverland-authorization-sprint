@@ -25,7 +25,7 @@ describe('authorization and registartion', () => {
         it('success authorization', () => {
             cy.viewport(360, 600);
             let token;
-            cy.get('[data-test-id=auth-form] input[name=identifier]').type('TestUser1');
+            cy.get('[data-test-id=auth-form] input[name=identifier]').type('TestUser1'); /// NOTE
             cy.get('[data-test-id=eye-closed]').should('not.be.exist');
             cy.get('[data-test-id=auth-form] input[name=password]').type('Qwerty123');
             cy.get('[data-test-id=auth]').screenshot('password hidden');
@@ -44,7 +44,7 @@ describe('authorization and registartion', () => {
                 assert.deepEqual(request.body, { identifier: 'TestUser1', password: 'Qwerty123' });
             });
             cy.url().should('contain', '/books');
-            cy.get('[data-test-id=loader]').should('be.exist');
+            cy.get('[data-test-id=loader]').should('be.exist'); 
             cy.wait('@categories').should(({ request }) => {
                 expect(request.headers, 'request headers').to.include({
                     authorization: `Bearer ${token}`,

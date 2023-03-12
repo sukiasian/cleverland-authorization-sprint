@@ -18,7 +18,7 @@ export const SwitchAuthType = () => {
 	}
 
 	return <div className={style['switch-auth-type']}>
-		<p className={style.paragraph}>{renderData.controlQuestion}</p>
-		<Link className='link link_plain-text' to={renderData.switchTo}>{renderData.action}</Link>
+		<p className='paragraph_grey font_medium'>{renderData.controlQuestion}</p>
+		<Link className='link link_text' to={renderData.switchTo}>{renderData.action}</Link>
 	</div>
 }

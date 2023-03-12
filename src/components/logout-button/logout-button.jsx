@@ -9,6 +9,8 @@ export const LogoutButton = () => {
 
 	const logout = () => {
 		setCookieValue(COOKIES_KEY.USER_IS_AUTHORIZED, null);
+		setCookieValue(COOKIES_KEY.JWT);
+
 
 		dispatch(setUserIsAuthorized(false));
 	}

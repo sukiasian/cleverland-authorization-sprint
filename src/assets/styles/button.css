@@ -1,0 +1,11 @@
+button { 
+	cursor: pointer;
+	color: #fff;
+}
+
+
+.button_available {}
+
+.button_unavailable { 
+	background: #EBEBEB;
+}

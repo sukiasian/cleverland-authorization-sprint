@@ -15,7 +15,7 @@ export const ForgotPass = () => {
 	const code = searchParams.get('code');
 
 	useEffect(() => { 
-		dispatch(annualizeResetPassword());
+		dispatch(annualizeResetPassword);
 		dispatch(annualizeRequestPasswordRecovery());
 	}, []); // eslint-disable-line
 

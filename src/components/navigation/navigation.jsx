@@ -1,30 +1,31 @@
-import React, { useEffect,useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useEffect,useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 
 import { changeActiveCategory, changeSortIcon, fetchCategories, sortDescending } from '../../redux/actions/actions';
-import { TextButton } from '../buttons/text-button/text-button';
 import { LogoutButton } from '../logout-button/logout-button';
 
 import style from './navigation.module.css';
 
-export const NavigationContainer = (props) => {
-  const { category } = useParams();
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const [isMenuOpen, toggleMenu] = useState(true);
-  const toggleMenuMode = () => {
-    toggleMenu(!isMenuOpen);
-  };
+export const Navigation = () => {
+	const { books, categories } = useSelector((state) => state.books);
 
-  useEffect(() => {
-    props.fetchCategories();
+	const { category } = useParams();
+	const { pathname } = useLocation();
+	const dispatch = useDispatch();
+	const [isMenuOpen, toggleMenu] = useState(true);
+	const toggleMenuMode = () => {
+		toggleMenu(!isMenuOpen);
+	};
 
-    if (pathname === '/terms' || pathname === '/contract') {
-      toggleMenu(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+	useEffect(() => {
+		dispatch(fetchCategories());
+
+		if (pathname === '/terms' || pathname === '/contract') {
+			toggleMenu(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
   return (
     <section className={style.navbar}>
@@ -51,12 +52,12 @@ export const NavigationContainer = (props) => {
         />
       </button>
       <ul className={isMenuOpen ? style.navbar__list : style.navbar__active}>
-        {props.categories.length !== 0 && (
+        {categories.length !== 0 && (
           <NavLink
             data-test-id='navigation-books'
             onClick={() => {
-              props.changeActiveCategory('Все книги');
-              props.changeSortIcon();
+              dispatch(changeActiveCategory('Все книги'));
+              dispatch(changeSortIcon());
             }}
             className={`${category}` === 'all' ? style.navbar__list_active : ''}
             to='/books/all'
@@ -64,14 +65,14 @@ export const NavigationContainer = (props) => {
             Все книги
           </NavLink>
         )}
-        {props.categories[0] &&
-          props.categories[0].map((item) => (
+        {categories[0] &&
+          categories[0].map((item) => (
             <li key={item.id} className={style.navbar__list_item}>
               <NavLink
                 data-test-id={`navigation-${item.path}`}
                 onClick={() => {
-                  props.changeActiveCategory(item.name);
-                  props.changeSortIcon();
+                  dispatch(changeActiveCategory(item.name));
+                  dispatch(changeSortIcon());
                 }}
                 className={`${category}` === item.path ? style.navbar__list_active : ''}
                 to={`/books/${item.path}`}
@@ -79,7 +80,7 @@ export const NavigationContainer = (props) => {
                 {item.name}
               </NavLink>
               <span data-test-id={`navigation-book-count-for-${item.path}`}>
-                {props.books[0] && props.books[0].filter((book) => book.categories[0] === item.name).length}
+                {books[0] && books[0].filter((book) => book.categories[0] === item.name).length}
               </span>
             </li>
           ))}
@@ -99,15 +100,15 @@ export const NavigationContainer = (props) => {
     </section>
   );
 };
-const mapStateToProps = (state) => ({
-  categories: state.books.categories,
-  books: state.books.books,
-});
-const mapDispatchToProps = {
-  changeSortIcon,
-  sortDescending,
-  fetchCategories,
-  changeActiveCategory,
-};
+// const mapStateToProps = (state) => ({
+//   categories: state.books.categories,
+//   books: state.books.books,
+// });
+// const mapDispatchToProps = {
+//   changeSortIcon,
+//   sortDescending,
+//   fetchCategories,
+//   changeActiveCategory,
+// };
 
-export const Navigation = connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);
+// export const Navigation = connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);

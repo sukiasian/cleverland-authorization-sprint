@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { REGISTER_INPUTS } from '../../../utils/input-names'
+import { REGISTER_INPUTS } from '../../../utils/input-utils'
 
 export const LastName = ({ innerRef }) => { 
 	const { register } = useFormContext();

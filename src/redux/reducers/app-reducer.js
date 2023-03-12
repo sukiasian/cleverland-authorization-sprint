@@ -1,4 +1,4 @@
-import { HIDE_ALERT, HIDE_LOADER, SET_LOADING_SPIN_IS_OPEN, SET_PASSWORD_VISIBILITY,SHOW_ALERT, SHOW_LOADER, TOGGLE_USER_MENU } from '../types/types';
+import { HIDE_ALERT, HIDE_LOADER, SET_LOADING_SPIN_IS_OPEN, SET_PASSWORD_CONFIRMATION_VISIBILITY, SET_PASSWORD_VISIBILITY,SHOW_ALERT, SHOW_LOADER, TOGGLE_USER_MENU } from '../types/types';
 
 const initialState = {
   isLoading: true,
@@ -6,6 +6,7 @@ const initialState = {
   HOST: 'https://strapi.cleverland.by',
   userMenuIsOpen: false,
   passwordVisibility: null,
+  passwordConfirmationVisibility: null,
   loadingSpinIsOpen: null
 };
 
@@ -23,6 +24,8 @@ export const appReducer = (state = initialState, action) => {
 		return { ...state, userMenuIsOpen: !state.userMenuIsOpen }
 	case SET_PASSWORD_VISIBILITY: 
 		return { ...state, passwordVisibility: action.payload }
+	case SET_PASSWORD_CONFIRMATION_VISIBILITY: 
+		return { ...state, passwordConfirmationVisibility: action.payload }
 	case SET_LOADING_SPIN_IS_OPEN: 
 		return { ...state, loadingSpinIsOpen: action.payload }
 

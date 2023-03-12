@@ -1,0 +1,1 @@
+export { PasswordConfirmationInput } from './password-confirmation-input';

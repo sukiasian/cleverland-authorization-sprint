@@ -1,4 +1,4 @@
-import style from './authentication-window.css';
+import style from './authentication-window.module.css';
 
 export const AuthenticationWindow = (
 	{ 
@@ -9,9 +9,9 @@ export const AuthenticationWindow = (
 		paragraph 
 	}
 ) => (
-	<div className={`${style.window} ${style['authentication-window']}`}>
+	<div className={`window window_white ${style.window_authentication}`}>
 		{ topChildren }
-		<h2 className={`${style.heading} ${style.heading_secondary}`}>{/* или использовать без style.<> а напрямую heading heading_secondary */} {heading} </h2>
+		<h2> {heading} </h2>
 		{ paragraph ? <p className='paragraph paragraph_primary'>{paragraph}</p> : null}
 		{ form }
 		{ bottomChildren }

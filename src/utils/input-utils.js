@@ -21,3 +21,15 @@ export const PASSWORD_UPDATE_INPUTS = {
   	passwordConfirmation: 'passwordConfirmation',
   	code: 'code' // coming from URL
 }
+
+export const PASSWORD_VALIDATION_ERRORS_NAMES = {
+	atLeastOneCapitalLetter: 'atLeastOneCapitalLetter',
+	atLeastOneDigit: 'atLeastOneDigit', 
+	atLeastEightCharacters: 'atLeastEightCharacters'
+}
+
+export const getRegexErrorsForPasswordValidation = (value) => ({
+	atLeastOneCapitalLetter: !value.match(/(?=.*[A-Z])+/),
+	atLeastOneDigit: !value.match(/(?=.*\d)/),
+	atLeastEightCharacters: !value.match(/.{8,}/)
+});

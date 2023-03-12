@@ -1,0 +1,17 @@
+.paragraph {}
+
+.paragraph_grey { 
+	color: #84888f;
+}
+
+.paragraph_white { 
+	color: #fff
+}
+
+.font_small { 
+	font-size: 0.7rem;
+}
+
+.font_medium { 
+	font-size: 1rem;
+}

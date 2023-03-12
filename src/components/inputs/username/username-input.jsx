@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
-import { AUTH_INPUTS, REGISTER_INPUTS } from '../../../utils/input-names';
+import { AUTH_INPUTS, REGISTER_INPUTS } from '../../../utils/input-utils';
 import { getRegexValidationClassnameThroughExtractingErrorsFromErrorsArray, regexValidation } from '../regex-validation-by-patterns';
 
 const USERNAME_VALIDATION_ERRORS_NAMES = {
@@ -86,7 +86,7 @@ export const UsernameInput = ({ focus }) => {
  	return (
 		<React.Fragment> 
 			<input 
-				className=''
+				className='input'
 				placeholder={
 					appIsAtRegistrationURL 
 						? 

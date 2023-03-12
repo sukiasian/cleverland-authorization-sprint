@@ -119,3 +119,12 @@ select {
     grid-template-rows: 64px 1fr 56px;
   }
 }
+
+.logo_text { 
+	margin-bottom: 2rem;
+}
+
+
+
+@import url('./assets/styles/main.css');
+

@@ -1,0 +1,9 @@
+.switch-auth-type { 
+	margin-top: 1.3rem;
+	display: flex;
+	flex-direction: row;
+}
+
+.switch-auth-type > a  { 
+	margin-left: 1.5rem;
+}

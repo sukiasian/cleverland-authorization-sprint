@@ -1,8 +1,8 @@
-.button_available { 
+.button_rounded  {
+	padding: 0.8rem 0.5rem;
+	width: 100%;
+	outline: none;
+	border: none;
+	border-radius: 20px;
 	background: linear-gradient(to right top, #F87B11, #F84E06);
-}
-
-.button_unavailable { 
-	background: #EBEBEB;
-	padding: 1rem;
 }

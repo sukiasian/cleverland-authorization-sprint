@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { annualizeResetPassword, setResetPassword } from '../../../../redux/actions/actions'
-import { CLIENT_URL_PATHNAMES } from '../../../../utils/url-pathnames'
-import { ResetPasswordForm } from '../../../forms/password-update/reset-password-form'
-import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window'
-import { LoadingWindow } from '../../../layouts/window-elements/loading-window/loading-window'
-import { StatusBlock } from '../../../status-block'
-import { RoundedButton } from '../../forms/password-update/reset-password-form';
+import { annualizeResetPassword, setResetPassword } from '../../../../redux/actions/actions';
+import { CLIENT_URL_PATHNAMES } from '../../../../utils/url-pathnames';
+import { RoundedButton } from '../../../buttons/rounded-button';
+import { ResetPasswordForm } from '../../../forms/password-update';
+import { AuthenticationWindow } from '../../../layouts/window-elements/authentication-window/authentication-window';
+import { LoadingWindow } from '../../../layouts/window-elements/loading-window/loading-window';
+import { StatusBlock } from '../../../status-block';
 
 const RecoveryTip = () => <p>После сохранения войдите в библиотеку, используя новый пароль</p>
 
 export const PasswordUpdate = ({ code }) => { 
 	const [passwordDataForRetryingRequest, setPasswordDataForRetryingRequest] = useState(null);
 	
-	const { passwordUpdate } = useSelector((state) => state.auth);
+	const { resetPassword } = useSelector((state) => state.auth);
 	
 	const dispatch = useDispatch();
 
-	const passwordUpdateError = passwordUpdate?.response?.data?.error;
-	const passwordUpdateSuccess = passwordUpdate?.status === 200;
+	const passwordUpdateError = resetPassword?.response?.data?.error;
+	const passwordUpdateSuccess = resetPassword?.status === 200;
 
-	const resetPassword = (value) => { 
+	const resetPasswordHandler = (value) => { 
 		const data = { 
 			...value,
 			code
@@ -43,7 +43,7 @@ export const PasswordUpdate = ({ code }) => {
 	return (
 		<React.Fragment> 
 		{ 
-			passwordUpdate
+			resetPassword
 				? 
 					null
 				:
@@ -51,7 +51,7 @@ export const PasswordUpdate = ({ code }) => {
 							heading='Восстановление пароля' 
 							bottomChildren={<RecoveryTip />} 
 							form={
-								<ResetPasswordForm resetPasswordHandler={resetPassword}/>
+								<ResetPasswordForm resetPasswordHandler={resetPasswordHandler} />
 							}
 						/>
 		}
