@@ -129,7 +129,7 @@ export const PasswordInput = ({ confirmation, focus }) => {
 					: 
 						<img 
 							id='password-visibility' 
-							src={hidePasswordIcon} 
+							src={showPasswordIcon} 
 							alt='Показать / скрыть пароль' 
 							data-test-id='eye-closed'
 						/> }

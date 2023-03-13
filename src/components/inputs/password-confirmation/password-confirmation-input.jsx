@@ -9,6 +9,8 @@ import { checkAppIsAtRegistrationURL } from '../../../utils/functions';
 import { getRegexErrorsForPasswordValidation, PASSWORD_UPDATE_INPUTS } from '../../../utils/input-utils';
 import { regexValidation } from '../regex-validation-by-patterns';
 
+import style from './password-confirmation-input.module.css';
+
 export const PasswordConfirmationInput = () => { 
 	const appIsAtRegistrationURL = checkAppIsAtRegistrationURL();
 
@@ -51,16 +53,22 @@ export const PasswordConfirmationInput = () => {
 							{}
 				)}  
 			/> 
-			<button type='button' className='button_holder' onClick={togglePasswordConfirmationVisibility}>
-				<img id='password-visibility' src={ 
-					passwordConfirmationVisibility 
-						? 
-							hidePasswordConfirmationIcon
-						:  
-							showPasswordConfirmationIcon 
-					} 
-					alt='Показать / скрыть пароль'
-				/>
+			<button type='button' className={`button button_holder ${style.button_holder}`} onClick={togglePasswordConfirmationVisibility}>
+				{ passwordConfirmationVisibility 
+					? 
+						<img 
+							id='password-visibility' 
+							src={hidePasswordConfirmationIcon} 
+							alt='Показать / скрыть пароль' 
+							data-test-id='eye-closed'
+						/> 
+					: 
+						<img 
+							id='password-visibility' 
+							src={showPasswordConfirmationIcon} 
+							alt='Показать / скрыть пароль' 
+							data-test-id='eye-closed'
+						/> }
 			</button>
 		</div>
 	)
