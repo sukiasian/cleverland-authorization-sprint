@@ -118,15 +118,21 @@ export const PasswordInput = ({ confirmation, focus }) => {
 			<p className={style.placeholder}>Пароль</p>
 
 			<button type='button' className={`button button_holder ${style.button_holder}`} onClick={togglePasswordVisibility}>
-				<img id='password-visibility' src={ 
-					passwordVisibility 
-						? 
-							hidePasswordIcon
-						:  
-							showPasswordIcon 
-					} 
-					alt='Показать / скрыть пароль' data-test-id={passwordVisibility ? 'eye-closed' : 'eye-closed'}
-				/>
+				{ passwordVisibility 
+					? 
+						<img 
+							id='password-visibility' 
+							src={hidePasswordIcon} 
+							alt='Показать / скрыть пароль' 
+							data-test-id='eye-closed'
+						/> 
+					: 
+						<img 
+							id='password-visibility' 
+							src={hidePasswordIcon} 
+							alt='Показать / скрыть пароль' 
+							data-test-id='eye-closed'
+						/> }
 			</button>
 			<Hint confirmation={confirmation} />
 		</div>

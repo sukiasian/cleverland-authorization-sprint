@@ -7,7 +7,7 @@ import { UsernameInput } from '../../../../inputs/username/username-input';
 
 export const AuthForm = ({ authUserHandler }) => {
 	const methods = useForm({
-		mode: 'onChange',
+		mode:  ['onBlur', 'onSubmit'],
 		defaultValues: { 
 			identifier: '',
 			password: ''
@@ -22,7 +22,7 @@ export const AuthForm = ({ authUserHandler }) => {
 				<Link className='link link_text' to='/forgot-pass'>
 					<p className='paragraph paragraph_grey font_small form_hint'>Забыли логин или пароль?</p>
 				</Link>
-				<RoundedButton submit={true} isAvailable={true}>ВОЙТИ</RoundedButton>
+				<RoundedButton submit={true} isAvailable={true}>ВХОД</RoundedButton>
 			</form>
 		</FormProvider>
 	)

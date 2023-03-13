@@ -6,6 +6,7 @@ import { PasswordConfirmationInput } from '../../inputs/password-confirmation';
 
 export const ResetPasswordForm = ({ resetPasswordHandler }) => {
 	const methods = useForm({ 
+		mode: ['onBlur', 'onSubmit'],
 		defaultValues: { 
 			password: '',
 			passwordConfirmation: '',

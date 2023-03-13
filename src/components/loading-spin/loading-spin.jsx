@@ -14,16 +14,18 @@ export const LoadingSpin = () => {
   	const windowWidth = ShowWindowDimensions().props.children[1];
 
 	return (
-		<Lottie
-			style={{ 
-				position: 'absolute', 
-				top: '50vh', 
-				left: '50%', 
-				transform: 'translate(-50%, -50%)' 
-			}}
-			options={defaultOptions}
-			height={windowWidth < 910 ? 48 : 150}
-			width={windowWidth < 910 ? 48 : 150}
-        />
+		<div className='loading-spin' data-test-id='loader'>
+			<Lottie
+				style={{ 
+					position: 'absolute', 
+					top: '50vh', 
+					left: '50%', 
+					transform: 'translate(-50%, -50%)' 
+				}}
+				options={defaultOptions}
+				height={windowWidth < 910 ? 48 : 150}
+				width={windowWidth < 910 ? 48 : 150}
+			/>
+		</div>
 	)
 }
