@@ -8,7 +8,7 @@ export const LoadingWindow = () => {
 
 return loadingSpinIsOpen 
 	? 
-		<DarkScreen blured={true} data-test-id='loader'>
+		<DarkScreen blured={true}>
 			<LoadingSpin />
 		</DarkScreen>
 	: 
